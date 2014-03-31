@@ -70,7 +70,7 @@ function filter_dirs($path, $items){
 
 function relative_to($path, $items){
     foreach( $items as $i=>$v){
-        $items[$i] = $path.$v;
+        $items[$i] = $path."/".$v;
         if( is_dir($items[$i]) ){
             $items[$i] = substr($items[$i],-1)=="/"?$items[$i]:$items[$i]."/";
         }
