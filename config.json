@@ -1,4 +1,13 @@
 {
     "app_title":"My Super great app to manage pictures !",
-    "pictures_path":"pictures_repo/"
+    "pictures_path":"pictures_repo/",
+    "git":{
+        "enable":true,
+        "auto_push":true,
+        "remote":"name branch?"
+    },
+    "template_message":{
+        "update":"File updated by :user_name:\n\nReason is ",
+        "trash":"File deleted by :user_name:\n\nReason is "
+    }
 }
