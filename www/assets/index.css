@@ -1,0 +1,184 @@
+html{
+    overflow: hidden;
+}
+.app-loader{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    line-height: 100%;
+}
+.app-loader .loading{
+    top: -50%;
+    position: absolute;
+    margin-top: 50%;
+    width: 100%;
+ }
+.app-loader .ion-ios7-reloading{
+    font-size: 3em;
+ }
+.top{
+	width:100%;
+}
+
+.directoryBrowser{
+	width: 20%;
+	float: left;
+	min-width: 200px;
+}
+
+.directoryBrowser h2{
+	cursor:pointer;
+}
+
+.directoryBrowser li{
+	cursor:pointer;
+}
+
+.picturesBrowser{
+	width: 76%;
+	float: left;
+	padding-right: 1%;
+	padding-left: 1%;
+}
+.picturesBrowser >ul{
+}
+.picturesBrowser >ul >li{
+    display: inline-block;
+    text-align: center;
+    max-width: 150px;
+    position: relative;
+}
+.picturesBrowser >ul >li >a{
+    position: relative;
+    display: block;
+}
+.picturesBrowser >ul >li >a.active img{
+	display:inline-block;
+	position:relative;
+}
+.picturesBrowser >ul >li >a img{
+    max-width: 80%;
+}
+.picturesBrowser >ul >li .name{
+    display: inline-block;
+    width: 60%;
+    height: 22px;
+    overflow: hidden;
+    text-align: right;
+}
+.picturesBrowser >ul >li .etc{
+    display: inline-block;
+    width: 19%;
+    height: 22px;
+    text-align: left;
+}
+.picturesBrowser .tooltip{
+    display: none;
+}
+.picturesBrowser .tooltip-inner{
+    word-break: break-all;
+}
+
+
+
+
+.pictureOverlay{
+	display:none;
+	position:absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+}
+.pictureOverlay .bg{
+	position:absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	background-color: grey;
+	opacity: 0.6;
+}
+.pictureOverlay .toolbar{
+	position:absolute;
+    top: 14%;
+    right: 5%;
+    text-align: right;
+}
+.pictureOverlay .toolbar a{
+	background-color:black;
+    padding-left: 4px;
+    padding-right: 4px;
+	border-radius: 4px;
+	margin-left: 2px;
+	margin-right: 2px;
+    line-height: 25px;
+}
+
+
+.pictureDetails{
+    display: none;
+    position: fixed;
+    margin-left: -30%;
+    left: 50%;
+    width: 70%;
+    height: 90%;
+    padding: 10px;
+    top: 5%;
+}
+.pictureDetails h3{
+    margin-bottom: 10px;
+    display: inline;
+    position: absolute;
+    top: 10px;
+    right: 40px;
+}
+.pictureDetails .close{
+    line-height: 1.6;
+}
+.pictureDetails .body{
+	text-align: center;
+    height: 78%;
+}
+.pictureDetails .body .zoom{
+}
+.pictureDetails .body #edit{
+    margin-top: 20px;
+}
+.pictureDetails .body .edit_img{
+    height: 150px;
+}
+.pictureDetails .body .form-horizontal{
+    margin-top: 20px;
+}
+.pictureDetails .body .form-group label{
+    display: inline;
+    margin-right: 20px;
+}
+.pictureDetails .body .form-group textarea,
+.pictureDetails .body .form-group input{
+    display: inline;
+    width: auto;
+}
+.pictureDetails .footer{
+    text-align: right;
+    position: absolute;
+    bottom: 1%;
+    width: 95%;
+    height: 10%;
+    min-height: 60px;
+    max-height: 80px;
+}
+
+
+.themeSelector{
+	position:absolute;
+	top:20px;
+	right:20px;
+}
+.themeSelector .selected a{
+	text-decoration: underline;
+}
