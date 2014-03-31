@@ -143,7 +143,7 @@ html{
 	text-align: center;
     height: 78%;
 }
-.pictureDetails .body .zoom p{
+.pictureDetails .body #zoom p{
     margin-top: 10px;
 }
 .pictureDetails .body #edit{
