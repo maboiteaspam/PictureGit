@@ -98,7 +98,7 @@ $routes["`^/trash_file/(.+)`i"] = function($path) use($picture_dir){
 };
 $routes["`^/read_logs/(.+)`i"] = function($f_path) use($picture_dir){
 };
-$routes["`^/list_bootstrap_themes/`i"] = function() use($assets_dir,$www_dir){
+$routes["`^/list_bootstrap_themes`i"] = function() use($assets_dir,$www_dir){
 	$retour = read_directory($assets_dir."/themes/");
 	$retour = filter_pattern("`[^.]+[.]bootstrap[.]min[.]css$`", $retour);
 	$retour = relative_to("/assets/themes/", $retour);
