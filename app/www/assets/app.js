@@ -412,7 +412,11 @@
             var fetchThemes = function(){
                 return getJson("/list_bootstrap_themes/");
             };
+            var fetchConfig = function(){
+                return getJson("/config");
+            };
             return {
+                fetchConfig: fetchConfig,
                 fetchDirectories: fetchDirectories,
                 fetchPictures: fetchPictures,
                 trashFile: trashFile,
@@ -474,6 +478,8 @@
         }
     })();
 
+
+    // instance declaration starts here
     var localStorage = localStorageFactory("");
     var api = ajaxApiFactory("");
     var topView = topFactory( $(".top") );
@@ -530,7 +536,7 @@
             path = path.join("/");
 
             path = path=="/"?"":path;
-            path = path==""?"pictures_repo/":"pictures_repo/"+path+"/";
+            path = path==""?"/":"/"+path+"/";
         }else{
             path = item.path;
         }
@@ -539,9 +545,6 @@
         ev.preventDefault();
         return false;
     });
-
-    directoryBrowser.model.browseTo("pictures_repo/");
-    topView.model.appTitle("App title");
 
     pictureDetails.onCloseClicked(function(){
         pictureDetails.el.hide();
@@ -647,6 +650,13 @@
         });
     });
 
+
+
+
+
+    // app starts here
+    directoryBrowser.model.browseTo("/");
+    topView.model.appTitle("App title");
     var css_el = $("#bootstrap");
     themeSelector.el.addClass("loading");
     themeSelector.onItemClicked(function(item){
@@ -675,6 +685,11 @@
                 });
                 $("html").css("overflow","auto");
             },1000);
+        });
+
+    api.fetchConfig()
+        .done(function(data){
+            topView.model.appTitle(data.app_title)
         });
 
 })();
