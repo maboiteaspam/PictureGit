@@ -5,10 +5,24 @@ $picture_dir = getcwd()."/";
 $app_dir = __DIR__."/";
 $www_dir = __DIR__."/www/";
 $assets_dir = __DIR__."/www/assets/";
-$config = [];
+
 $config_path = false;
+$config = [
+    "app_title"=>"My Super great app to manage pictures !",
+    "pictures_path"=>"pictures_repo/",
+    "git"=>[
+        "enable"=>false,
+        "auto_push"=>false,
+        "remote"=>"name branch?",
+    ],
+    "template_message"=>[
+        "update"=>"File updated by :user_name:\n\nReason is ",
+        "trash"=>"File deleted by :user_name:\n\nReason is "
+    ],
+];
 
 require_once($app_dir."lib.php");
+require_once($app_dir."lib-git.php");
 
 $config_path = getenv("PICUREGITCONFIG");
 if( $config_path !== false ){
@@ -31,6 +45,19 @@ if( $config_path !== false ){
             throw new \Exception("Application cannot start, pictures directory '$config->pictures_path' is not readable.");
         }
         $picture_dir = realpath($config->pictures_path);
+    }
+
+    if( isset($config->git) ){
+        if( isset($config->git->enable) && !$config->git->enable ){
+            $config->git = false;
+        }else{
+            if( is_a_gitified_directory($config->pictures_path) === false ){
+                $config->git = false;
+            }
+        }
+
+    }else{
+        $config->git = false;
     }
 }
 
@@ -81,7 +108,7 @@ $routes["`^/config$`"] = function() use($config){
     return respond_json($config);
 };
 $routes["catch_all"] = function($path) use($www_dir){
-	if( file_exists($www_dir.$path) ){
+	if( is_file($www_dir.$path) ){
 		return respond_file($www_dir.$path);
 	}
 	return false;
