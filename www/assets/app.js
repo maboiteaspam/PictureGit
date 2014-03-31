@@ -49,7 +49,8 @@
                         return false;
                     }
                 });
-                $(items).each(function(k,item){
+                for(var n in items ){
+                    var item = items[n];
                     model.items.push({
                         path:item,
                         name:get_file_name(item),
@@ -61,7 +62,7 @@
                             return false;
                         }
                     });
-                });
+                }
             };
             var fillEmpty = function(){
                 return fillWith([]);
@@ -94,7 +95,8 @@
 
             var fillWith = function(items){
                 model.items.removeAll();
-                $(items).each(function(k,item){
+                for(var n in items ){
+                    var item = items[n];
                     model.items.push({
                         path:item,
                         name:get_file_name(item),
@@ -106,7 +108,7 @@
                             return "/read_file/"+this.path;
                         }
                     });
-                });
+                }
             };
             var fillEmpty = function(){
                 return fillWith([]);
@@ -140,7 +142,8 @@
 
             var fillWith = function(items){
                 model.items.removeAll();
-                $(items).each(function(k,item){
+                for(var n in items ){
+                    var item = items[n];
                     model.items.push({
                         path:item,
                         name:item.match(/[/]([^/.]+)[.]bootstrap[.]min[.]css$/)[1],
@@ -152,7 +155,7 @@
                             return false;
                         }
                     });
-                });
+                }
             };
             var fillEmpty = function(){
                 return fillWith([]);
