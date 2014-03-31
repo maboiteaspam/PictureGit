@@ -644,17 +644,18 @@
         });
     });
 
+    var css_el = $("#bootstrap");
     themeSelector.el.addClass("loading");
     themeSelector.onItemClicked(function(item){
         themeSelector.model.current( item.path );
-        $("#bootstrap").attr("href", item.path );
+        css_el.attr("href", item.path );
         localStorage.setValue("preferred_theme", item.path );
     });
     var preferred = localStorage.getValue("preferred_theme");
     if( preferred ) {
-        $("#bootstrap").attr("href", preferred );
+        css_el.attr("href", preferred );
     }
-    themeSelector.model.current( $("#bootstrap").attr("href") );
+    themeSelector.model.current( css_el.attr("href") );
     api.fetchThemes()
         .done(function(data){
             themeSelector.fillWith(data);
