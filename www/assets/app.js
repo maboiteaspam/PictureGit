@@ -94,7 +94,7 @@
 
             var fillWith = function(items){
                 model.items.removeAll();
-                $(items).ease(function(k,item){
+                $(items).each(function(k,item){
                     model.items.push({
                         path:item,
                         name:get_file_name(item),
