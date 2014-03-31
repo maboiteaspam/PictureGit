@@ -23,6 +23,7 @@ function respond_file($path){
     }else{
         header('Content-type: '.mime_content_type($path));
     }
+    if( !is_file($path) || !is_readable($path) ) return "";
     return file_get_contents($path);
 }
 
@@ -76,4 +77,38 @@ function relative_to($path, $items){
         }
     }
     return $items;
+}
+
+/**
+ * thanks to @ http://www.php.net/manual/en/function.shell-exec.php#67183
+ *
+ * @param $cmd
+ * @param $stdout
+ * @param $stderr
+ * @param $stdin
+ * @return int
+ */
+function cmd_exec($cmd, &$stdout, &$stderr, $stdin="")
+{
+    $outfile = tempnam(".", "cmd");
+    $errfile = tempnam(".", "cmd");
+    $descriptorspec = array(
+        0 => array("pipe", "r"),
+        1 => array("file", $outfile, "w"),
+        2 => array("file", $errfile, "w")
+    );
+    $proc = proc_open($cmd, $descriptorspec, $pipes);
+
+    if (!is_resource($proc)) return 255;
+
+    fwrite($pipes[0],$stdin);
+    fclose($pipes[0]);    //Don't really want to give any input
+
+    $exit = proc_close($proc);
+    $stdout = file($outfile);
+    $stderr = file($errfile);
+
+    unlink($outfile);
+    unlink($errfile);
+    return $exit;
 }
