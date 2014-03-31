@@ -410,7 +410,7 @@
                 return getJson("/trash_file/"+path);
             };
             var fetchThemes = function(){
-                return getJson("/list_bootstrap_themes/");
+                return getJson("/list_bootstrap_themes");
             };
             var fetchConfig = function(){
                 return getJson("/config");
@@ -536,7 +536,7 @@
             path = path.join("/");
 
             path = path=="/"?"":path;
-            path = path==""?"/":"/"+path+"/";
+            path = path==""?"":"/"+path+"/";
         }else{
             path = item.path;
         }
