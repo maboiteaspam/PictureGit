@@ -24,6 +24,8 @@ $config = [
 require_once($app_dir."lib.php");
 require_once($app_dir."lib-git.php");
 
+/** @var \VersionSystem\Base $VS */
+$VS = new \VersionSystem\TrueStub("");
 $config_path = getenv("PICUREGITCONFIG");
 if( $config_path !== false ){
     $config_path = $cwd.getenv("PICUREGITCONFIG");
@@ -48,18 +50,22 @@ if( $config_path !== false ){
     }
 
     if( isset($config->git) ){
-        if( isset($config->git->enable) && !$config->git->enable ){
-            $config->git = false;
-        }else{
-            if( is_a_gitified_directory($config->pictures_path) === false ){
-                $config->git = false;
-            }
+        if( !(isset($config->git->enable) && !$config->git->enable) ){
+            $VS = new \VersionSystem\Git($config->pictures_path, $config->git);
         }
-
-    }else{
-        $config->git = false;
+    }else if( isset($config->git_annex) ){
+        if( !(isset($config->git_annex->enable) && !$config->git_annex->enable) ){
+            $VS = new \VersionSystem\Git($config->pictures_path, $config->git_annex);
+        }
     }
+
 }
+
+if( $VS->isRootReady() === false ){
+    $VS = new \VersionSystem\TrueStub("");
+}
+
+
 
 $routes = array();
 $routes["`^/list_directory/(.*)`i"] = function($path) use($picture_dir){
@@ -92,9 +98,11 @@ $routes["`^/edit_file/(.+)`i"] = function($path) use($picture_dir){
     var_dump($_FILES);
     var_dump($path);
 };
-$routes["`^/trash_file/(.+)`i"] = function($path) use($picture_dir){
+$routes["`^/trash_file/(.+)`i"] = function($path) use($picture_dir, $VS){
     $path = urldecode( $path );
-    return respond_json( trash_file($picture_dir.$path) );
+    $trashed = trash_file($picture_dir.$path);
+    $trashed = $trashed && $VS->remove($picture_dir.$path);
+    return respond_json( $trashed );
 };
 $routes["`^/read_logs/(.+)`i"] = function($f_path) use($picture_dir){
 };
