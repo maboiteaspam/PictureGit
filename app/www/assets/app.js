@@ -232,7 +232,8 @@
 
                 pictureSelector.width(iw*r);
                 pictureSelector.height(ih*r);
-                pictureSelector.css( "margin-top", (bh-(ih*r)) /2 );
+                pictureSelector
+                    .css( "margin-top", (bh-(ih*r)) /2 )
             };
 
             var hide = function(){
@@ -258,8 +259,7 @@
                 var bodySelector = el.find("#zoom");
                 bodySelector.css("visibility","hidden");
                 pictureSelector
-                    .off("load")
-                    .on("load",function(){
+                    .one("load",function(){
                         setTimeout(function(){
                             bodySelector.css("opacity",0);
                             resizePicture();
@@ -311,24 +311,29 @@
             var disableLogsTab = function(){};
 
             el.find("a[href='#zoom']").on("click",function(){
-                disableEditTab();
-                disableLogsTab();
-                enableZoomTab();
+                if( $(this).parent().hasClass("active") == false ){
+                    disableEditTab();
+                    disableLogsTab();
+                    enableZoomTab();
+                }
             });
 
             el.find("a[href='#edit']").on("click",function(){
-                disableLogsTab();
-                disableZoomTab();
-                enableEditTab();
+                if( $(this).parent().hasClass("active") == false ){
+                    disableLogsTab();
+                    disableZoomTab();
+                    enableEditTab();
+                }
             });
 
             el.find("a[href='#logs']").on("click",function(){
-                disableEditTab();
-                disableZoomTab();
-                enableLogsTab();
+                if( $(this).parent().hasClass("active") == false ){
+                    disableEditTab();
+                    disableZoomTab();
+                    enableLogsTab();
+                }
             });
 
-            var hideZoomTimeout;
             return {
                 model:model,
                 el:el,
@@ -344,21 +349,8 @@
                 resizePicture: resizePicture,
                 show: show,
                 hide:hide,
-                showZoom:function(){
-                    el.find("a[href='#zoom']").trigger("click");
-                },
-                hideZoom:function(then){
-                    el.find("#zoom").css("opacity",0);
-                    clearTimeout(hideZoomTimeout);
-                    hideZoomTimeout = setTimeout(function(){
-                        if( then ) then();
-                    },250);
-                },
-                showEdit:function(){
-                    el.find("a[href='#edit']").trigger("click");
-                },
-                showLogs:function(){
-                    el.find("a[href='#logs']").trigger("click");
+                showTab:function(id){
+                    el.find("a[href='#"+id+"']").trigger("click");
                 }
             };
         }
@@ -397,7 +389,7 @@
             var getJson = function(url,data){
                 return $.ajax({
                     "url":base_url+url,
-                    "data":data,
+                    "data":data
                 });
             };
             var fetchDirectories = function(path){
@@ -480,7 +472,7 @@
 
 
     // instance declaration starts here
-    var localStorage = localStorageFactory("");
+    var localStorage = localStorageFactory();
     var api = ajaxApiFactory("");
     var topView = topFactory( $(".top") );
     var directoryBrowser = directoryBrowserFactory( $(".directoryBrowser") );
@@ -598,21 +590,21 @@
         pictureOverlay.onLogs(function(){
             $(".pictureOverlay").trigger("mouseleave");
             pictureDetails.model.path(item.path);
-            pictureDetails.showLogs();
+            pictureDetails.showTab("logs");
             return false;
         });
         pictureOverlay.onEdit(function(){
             $(".pictureOverlay").trigger("mouseleave");
             pictureDetails.model.path(item.path);
             pictureDetails.show();
-            pictureDetails.showEdit();
+            pictureDetails.showTab("edit");
             return false;
         });
         pictureOverlay.onZoom(function(){
             $(".pictureOverlay").trigger("mouseleave");
             pictureDetails.model.path(item.path);
             pictureDetails.show();
-            pictureDetails.showZoom();
+            pictureDetails.showTab("zoom");
             return false;
         });
 
@@ -626,11 +618,11 @@
             if( cur_index < l ){
                 item = pictureBrowser.model.items()[ cur_index ];
             }
-
-            pictureDetails.hideZoom(function(){
+            pictureDetails.el.find(".tab-pane").transition({opacity:0,complete:function(){
                 pictureDetails.model.path(item.path);
-                pictureDetails.showZoom();
-            });
+                pictureDetails.el.find(".tab-pane").transition({opacity:1},150);
+            }},100);
+            return false;
         });
         pictureDetails.onPrev(function(){
             var l = pictureBrowser.model.items().length;
@@ -642,11 +634,11 @@
             if( cur_index < l ){
                 item = pictureBrowser.model.items()[ cur_index ];
             }
-
-            pictureDetails.hideZoom(function(){
+            pictureDetails.el.find(".tab-pane").transition({opacity:0,complete:function(){
                 pictureDetails.model.path(item.path);
-                pictureDetails.showZoom();
-            });
+                pictureDetails.el.find(".tab-pane").transition({opacity:1},150);
+            }},100);
+            return false;
         });
     });
 
