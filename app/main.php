@@ -98,8 +98,12 @@ $routes["`^/list_bootstrap_themes`i"] = function() use($assets_dir,$www_dir){
     $retour = relative_to("/assets/themes/", $retour);
     return respond_json($retour);
 };
-$routes["`^/config$`"] = function() use($config){
-    return respond_json($config);
+$routes["`^/config$`"] = function() use($config,$VS){
+    return respond_json([
+        "app_title"=>$config->app_title,
+        "vcs_ready"=>get_class($VS)!=="\\VersionSystem\\TrueStub",
+        "template_message"=>$config->template_message,
+    ]);
 };
 $routes["catch_all"] = function($path) use($www_dir){
     if( is_file($www_dir.$path) ){
