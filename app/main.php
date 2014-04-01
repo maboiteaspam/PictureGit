@@ -38,11 +38,11 @@ if( $config_path !== false ){
 
     if( isset($config->git) ){
         if( !(isset($config->git->enable) && !$config->git->enable) ){
-            $VS = new \VersionSystem\Git($config->pictures_path, $config->git);
+            $VS = new \VersionSystem\Git($picture_dir, $config->git);
         }
     }else if( isset($config->git_annex) ){
         if( !(isset($config->git_annex->enable) && !$config->git_annex->enable) ){
-            $VS = new \VersionSystem\Git($config->pictures_path, $config->git_annex);
+            $VS = new \VersionSystem\Git($picture_dir, $config->git_annex);
         }
     }
 
