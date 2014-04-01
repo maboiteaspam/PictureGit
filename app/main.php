@@ -30,23 +30,10 @@ $config_path = getenv("PICUREGITCONFIG");
 if( $config_path !== false ){
     $config_path = $cwd.getenv("PICUREGITCONFIG");
 
-    if( is_file($config_path) === false ){
-        throw new \Exception("Application cannot start, config.json is missing in '$config_path'.");
-    }else if( is_readable($config_path) === false ){
-        throw new \Exception("Application cannot start, '$config_path' is not readable.");
-    }
-    $config = load_json_file($config_path);
-    if( $config === false ){
-        throw new \Exception("Application cannot start, '$config_path' is poorly JSON compatible.");
-    }
+    $config = load_config_or_die($config_path);
 
     if( isset($config->pictures_path) ){
-        if( is_dir($config->pictures_path) === false ){
-            throw new \Exception("Application cannot start, pictures directory '$config->pictures_path' is missing.");
-        }else if( is_readable($config->pictures_path) === false ){
-            throw new \Exception("Application cannot start, pictures directory '$config->pictures_path' is not readable.");
-        }
-        $picture_dir = realpath($config->pictures_path);
+        $picture_dir = get_picture_path_or_die($config);
     }
 
     if( isset($config->git) ){
