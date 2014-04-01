@@ -66,36 +66,36 @@ class Git extends Base {
         return $ret;
     }
     public function isRootReady(){
-        return $this->cmd_exec("git status");
+        return $this->cmd_exec("git status")===0;
     }
     public function commit($path,$message,$options=array()){
         $path = realpath($path);
-        return $this->cmd_exec("git commit -F - $path",$message);
+        return $this->cmd_exec("git commit -F - $path",$message)===0;
     }
     public function push($options=array()){
         $remote = isset($options["remote"])?$options["remote"]:"";
-        return $this->cmd_exec("git push $remote");
+        return $this->cmd_exec("git push $remote")===0;
     }
     public function remove($path,$options=array()){
         $path = realpath($path);
-        return $this->cmd_exec("git rm $path");
+        return $this->cmd_exec("git rm $path")===0;
     }
 }
 
 class GitAnnex extends Git {
     public function isRootReady(){
-        return $this->cmd_exec("git annex status");
+        return $this->cmd_exec("git annex status")===0;
     }
     public function commit($path,$message,$options=array()){
         $path = realpath($path);
-        return $this->cmd_exec("git annex commit -F - $path",$message);
+        return $this->cmd_exec("git annex commit -F - $path",$message)===0;
     }
     public function push($options=array()){
         $remote = isset($options["remote"])?$options["remote"]:"";
-        return $this->cmd_exec("git annex push $remote");
+        return $this->cmd_exec("git annex push $remote")===0;
     }
     public function remove($path,$options=array()){
         $path = realpath($path);
-        return $this->cmd_exec("git annex rm $path");
+        return $this->cmd_exec("git annex rm $path")===0;
     }
 }

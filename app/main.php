@@ -47,7 +47,7 @@ if( $config_path !== false ){
     }
 }
 
-if( $VS->isRootReady() === false ){
+if( ! $VS->isRootReady() ){
     $VS = new \VersionSystem\TrueStub("");
 }
 
