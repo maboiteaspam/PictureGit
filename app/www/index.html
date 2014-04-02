@@ -2,7 +2,7 @@
 <head>
     <style type="text/css">
         html{
-            overflow: hidden;
+            overflow-y: visible;
             margin:0;
             padding:0;
         }
@@ -14,6 +14,12 @@
             left: 0;
             text-align: center;
             z-index: 20;
+            background-color: #ffffff;
+
+            -webkit-transition: all 250ms ease-in 0s;
+            -moz-transition: all 250ms ease-in 0s;
+            -o-transition: all 250ms ease-in 0s;
+            transition: all 250ms ease-in 0s;
         }
         .app-loader .loading{
             position: absolute;
@@ -26,6 +32,7 @@
     </style>
     <link href='assets/vendors/reset.css' rel='stylesheet' type='text/css'>
     <link href='assets/vendors/css/ionicons.min.css' rel='stylesheet' type='text/css'>
+    <link href='#' rel='stylesheet' type='text/css' id="bootstrap" />
     <link href='assets/index.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -33,7 +40,7 @@
 
 <div class="app-loader bg-primary">
     <div class="loading">
-        loading...
+        <span class="status">loading...</span>
         <br/><br/>
         <i class="ion-ios7-reloading"></i>
     </div>
@@ -148,12 +155,12 @@
 
 
 
-<link href='assets/themes/slate.bootstrap.min.css' rel='stylesheet' type='text/css' id="bootstrap" />
 <script type="text/javascript" src="assets/vendors/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="assets/vendors/jquery.easing.min.js"></script>
 <script type="text/javascript" src="assets/vendors/jquery.transit.min.js"></script>
 <script type="text/javascript" src="assets/vendors/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/vendors/knockout-3.1.0.js"></script>
-<script data-main="assets/app" src="assets/require-2.1.11.js"></script>
+<script data-main="assets/main" src="assets/require-2.1.11.js"></script>
 
 </body>
 </html>

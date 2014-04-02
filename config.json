@@ -1,5 +1,5 @@
 {
-    "app_title":"My Super great app to manage pictures !",
+    "app_title":"Manage pictures on top of git !",
     "pictures_path":"../pictures_repo/",
     "git":{
         "enable":true,
