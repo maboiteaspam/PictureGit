@@ -1,113 +1,114 @@
 <html>
 <head>
- <link href='assets/vendors/reset.css' rel='stylesheet' type='text/css'>
- <link href='assets/themes/slate.bootstrap.min.css' rel='stylesheet' type='text/css' id="bootstrap" />
+    <link href='assets/vendors/reset.css' rel='stylesheet' type='text/css'>
+    <link href='assets/themes/slate.bootstrap.min.css' rel='stylesheet' type='text/css' id="bootstrap" />
     <link href='assets/vendors/css/ionicons.min.css' rel='stylesheet' type='text/css'>
- <link href='assets/index.css' rel='stylesheet' type='text/css'>
+    <link href='assets/index.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
+
 <div class="top">
-	<h1 data-bind="text: appTitle"></h1>
-	<h2 data-bind="text: 'Browsing '+currentPath() "></h2>
+    <h1 data-bind="text: appTitle"></h1>
+    <h2 data-bind="text: 'Browsing '+currentPath() "></h2>
 </div>
 
 
 <div class="bs-component directoryBrowser">
-  <ul data-bind="foreach: items" class="nav nav-pills nav-stacked">
-    <li><a href="#" data-bind="text: name, click: onClick"></a></li>
-  </ul>
+    <ul data-bind="foreach: items" class="nav nav-pills nav-stacked">
+        <li><a href="#" data-bind="text: name, click: onClick"></a></li>
+    </ul>
 </div>
 
 <div class="picturesBrowser bs-component">
-  <ul data-bind="foreach: items">
-      <li>
-          <div class="tooltip top">
-              <div class="tooltip-arrow"></div>
-              <div class="tooltip-inner" data-bind="text: name">Tooltip on top</div>
-          </div>
-          <a href="#">
-              <img data-bind="attr:{src: srcPath() }" src="" class="img-thumbnail" />
-          </a>
-          <br/>
-          <div>
-              <span class="name" data-bind="text: name"></span>
-              <span class="etc">...</span>
-          </div>
-      </li>
-  </ul>
+    <ul data-bind="foreach: items">
+        <li>
+            <div class="tooltip top">
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-inner" data-bind="text: name">Tooltip on top</div>
+            </div>
+            <a href="#">
+                <img data-bind="attr:{src: srcPath() }" src="" class="img-thumbnail" />
+            </a>
+            <br/>
+            <div>
+                <span class="name" data-bind="text: name"></span>
+                <span class="etc">...</span>
+            </div>
+        </li>
+    </ul>
 </div>
 
 <div class="pictureOverlay">
-	<div class="bg"></div>
-	<div class="toolbar">
-		<a href="#" data-bind="click: onEdit" class="label label-info logs">Logs</a>
-		<a href="#" data-bind="click: onEdit" class="label label-info edit">Edit</a>
-		<a href="#" data-bind="click: onZoom" class="label label-info zoom">Zoom</a>
-		<a href="#" data-bind="click: onTrash" class="label label-danger trash">Trash</a>
-	</div>
+    <div class="bg"></div>
+    <div class="toolbar">
+        <a href="#" data-bind="click: onEdit" class="label label-info logs">Logs</a>
+        <a href="#" data-bind="click: onEdit" class="label label-info edit">Edit</a>
+        <a href="#" data-bind="click: onZoom" class="label label-info zoom">Zoom</a>
+        <a href="#" data-bind="click: onTrash" class="label label-danger trash">Trash</a>
+    </div>
 </div>
 
 <div class="themeSelector btn-group">
-	<button type="button"
+    <button type="button"
             class="btn btn-default"
             data-toggle="dropdown">Themes <span class="caret"></span></button>
-  <ul data-bind="foreach: items" class="dropdown-menu pull-right">
-    <li data-bind="css:{selected:selected()}">
-			<a href="#" data-bind="text: name, click: onClick"></a>
-		</li>
-  </ul>
+    <ul data-bind="foreach: items" class="dropdown-menu pull-right">
+        <li data-bind="css:{selected:selected()}">
+            <a href="#" data-bind="text: name, click: onClick"></a>
+        </li>
+    </ul>
 </div>
 
 <div class="pictureDetails modal-content">
-  <div class="header">
-      <h3 class="modal-title" data-bind="text:fileName">Modal title</h3>
-    <button type="button" class="close" data-bind="click:onClose()">x</button>
-  </div>
-  <div class="body">
+    <div class="header">
+        <h3 class="modal-title" data-bind="text:fileName">Modal title</h3>
+        <button type="button" class="close" data-bind="click:onClose()">x</button>
+    </div>
+    <div class="body">
 
-      <div class="bs-component">
-          <ul class="nav nav-tabs">
-              <li class="active"><a href="#zoom" data-toggle="tab">Zoom</a></li>
-              <li><a href="#edit" data-toggle="tab">Edit</a></li>
-              <li><a href="#logs" data-toggle="tab">Logs</a></li>
-          </ul>
-          <div id="myTabContent" class="tab-content">
-              <div class="tab-pane fade active in" id="zoom">
-                  <p><img data-bind="attr:{src: srcPath }" src="" class="img-thumbnail zoom" /></p>
-              </div>
-              <div class="tab-pane fade" id="edit">
-                  <div>
-                      <img data-bind="attr:{src: srcPath }" src="" class="img-thumbnail edit_img" />
-                      <iframe class="hide" id="post_picture"></iframe>
-                      <form class="form-horizontal"
-                            method="POST"
-                            enctype="multipart/form-data"
-                            data-bind="attr:{action: editPath }"
-                            target="post_picture">
-                          <div class="form-group">
-                              <label for="inputFile" class="control-label">File</label>
-                              <input type="file" name="content" class="form-control" id="inputFile"  />
-                          </div>
-                          <div class="form-group">
-                              <label for="inputMessage" class="control-label">Message</label>
-                              <textarea name="message" class="form-control" id="inputMessage"></textarea>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                      </form>
-                  </div>
-              </div>
-              <div class="tab-pane fade" id="logs">
-                  <p>logs</p>
-              </div>
-          </div>
-      </div>
+        <div class="bs-component">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#zoom" data-toggle="tab">Zoom</a></li>
+                <li><a href="#edit" data-toggle="tab">Edit</a></li>
+                <li><a href="#logs" data-toggle="tab">Logs</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="zoom">
+                    <p><img data-bind="attr:{src: srcPath }" src="" class="img-thumbnail zoom" /></p>
+                </div>
+                <div class="tab-pane fade" id="edit">
+                    <div>
+                        <img data-bind="attr:{src: srcPath }" src="" class="img-thumbnail edit_img" />
+                        <iframe class="hide" id="post_picture"></iframe>
+                        <form class="form-horizontal"
+                              method="POST"
+                              enctype="multipart/form-data"
+                              data-bind="attr:{action: editPath }"
+                              target="post_picture">
+                            <div class="form-group">
+                                <label for="inputFile" class="control-label">File</label>
+                                <input type="file" name="content" class="form-control" id="inputFile"  />
+                            </div>
+                            <div class="form-group">
+                                <label for="inputMessage" class="control-label">Message</label>
+                                <textarea name="message" class="form-control" id="inputMessage"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="logs">
+                    <p>logs</p>
+                </div>
+            </div>
+        </div>
 
-  </div>
-  <div class="footer">
-      <button type="button" class="btn btn-default" data-bind="click:onPrev()">Previous</button>
-      <button type="button" class="btn btn-default" data-bind="click:onNext()">Next</button>
-      <button type="button" class="btn btn-default" data-bind="click:onClose()">Close</button>
-  </div>
+    </div>
+    <div class="footer">
+        <button type="button" class="btn btn-default" data-bind="click:onPrev()">Previous</button>
+        <button type="button" class="btn btn-default" data-bind="click:onNext()">Next</button>
+        <button type="button" class="btn btn-default" data-bind="click:onClose()">Close</button>
+    </div>
 </div>
 
 <div class="app-loader bg-primary">
