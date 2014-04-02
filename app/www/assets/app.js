@@ -673,7 +673,7 @@
             themeSelector.el.removeClass("loading");
             setTimeout(function(){
                 $(".app-loader").transition({opacity:0},function(){
-                    $(".app-loader").remove();
+                    $(".app-loader").css("display","none");
                 });
                 $("html").css("overflow","auto");
             },1000);
