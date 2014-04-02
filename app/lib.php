@@ -38,6 +38,7 @@ function respond_json($data){
 }
 
 function respond_file($path){
+    if( !is_file($path) || !is_readable($path) ) return "";
     if( preg_match("/[.]css$/i",$path)>0){
         header('Content-type: text/css');
     }else if( preg_match("/[.]js$/i",$path)>0){
@@ -45,7 +46,6 @@ function respond_file($path){
     }else{
         header('Content-type: '.mime_content_type($path));
     }
-    if( !is_file($path) || !is_readable($path) ) return "";
     return file_get_contents($path);
 }
 
