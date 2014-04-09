@@ -70,11 +70,6 @@
             <a href="#">
                 <img data-bind="attr:{src: srcPath() }" src="" class="img-thumbnail" />
             </a>
-            <br/>
-            <div>
-                <span class="name" data-bind="text: name"></span>
-                <span class="etc">...</span>
-            </div>
         </li>
     </ul>
 </div>
@@ -109,12 +104,12 @@
 
         <div class="bs-component">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#zoom" data-toggle="tab">Zoom</a></li>
+                <li><a href="#zoom" data-toggle="tab">Zoom</a></li>
                 <li><a href="#edit" data-toggle="tab">Edit</a></li>
                 <li><a href="#logs" data-toggle="tab">Logs</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade active in" id="zoom">
+                <div class="tab-pane fade" id="zoom">
                     <p><img data-bind="attr:{src: srcPath }" src="" class="img-thumbnail zoom" /></p>
                 </div>
                 <div class="tab-pane fade" id="edit">
