@@ -89,11 +89,13 @@
         path.pop();
         path = path.join("/");
 
-        path = path=="/"?"":path;
-        path = path==""?"":"/"+path+"/";
       }else{
         path = item.path;
       }
+
+      path = path.replace("//","/");
+      path = path=="/"?"":path;
+
       directoryBrowser.model.browseTo(path);
 
       ev.preventDefault();
