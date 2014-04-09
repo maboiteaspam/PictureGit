@@ -153,6 +153,7 @@
       pictureOverlay.onLogs(function(){
         $(".pictureOverlay").trigger("mouseleave");
         pictureDetails.model.path(item.path);
+        pictureDetails.show();
         pictureDetails.showTab("logs");
         return false;
       });
@@ -183,6 +184,7 @@
           pictureDetails.el.find(".tab-pane").transition({opacity:0,complete:function(){
             pictureDetails.model.path(item.path);
             pictureDetails.el.find(".tab-pane").transition({opacity:1},150);
+            pictureDetails.resizePicture();
           }},100);
         }
         return false;
@@ -199,6 +201,7 @@
           pictureDetails.el.find(".tab-pane").transition({opacity:0,complete:function(){
             pictureDetails.model.path(item.path);
             pictureDetails.el.find(".tab-pane").transition({opacity:1},150);
+            pictureDetails.resizePicture();
           }},100);
         }
         return false;
