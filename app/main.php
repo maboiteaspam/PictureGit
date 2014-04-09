@@ -54,43 +54,43 @@ if( ! $VS->isRootReady() ){
 
 
 $routes = array();
-$routes["`^/list_directory/(.*)`i"] = function($path) use($picture_dir){
+$routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir){
     $path = urldecode( $path );
     $retour = read_directory($picture_dir.$path);
     $retour = relative_to($path, $retour);
     return respond_json($retour);
 };
-$routes["`^/list_directories/(.*)`i"] = function($path) use($picture_dir){
+$routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
     $path = urldecode( $path );
     $retour = read_directory($picture_dir.$path);
     $retour = filter_dirs($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
     return respond_json($retour);
 };
-$routes["`^/list_files/(.*)`i"] = function($path) use($picture_dir){
+$routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
     $path = urldecode( $path );
     $retour = read_directory($picture_dir.$path);
     $retour = filter_files($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
     return respond_json($retour);
 };
-$routes["`^/read_file/(.+)`i"] = function($path) use($picture_dir){
+$routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
     $path = urldecode( $path );
     return respond_file($picture_dir.$path);
 };
-$routes["`^/read_file/([^@]+)@(.+)`i"] = function($f_path, $version) use($picture_dir){
+$routes["`^/read_file(/[^@]+)@(.+)`i"] = function($f_path, $version) use($picture_dir){
 };
-$routes["`^/edit_file/(.+)`i"] = function($path) use($picture_dir){
+$routes["`^/edit_file(/.+)`i"] = function($path) use($picture_dir){
     var_dump($_FILES);
     var_dump($path);
 };
-$routes["`^/trash_file/(.+)`i"] = function($path) use($picture_dir, $VS){
+$routes["`^/trash_file(/.+)`i"] = function($path) use($picture_dir, $VS){
     $path = urldecode( $path );
     $trashed = trash_file($picture_dir.$path);
     $trashed = $trashed && $VS->remove($picture_dir.$path);
     return respond_json( $trashed );
 };
-$routes["`^/read_logs/(.+)`i"] = function($f_path) use($picture_dir){
+$routes["`^/read_logs(/.+)`i"] = function($f_path) use($picture_dir){
 };
 $routes["`^/list_bootstrap_themes`i"] = function() use($assets_dir,$www_dir){
     $retour = read_directory($assets_dir."/themes/");
@@ -104,6 +104,15 @@ $routes["`^/config$`"] = function() use($config,$VS){
         "vcs_ready"=>get_class($VS)!=="\\VersionSystem\\TrueStub",
         "template_message"=>$config->template_message,
     ]);
+};
+$routes["`^/$`"] = function() use($www_dir){
+    if( is_file("$www_dir/index.html") ){
+        return respond_file("$www_dir/index.html");
+    }
+    if( is_file("$www_dir/index.htm") ){
+        return respond_file("$www_dir/index.htm");
+    }
+    return false;
 };
 $routes["catch_all"] = function($path) use($www_dir){
     if( is_file($www_dir.$path) ){
