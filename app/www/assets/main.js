@@ -41,7 +41,6 @@
     var directoryBrowser = directoryBrowserFactory( $(".directoryBrowser") );
     var pictureBrowser = pictureBrowserFactory( $(".picturesBrowser") );
     var themeSelector = themeSelectorFactory( $(".themeSelector") );
-    var pictureDetails = pictureDetailsFactory( $(".pictureDetails") );
     var pictureOverlay = pictureOverlayFactory( $(".pictureOverlay") );
 
     directoryBrowser.model.browseTo.subscribe(function(newValue) {
@@ -101,8 +100,9 @@
       return false;
     });
 
+    var pictureDetails = pictureDetailsFactory( $(".pictureDetails") );
     pictureDetails.onCloseClicked(function(){
-      pictureDetails.el.hide();
+      pictureDetails.hide();
     });
 
     pictureBrowser.el.on( "click", "div > a ", function(ev) {
@@ -180,11 +180,11 @@
         }
         if( cur_index < l ){
           item = pictureBrowser.model.items()[ cur_index ];
+          pictureDetails.el.find(".tab-pane").transition({opacity:0,complete:function(){
+            pictureDetails.model.path(item.path);
+            pictureDetails.el.find(".tab-pane").transition({opacity:1},150);
+          }},100);
         }
-        pictureDetails.el.find(".tab-pane").transition({opacity:0,complete:function(){
-          pictureDetails.model.path(item.path);
-          pictureDetails.el.find(".tab-pane").transition({opacity:1},150);
-        }},100);
         return false;
       });
       pictureDetails.onPrev(function(){
@@ -196,11 +196,11 @@
         }
         if( cur_index < l ){
           item = pictureBrowser.model.items()[ cur_index ];
+          pictureDetails.el.find(".tab-pane").transition({opacity:0,complete:function(){
+            pictureDetails.model.path(item.path);
+            pictureDetails.el.find(".tab-pane").transition({opacity:1},150);
+          }},100);
         }
-        pictureDetails.el.find(".tab-pane").transition({opacity:0,complete:function(){
-          pictureDetails.model.path(item.path);
-          pictureDetails.el.find(".tab-pane").transition({opacity:1},150);
-        }},100);
         return false;
       });
     });
@@ -223,6 +223,8 @@
       css_el.attr("href", preferred );
     }
     themeSelector.model.current( css_el.attr("href") );
+
+
     api.fetchThemes()
       .done(function(data){
         themeSelector.fillWith(data);
