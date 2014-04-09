@@ -24,7 +24,8 @@ define(["app/utils"],function(utils){
             return false;
           },
           srcPath:function(){
-            return "/read_file/"+this.path;
+            var p = this.path.substr(0,1)=="/"?this.path.substr(1):this.path;
+            return "/read_file/"+p;
           }
         });
       }
