@@ -111,6 +111,7 @@ function relative_to($path, $items){
         if( is_dir($items[$i]) ){
             $items[$i] = substr($items[$i],-1)=="/"?$items[$i]:$items[$i]."/";
         }
+        $items[$i] = str_replace("//","/",$items[$i]);
     }
     return $items;
 }
