@@ -28,9 +28,10 @@ define(["app/utils"],function(utils){
 
     model.path.subscribe(function(newValue){
       newValue = newValue || "";
-      newValue = newValue.substr(newValue.length-1)=="/"?newValue.substr(0,newValue.length-1):newValue;
-      model.editPath( "/edit_file"+newValue );
-      model.srcPath( "/read_file"+newValue );
+      newValue = newValue.replace("//","/");
+      newValue = newValue.substr(0,1)=="/"?newValue.substr(1):newValue;
+      model.editPath( "/edit_file/"+newValue );
+      model.srcPath( "/read_file/"+newValue );
       model.fileName( utils.get_file_name(newValue) );
     });
     ko.applyBindings(model, $(el).get(0) );
