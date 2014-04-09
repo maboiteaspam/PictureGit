@@ -35,12 +35,9 @@ define(["app/utils"],function(utils){
 
     var resizeHandle;
 
-    var resizePicture = function(pictureSelector, bodySelector){
-      pictureSelector = pictureSelector || ".body .zoom";
-      bodySelector = bodySelector || ".body";
-
-      pictureSelector = el.find(pictureSelector);
-      bodySelector = el.find(bodySelector);
+    var resizePicture = function(){
+      var pictureSelector = el.find(".body .zoom");
+      var bodySelector = el.find(".body");
 
       pictureSelector
           .css("width","auto")
