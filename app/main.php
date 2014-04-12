@@ -63,7 +63,7 @@ $routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir){
     $path = urldecode( $path );
     $retour = read_directory($picture_dir.$path);
     $retour = relative_to($path, $retour);
-    $retour = clean_paths($picture_dir.$path, $retour);
+    $retour = clean_paths($picture_dir, $retour);
     return respond_json($retour);
 };
 $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
@@ -71,7 +71,7 @@ $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
     $retour = read_directory($picture_dir.$path);
     $retour = filter_dirs($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
-    $retour = clean_paths($picture_dir.$path, $retour);
+    $retour = clean_paths($picture_dir, $retour);
     return respond_json($retour);
 };
 $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
@@ -79,7 +79,7 @@ $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
     $retour = read_directory($picture_dir.$path);
     $retour = filter_files($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
-    $retour = clean_paths($picture_dir.$path, $retour);
+    $retour = clean_paths($picture_dir, $retour);
     return respond_json($retour);
 };
 $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
