@@ -1,0 +1,177 @@
+<html>
+<head>
+    <style type="text/css">
+        html{
+            overflow-y: visible;
+            margin:0;
+            padding:0;
+        }
+        .app-loader{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            text-align: center;
+            z-index: 20;
+            background-color: #ffffff;
+
+            -webkit-transition: all 250ms ease-in 0s;
+            -moz-transition: all 250ms ease-in 0s;
+            -o-transition: all 250ms ease-in 0s;
+            transition: all 250ms ease-in 0s;
+        }
+        .app-loader .loading{
+            position: absolute;
+            width: 100%;
+            top: 25%;
+        }
+        .app-loader .ion-ios7-reloading{
+            font-size: 3em;
+        }
+    </style>
+    <link href='assets/vendors/reset.css' rel='stylesheet' type='text/css'>
+    <link href='assets/vendors/css/ionicons.min.css' rel='stylesheet' type='text/css'>
+    <link href='assets/index.css' rel='stylesheet' type='text/css'>
+    <link href='assets/transitions.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+
+<div class="main">
+
+    <div data-bind="ifnot: ready">
+        <div class="app-loader bg-primary" data-bind="css: {'t-slide-left':loaded}">
+            <div class="loading">
+                <span class="status">loading...</span>
+                <br/><br/>
+                <i class="ion-ios7-reloading"></i>
+            </div>
+        </div>
+    </div>
+
+    <div data-bind="if: ready">
+
+        <div class="navbar navbar-inverse navbar-fixed-top t-color">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand t-font" href="#">Picture Git</a>
+                </div>
+                <div class="navbar-collapse collapse pull-right">
+                    <ul class="nav navbar-nav">
+                        <li data-bind="with:navigation" class="up"><a href="#" class="t-font">../Up</a></li>
+
+                        <li class="dropdown displaySelector" data-bind="with: files">
+                            <a href="#" class="dropdown-toggle t-font"
+                               data-toggle="dropdown">Display <b class="caret"></b></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li data-mode="table" data-bind="css:{active:display()=='table'}"><a>Table</a></li>
+                                <li data-mode="thumbs" data-bind="css:{active:display()=='thumbs'}"><a>Thumbs</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown sizeSelector" data-bind="with: files, css: {disabled:files.display()!='thumbs'}">
+                            <a href="#" class="dropdown-toggle t-font"
+                               data-toggle="dropdown"
+                                    >Size <b class="caret"></b></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li data-size="size-1" data-bind="css:{active:size()=='size-1'}"><a>Size 1</a></li>
+                                <li data-size="size-2" data-bind="css:{active:size()=='size-2'}"><a>Size 2</a></li>
+                                <li data-size="size-3" data-bind="css:{active:size()=='size-3'}"><a>Size 3</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown themeSelector" data-bind="with: themes">
+                            <a href="#" class="dropdown-toggle t-color t-font"
+                               data-toggle="dropdown">Themes <b class="caret"></b></a>
+                            <ul class="dropdown-menu pull-right t-all" data-bind="foreach: items">
+                                <li data-bind="css:{active:selected}">
+                                    <a class=" t-all" href="#" data-bind="text: name"></a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="fileBrowser" data-bind="with: files">
+            <div class="display-table" data-bind="if: display()=='table'">
+                <table>
+                    <tr>
+                        <th>type</th>
+                        <th>name</th>
+                        <th>path</th>
+                    </tr>
+                    <tbody  data-bind="foreach: items">
+                        <tr>
+                            <td data-bind="text: type"></td>
+                            <td data-bind="text: name"></td>
+                            <td data-bind="text: path"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="display-thumbs" data-bind="if: display()=='thumbs', css:size()">
+                <ul data-bind="foreach: items">
+                    <li class="t-all" data-bind="css:type()">
+                        <div data-bind="if: type()=='directory'">
+                            <a href="#" data-bind="attr:{title:name}">
+                                <i class="ion-ios7-folder"></i>
+                                <span data-bind="text:name"></span>
+                            </a>
+                            <div class="actions  t-all">
+                                <a href="#" class="ion-ios7-trash t-color btn btn-primary"></a>
+                                <a href="#" class="ion-ios7-compose t-color btn btn-primary"></a>
+                            </div>
+                        </div>
+                        <div data-bind="if: type()=='file'">
+                            <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
+                            <div class="actions  t-all">
+                                <a href="#" class="ion-ios7-trash t-color btn btn-primary"></a>
+                                <a href="#" class="ion-ios7-compose t-color btn  btn-primary"></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="navbar navbar-inverse navbar-fixed-bottom t-font t-color" data-bind="with: navigation">
+            <div class="container navigation">
+                <ul class="nav navbar-nav" data-bind="foreach: breadcrumb">
+                    <li data-bind="css:{active:active}"><a href="#" class="t-font" data-bind="text: name"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="zoom t-all" data-bind="with: zoom,css:{disabled:zoom.path()==''}">
+            <div class="bg-primary">
+                <img data-bind="attr:{src:path,title:path}" />
+                <div data-bind="with: name"></div>
+                <a href="#" class="ion-ios7-close-outline t-color btn  btn-primary"></a>
+            </div>
+        </div>
+
+    </div>
+
+    <link rel='stylesheet' type='text/css' data-bind="attr:{href: theme.path}">
+    <link rel='stylesheet' type='text/css' data-bind="attr:{href: theme.path_prev}">
+
+</div>
+
+<script type="text/javascript" src="assets/vendors/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="assets/vendors/jquery.easing.min.js"></script>
+<script type="text/javascript" src="assets/vendors/jquery.transit.min.js"></script>
+<script type="text/javascript" src="assets/vendors/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="assets/vendors/jquery.ba-throttle-debounce.min.js"></script>
+<script type="text/javascript" src="assets/vendors/knockout-3.1.0.js"></script>
+<script type="text/javascript" src="assets/vendors/bootstrap.min.js"></script>
+<script data-main="assets/main" src="assets/require-2.1.11.js"></script>
+
+</body>
+</html>

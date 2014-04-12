@@ -1,0 +1,21 @@
+.t-slide-left {
+    transition: left 1s  ease-in-out;
+    left:-100%;
+}
+.t-block-size {
+    transition-property: width, height;
+    transition-duration: 1s
+}
+.t-all {
+    transition-property: all;
+    transition-duration: 0.5s
+}
+.t-color {
+    transition-property: background, color;
+    transition-duration: 0.5s;
+
+}
+.t-font {
+    transition-property: font-size, color;
+    transition-duration: 0.5s
+}
