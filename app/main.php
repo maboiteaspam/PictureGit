@@ -3,13 +3,12 @@
 $cwd = getcwd()."/";
 $picture_dir = getcwd()."/";
 $app_dir = __DIR__."/";
-$www_dir = __DIR__."/www/";
-$assets_dir = __DIR__."/www/assets/";
 
 $config_path = false;
-$config = [
+$default_config = [
     "app_title"=>"My Super great app to manage pictures !",
     "pictures_path"=>"pictures_repo/",
+    "www_path"=>"app/www/",
     "git"=>[
         "enable"=>false,
         "auto_push"=>false,
@@ -26,6 +25,7 @@ require_once($app_dir."lib-git.php");
 
 /** @var \VersionSystem\Base $VS */
 $VS = new \VersionSystem\TrueStub("");
+
 $config_path = getenv("PICUREGITCONFIG");
 if( $config_path !== false ){
     $config_path = $cwd.getenv("PICUREGITCONFIG");
@@ -45,11 +45,16 @@ if( $config_path !== false ){
             $VS = new \VersionSystem\GitAnnex($picture_dir, $config->git_annex);
         }
     }
+}else{
+    $config = json_decode(json_encode($default_config));
 }
 
 if( ! $VS->isRootReady() ){
     $VS = new \VersionSystem\TrueStub("");
 }
+
+$www_dir = $config->www_path;
+$assets_dir = $config->www_path."/assets/";
 
 
 
