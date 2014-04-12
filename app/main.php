@@ -63,6 +63,7 @@ $routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir){
     $path = urldecode( $path );
     $retour = read_directory($picture_dir.$path);
     $retour = relative_to($path, $retour);
+    $retour = clean_paths($picture_dir.$path, $retour);
     return respond_json($retour);
 };
 $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
@@ -70,6 +71,7 @@ $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
     $retour = read_directory($picture_dir.$path);
     $retour = filter_dirs($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
+    $retour = clean_paths($picture_dir.$path, $retour);
     return respond_json($retour);
 };
 $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
@@ -77,6 +79,7 @@ $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
     $retour = read_directory($picture_dir.$path);
     $retour = filter_files($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
+    $retour = clean_paths($picture_dir.$path, $retour);
     return respond_json($retour);
 };
 $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
@@ -101,6 +104,7 @@ $routes["`^/list_bootstrap_themes`i"] = function() use($assets_dir,$www_dir){
     $retour = read_directory($assets_dir."/themes/");
     $retour = filter_pattern("`[^.]+[.]bootstrap[.]min[.]css$`", $retour);
     $retour = relative_to("/assets/themes/", $retour);
+    $retour = clean_paths($assets_dir."/themes/", $retour);
     return respond_json($retour);
 };
 $routes["`^/config$`"] = function() use($config,$VS){

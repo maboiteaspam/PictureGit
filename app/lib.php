@@ -105,13 +105,18 @@ function filter_dirs($path, $items){
 }
 
 function relative_to($path, $items){
-    $path = substr($path,-1)=="/"?substr($path,0,-1):$path;
     foreach( $items as $i=>$v){
         $items[$i] = $path."/".$v;
-        if( is_dir($items[$i]) ){
-            $items[$i] = substr($items[$i],-1)=="/"?$items[$i]:$items[$i]."/";
+    }
+    return $items;
+}
+
+function clean_paths($path,$items){
+    foreach( $items as $i=>$v){
+        if( is_dir($path.$v) && substr($v,-1)!="/" ){
+            $items[$i] .= "/";
         }
-        $items[$i] = str_replace("//","/",$items[$i]);
+        $items[$i] = preg_replace("`([/]+)`i","/",$items[$i]);
     }
     return $items;
 }
