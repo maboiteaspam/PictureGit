@@ -16,6 +16,38 @@
     float: left;
 }
 
+.fileBrowser .loader{
+    display: none;
+}
+.fileBrowser .bg-primary{
+    opacity: 0;
+}
+
+.fileBrowser.loading .loader{
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    position: fixed;
+}
+
+.fileBrowser.loading .bg-primary{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+.fileBrowser.loading .ion-ios7-reloading{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 50000;
+    font-size: 7em;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+
 .fileBrowser .display-thumbs .directory:hover,
 .fileBrowser .display-thumbs .file:hover{
     transition: box-shadow 500ms;
@@ -213,6 +245,9 @@
     top: 0;
     left: 0;
     width: 100%;
+}
+.fileEdit.loading .edit .preview img{
+    opacity: 0;
 }
 
 .fileEdit .edit form{
