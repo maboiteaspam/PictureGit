@@ -58,58 +58,58 @@ if( ! $VS->isRootReady() ){
 
 $www_dir = $config->www_path;
 $assets_dir = $config->www_path."/assets/";
-$items_count = $config->display->items_count;
+$items_by_page = $config->display->items_by_page;
 
 
 $routes = array();
-$routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir,$items_count){
+$routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir,$items_by_page){
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
-    $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
+    $items_by_page = isset($_GET["items_by_page"])?intval($_GET["items_by_page"]):$items_by_page;
     $path = secure_path($picture_dir, $path );
     $items = read_directory($picture_dir.$path);
     $items = relative_to($path, $items);
     $items = clean_paths($picture_dir, $items);
     $length = count($items);
-    $items = reduce($items,$from,$by);
+    $items = reduce($items,$from,$items_by_page);
     return respond_json(array(
         "items"=>$items,
-        "length"=>$length,
+        "total_count"=>$length,
         "from"=>$from,
-        "by"=>$by,
+        "items_by_page"=>$items_by_page,
     ));
 };
-$routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir,$items_count){
+$routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir,$items_by_page){
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
-    $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
+    $items_by_page = isset($_GET["items_by_page"])?intval($_GET["items_by_page"]):$items_by_page;
     $path = secure_path($picture_dir, $path );
     $items = read_directory($picture_dir.$path);
     $items = filter_dirs($picture_dir.$path, $items);
     $items = relative_to($path, $items);
     $items = clean_paths($picture_dir, $items);
     $length = count($items);
-    $items = reduce($items,$from,$by);
+    $items = reduce($items,$from,$items_by_page);
     return respond_json(array(
         "items"=>$items,
-        "length"=>$length,
+        "total_count"=>$length,
         "from"=>$from,
-        "by"=>$by,
+        "items_by_page"=>$items_by_page,
     ));
 };
-$routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir,$items_count){
+$routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir,$items_by_page){
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
-    $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
+    $items_by_page = isset($_GET["items_by_page"])?intval($_GET["items_by_page"]):$items_by_page;
     $path = secure_path($picture_dir, $path );
     $items = read_directory($picture_dir.$path);
     $items = filter_files($picture_dir.$path, $items);
     $items = relative_to($path, $items);
     $items = clean_paths($picture_dir, $items);
     $length = count($items);
-    $items = reduce($items,$from,$by);
+    $items = reduce($items,$from,$items_by_page);
     return respond_json(array(
         "items"=>$items,
         "length"=>$length,
         "from"=>$from,
-        "by"=>$by,
+        "items_by_page"=>$items_by_page,
     ));
 };
 $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
