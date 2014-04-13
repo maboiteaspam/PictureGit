@@ -60,14 +60,14 @@ $assets_dir = $config->www_path."/assets/";
 
 $routes = array();
 $routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir){
-    $path = urldecode( $path );
+    $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = relative_to($path, $retour);
     $retour = clean_paths($picture_dir, $retour);
     return respond_json($retour);
 };
 $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
-    $path = urldecode( $path );
+    $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = filter_dirs($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
@@ -75,7 +75,7 @@ $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
     return respond_json($retour);
 };
 $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
-    $path = urldecode( $path );
+    $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = filter_files($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
@@ -83,14 +83,32 @@ $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
     return respond_json($retour);
 };
 $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
-    $path = urldecode( $path );
+    $path = secure_path($picture_dir, $path );
     return respond_file($picture_dir.$path);
 };
 $routes["`^/read_file(/[^@]+)@(.+)`i"] = function($f_path, $version) use($picture_dir){
 };
-$routes["`^/edit_file(/.+)`i"] = function($path) use($picture_dir){
-    var_dump($_FILES);
-    var_dump($path);
+$routes["`^/edit_file(/.*)`i"] = function($path) use($picture_dir,$VS){
+    if( isset($_FILES["img"]) ){
+        $path = secure_path($picture_dir, $path );
+        $contents = file_get_contents($_FILES["img"]["tmp_name"]);
+        file_put_contents($picture_dir.$path,$contents);
+        $message = isset($_POST["commit"])?$_POST["commit"]:"";
+        $VS->commit($picture_dir.$path,$message);
+        return respond_json("ok");
+    }
+    return respond_json("ko");
+};
+$routes["`^/new_file(/.*)`i"] = function($d_path) use($picture_dir,$VS){
+    $d_path = secure_path($picture_dir, $d_path );
+    if( is_dir($picture_dir.$d_path) == false ){
+        mkdir($picture_dir.$d_path,0777,true);
+    }
+    $path = $d_path.$_FILES["img"]["name"];
+    $contents = file_get_contents($_FILES["img"]["tmp_name"]);
+    file_put_contents($picture_dir.$path,$contents);
+    $message = isset($_POST["commit"])?$_POST["commit"]:"";
+    $VS->commit($picture_dir.$path,$message);
 };
 $routes["`^/trash_file(/.+)`i"] = function($path) use($picture_dir, $VS){
     $path = urldecode( $path );
