@@ -120,7 +120,7 @@
         </div>
 
 
-        <div class="fileBrowser" data-bind="with: files">
+        <div class="fileBrowser" data-bind="with: files,css:{loading:!files.loaded()}">
             <div class="display-table" data-bind="if: display()=='table'">
                 <table>
                     <tr>
@@ -146,7 +146,7 @@
                                 <i class="ion-ios7-folder"></i>
                                 <span data-bind="text:name"></span>
                             </a>
-                            <div class="actions  t-all">
+                            <div class="actions t-all">
                                 <a href="#" class="ion-ios7-trash-outline t-color btn btn-primary"></a>
                                 <a href="#" class="ion-ios7-compose t-color btn btn-primary"></a>
                             </div>
@@ -163,6 +163,10 @@
                 </ul>
             </div>
 
+            <div class="loader">
+                <div class="bg-primary t-all"></div>
+                <i class="ion-ios7-reloading"></i>
+            </div>
         </div>
 
         <div class="navbar navbar-inverse navbar-fixed-bottom t-font t-color" data-bind="with: navigation">
@@ -185,7 +189,7 @@
                 <div class="edit t-all" data-bind="css:{active:tab()=='edit'}">
                     <div>
                         <div class="ion-ios7-cloud-outline preview">
-                            <img data-bind="attr:{src:preview_url,title:name}" />
+                            <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
                         </div>
                         <form data-bind="attr:{action:edit_url}"
                               method="post"
