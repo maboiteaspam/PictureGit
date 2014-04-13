@@ -65,12 +65,31 @@
                             </a>
                         </li>
 
+                        <li class="dropdown newSelector">
+                            <a href="#" class="dropdown-toggle t-color t-font"
+                               data-toggle="dropdown">New <b class="caret"></b></a>
+                            <ul class="dropdown-menu pull-right t-all">
+                                <li><a><span class="ion-ios7-cloud-upload-outline"></span>
+                                        File</a>
+                                </li>
+                                <li><a><span class="ion-ios7-folder-outline"></span>
+                                        Folder</a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li class="dropdown displaySelector" data-bind="with: files">
                             <a href="#" class="dropdown-toggle t-font"
                                data-toggle="dropdown">Display <b class="caret"></b></a>
                             <ul class="dropdown-menu pull-right">
-                                <li data-mode="table" data-bind="css:{active:display()=='table'}"><a>Table</a></li>
-                                <li data-mode="thumbs" data-bind="css:{active:display()=='thumbs'}"><a>Thumbs</a></li>
+                                <li data-mode="table" data-bind="css:{active:display()=='table'}">
+                                    <a><span class="ion-ios7-drag"></span>
+                                        Table</a>
+                                </li>
+                                <li data-mode="thumbs" data-bind="css:{active:display()=='thumbs'}">
+                                    <a><span class="ion-ios7-keypad-outline"></span>
+                                        Thumbs</a>
+                                </li>
                             </ul>
                         </li>
 
