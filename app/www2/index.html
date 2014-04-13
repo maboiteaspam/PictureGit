@@ -52,7 +52,7 @@
 
     <div data-bind="if: ready">
 
-        <div class="navbar navbar-inverse navbar-fixed-top t-color">
+        <div class="navbar navbar-inverse navbar-fixed-bottom t-color">
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand t-font" href="#">Picture Git</a>
@@ -120,6 +120,14 @@
         </div>
 
 
+        <div class="navbar navbar-inverse navbar-fixed-top  t-font t-color" data-bind="with: navigation">
+            <div class="container navigation">
+                <ul class="nav navbar-nav" data-bind="foreach: breadcrumb">
+                    <li data-bind="css:{active:active}"><a href="#" class="t-font" data-bind="text: name"></a></li>
+                </ul>
+            </div>
+        </div>
+
         <div class="fileBrowser" data-bind="with: files,css:{loading:!files.loaded()}">
             <div class="display-table" data-bind="if: display()=='table'">
                 <table>
@@ -167,14 +175,6 @@
             <div class="loader">
                 <div class="bg-primary t-all"></div>
                 <i class="ion-ios7-reloading"></i>
-            </div>
-        </div>
-
-        <div class="navbar navbar-inverse navbar-fixed-bottom t-font t-color" data-bind="with: navigation">
-            <div class="container navigation">
-                <ul class="nav navbar-nav" data-bind="foreach: breadcrumb">
-                    <li data-bind="css:{active:active}"><a href="#" class="t-font" data-bind="text: name"></a></li>
-                </ul>
             </div>
         </div>
 
