@@ -19,11 +19,6 @@
       that.loaded = ko.observable(false);
       that.ready = ko.observable(false);
 
-      that.zoom = {};
-      that.zoom.loaded = ko.observable(false);
-      that.zoom.name = ko.observable("");
-      that.zoom.path = ko.observable("");
-
       that.theme = {};
       that.theme.loaded = ko.observable(false);
       that.theme.name = ko.observable("");
@@ -77,6 +72,14 @@
           that.files.items.push(e);
         }
       };
+
+
+      that.fileEdit = {};
+      that.fileEdit.tab = ko.observable("");
+      that.fileEdit.path = ko.observable("");
+      that.fileEdit.preview_url = ko.observable("");
+      that.fileEdit.name = ko.observable("");
+      that.fileEdit.logs = ko.observableArray([]);
 
       that.navigation = {};
       that.navigation.location = ko.observable("");
@@ -192,6 +195,26 @@
       return false;
     });
 
+
+
+    AppModel.on("click",".up a", function(){
+      AppModel.navigation.up();
+      return false;
+    });
+    AppModel.on("click",".fileBrowser .directory", function(){
+      var i = $(this).index();
+      var t = AppModel.files.items()[i];
+      AppModel.navigation.location(t.path);
+      return false;
+    });
+    AppModel.on("click",".navigation li", function(){
+      if( !$(this).hasClass("active") ){
+        var i = $(this).index();
+        var t = AppModel.navigation.breadcrumb()[i];
+        AppModel.navigation.location(t.path);
+      }
+      return false;
+    });
     AppModel.navigation.location.subscribe(function(v){
       AppModel.files.loaded( false );
       api.fetchDirectoryItems(v).always(function(data){
@@ -201,27 +224,49 @@
       });
     });
 
-    AppModel.on("click",".fileBrowser .directory", function(){
-      var i = $(this).index();
-      var t = AppModel.files.items()[i];
-      AppModel.navigation.location(t.path);
+    AppModel.fileEdit.tab.subscribe(function(){
+    });
+    AppModel.on("click",".fileBrowser .ion-ios7-cloud-upload-outline", function(){
+      AppModel.fileEdit.tab("edit");
       return false;
     });
-
+    AppModel.on("click",".fileEdit .ion-ios7-cloud-upload-outline", function(){
+      AppModel.fileEdit.tab("edit");
+      return false;
+    });
+    AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
+      AppModel.fileEdit.tab("logs");
+      return false;
+    });
+    AppModel.on("click",".fileEdit .ion-ios7-recording-outline", function(){
+      AppModel.fileEdit.tab("logs");
+      return false;
+    });
+    AppModel.on("click",".fileEdit .ion-ios7-eye", function(){
+      AppModel.fileEdit.tab("zoom");
+      return false;
+    });
     AppModel.on("click",".fileBrowser .file", function(){
       var i = $(this).index();
       var t = AppModel.files.items()[i];
-      /*
-       console.log(t)
-       */
-      AppModel.zoom.path(t.preview_url());
-      AppModel.zoom.name(t.name);
-      AppModel.one("transitionend",".zoom",function(){
-        do_resize();
-      });
-      do_resize();
+      console.log(t)
+      AppModel.fileEdit.preview_url(t.preview_url());
+      AppModel.fileEdit.name(t.name);
+      AppModel.fileEdit.tab("zoom");
       return false;
     });
+    AppModel.fileEdit.path.subscribe(function(){
+    });
+    AppModel.on("click",".fileEdit .ion-ios7-close-outline", function(){
+      AppModel.fileEdit.tab("");
+      AppModel.fileEdit.path("");
+      AppModel.fileEdit.name("");
+      return false;
+    });
+    AppModel.on("click",".fileEdit .ion-ios7-trash-outline", function(){
+      return false;
+    });
+
 
     AppModel.on("mouseenter",".fileBrowser .file", function(){
       var i = $(this).index();
@@ -232,36 +277,12 @@
       return false;
     });
 
-    AppModel.on("click",".navigation li", function(){
-      if( !$(this).hasClass("active") ){
-        var i = $(this).index();
-        var t = AppModel.navigation.breadcrumb()[i];
-        AppModel.navigation.location(t.path);
-      }
-      return false;
-    });
 
-    AppModel.on("click",".up a", function(){
-      AppModel.navigation.up();
+    AppModel.on("click",".dropdown", function(){
+      if( !$(this).hasClass("open")) $(".dropdown").removeClass("open");
+      $(this).toggleClass("open");
       return false;
     });
-    AppModel.on("click",".zoom .ion-ios7-close-outline", function(){
-      AppModel.zoom.path("");
-      AppModel.zoom.name("");
-      return false;
-    });
-    var do_resize = function(){
-      var h = $(".zoom").height();
-      var w = $(".zoom").width();
-      var wh = $(document.body).height()-60;
-      var ww = $(window).width();
-      $(".zoom").css("top", ""+(wh/2-h/2));
-      $(".zoom").css("left", ""+(ww/2-w/2));
-    }
-    $(window).on("resize", $.throttle(250,function(){
-      do_resize();
-    }));
-
 
 
 
@@ -283,6 +304,7 @@
         });
       }
       AppModel.themes.fill(k);
+      if(!preferred_theme ) AppModel.theme.name( k[0].name );
       AppModel.themes.loaded( true );
     });
 
