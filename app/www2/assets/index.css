@@ -37,6 +37,7 @@
     height: 100%;
     top: 0;
     position: fixed;
+    left: 0;
 }
 
 .fileBrowser.loading .bg-primary{
