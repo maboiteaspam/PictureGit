@@ -59,7 +59,11 @@
                 </div>
                 <div class="navbar-collapse collapse pull-right">
                     <ul class="nav navbar-nav">
-                        <li data-bind="with:navigation" class="up"><a href="#" class="t-font">../Up</a></li>
+                        <li data-bind="with:navigation, css: {disabled:navigation.location()=='/'}" class="up">
+                            <a href="#" class="t-font"
+                                    ><span class=" ion-ios7-arrow-thin-up"></span>Up
+                            </a>
+                        </li>
 
                         <li class="dropdown displaySelector" data-bind="with: files">
                             <a href="#" class="dropdown-toggle t-font"
@@ -155,16 +159,29 @@
             <div class="tabs">
                 <div class="zoom t-all" data-bind="css:{active:tab()=='zoom'}">
                     <div>
-                        <img data-bind="attr:{src:preview_url,title:path}" />
+                        <img data-bind="attr:{src:preview_url,title:name}" />
                         <div data-bind="with: name"></div>
                     </div>
                 </div>
                 <div class="edit t-all" data-bind="css:{active:tab()=='edit'}">
                     <div>
-                        <div class="ion-ios7-cloud-outline"></div>
-                        <input type="file" name="img" />
-                        <input type="text" name="name" />
-                        <textarea name="comment"></textarea>
+                        <div class="ion-ios7-cloud-outline preview">
+                            <img data-bind="attr:{src:preview_url,title:name}" />
+                        </div>
+                        <form name="d">
+                            <br/>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon ion-ios7-cloud-upload-outline"></span>
+                                <input type="file" class="form-control" name="img" />
+                            </div>
+                            <br/>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon ion-ios7-compose-outline"></span>
+                                <textarea class="form-control" name="comment" placeholder="commit message"></textarea>
+                            </div>
+                            <br/>
+                            <button type="button" class="btn btn-lg pull-right btn-default">Save</button>
+                        </form>
                     </div>
                 </div>
                 <div class="logs t-all" data-bind="css:{active:tab()=='logs'}">

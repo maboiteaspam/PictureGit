@@ -76,7 +76,6 @@
 
       that.fileEdit = {};
       that.fileEdit.tab = ko.observable("");
-      that.fileEdit.path = ko.observable("");
       that.fileEdit.preview_url = ko.observable("");
       that.fileEdit.name = ko.observable("");
       that.fileEdit.logs = ko.observableArray([]);
@@ -224,18 +223,11 @@
       });
     });
 
-    AppModel.fileEdit.tab.subscribe(function(){
-    });
-    AppModel.on("click",".fileBrowser .ion-ios7-cloud-upload-outline", function(){
-      AppModel.fileEdit.tab("edit");
-      return false;
+    AppModel.fileEdit.preview_url.subscribe(function(){
+      $(".fileEdit .edit form").get(0).reset();
     });
     AppModel.on("click",".fileEdit .ion-ios7-cloud-upload-outline", function(){
       AppModel.fileEdit.tab("edit");
-      return false;
-    });
-    AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
-      AppModel.fileEdit.tab("logs");
       return false;
     });
     AppModel.on("click",".fileEdit .ion-ios7-recording-outline", function(){
@@ -246,20 +238,33 @@
       AppModel.fileEdit.tab("zoom");
       return false;
     });
+    AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
+      var i = $(this).parentsUntil(".file").parent().index();
+      var t = AppModel.files.items()[i];
+      AppModel.fileEdit.preview_url(t.preview_url());
+      AppModel.fileEdit.name(t.name);
+      AppModel.fileEdit.tab("logs");
+      return false;
+    });
+    AppModel.on("click",".fileBrowser .ion-ios7-cloud-upload-outline", function(){
+      var i = $(this).parentsUntil(".file").parent().index();
+      var t = AppModel.files.items()[i];
+      AppModel.fileEdit.preview_url(t.preview_url());
+      AppModel.fileEdit.name(t.name);
+      AppModel.fileEdit.tab("edit");
+      return false;
+    });
     AppModel.on("click",".fileBrowser .file", function(){
       var i = $(this).index();
       var t = AppModel.files.items()[i];
-      console.log(t)
       AppModel.fileEdit.preview_url(t.preview_url());
       AppModel.fileEdit.name(t.name);
       AppModel.fileEdit.tab("zoom");
       return false;
     });
-    AppModel.fileEdit.path.subscribe(function(){
-    });
     AppModel.on("click",".fileEdit .ion-ios7-close-outline", function(){
       AppModel.fileEdit.tab("");
-      AppModel.fileEdit.path("");
+      AppModel.fileEdit.preview_url("");
       AppModel.fileEdit.name("");
       return false;
     });
@@ -274,13 +279,6 @@
       /*
        console.log(t)
        */
-      return false;
-    });
-
-
-    AppModel.on("click",".dropdown", function(){
-      if( !$(this).hasClass("open")) $(".dropdown").removeClass("open");
-      $(this).toggleClass("open");
       return false;
     });
 
@@ -311,6 +309,20 @@
     AppModel.navigation.location("/");
 
     AppModel.bind();
+
+
+
+    AppModel.on("click",".dropdown", function(){
+      if( !$(this).hasClass("disabled")){
+        if( !$(this).hasClass("open")) $(".dropdown").removeClass("open");
+        $(this).toggleClass("open");
+      }
+      return false;
+    });
+    $("body").on("click",function(){
+      $(".dropdown").removeClass("open");
+    });
+
 
   });
 })();

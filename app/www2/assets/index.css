@@ -6,6 +6,10 @@
     max-height: 350px;
 }
 
+.up span{
+    margin-right: 5px;
+}
+
 .fileBrowser{
     padding-top: 60px;
     padding-bottom: 60px;
@@ -190,4 +194,36 @@
 
 .fileEdit .zoom img{
     width: 100%;
+}
+
+.fileEdit .edit .preview{
+    width: 120px;
+    height: 120px;
+    text-align: center;
+    vertical-align: baseline;
+    line-height: 100px;
+    box-shadow: 0px 0px 5px white;
+    margin: 10px;
+    font-size: 4em;
+    margin-left: 165px;
+    position: relative;
+}
+.fileEdit .edit .preview img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.fileEdit .edit form{
+    width: 80%;
+    margin-left: 10%;
+}
+
+.fileEdit .edit .form-control{
+    font-size: 16px;
+}
+
+.fileEdit .edit textarea{
+    height: 130px;
 }
