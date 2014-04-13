@@ -287,10 +287,20 @@
         var c = parseInt(AppModel.pager.current_page())-1;
         var i = AppModel.pager.items_by_page();
         api.fetchDirectoryItems(v,c*i,i).always(function(data){
-          AppModel.files.fill(data.items);
-          AppModel.navigation.fill(v);
-          AppModel.pager.fill(data);
-          AppModel.files.loaded( true );
+          if( data.items.length==0 && data.total_count >0 ){
+            c--;
+            api.fetchDirectoryItems(v,c*i,i).always(function(data){
+              AppModel.files.fill(data.items);
+              AppModel.navigation.fill(v);
+              AppModel.pager.fill(data);
+              AppModel.files.loaded( true );
+            });
+          }else{
+            AppModel.files.fill(data.items);
+            AppModel.navigation.fill(v);
+            AppModel.pager.fill(data);
+            AppModel.files.loaded( true );
+          }
         });
       }
     });
