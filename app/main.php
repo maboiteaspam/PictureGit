@@ -60,26 +60,35 @@ $assets_dir = $config->www_path."/assets/";
 
 $routes = array();
 $routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir){
+    $from = isset($_GET["from"])?intval($_GET["from"]):0;
+    $by = isset($_GET["by"])?intval($_GET["by"]):15;
     $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = relative_to($path, $retour);
     $retour = clean_paths($picture_dir, $retour);
+    $retour = reduce($retour,$from,$by);
     return respond_json($retour);
 };
 $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
+    $from = isset($_GET["from"])?intval($_GET["from"]):0;
+    $by = isset($_GET["by"])?intval($_GET["by"]):15;
     $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = filter_dirs($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
     $retour = clean_paths($picture_dir, $retour);
+    $retour = reduce($retour,$from,$by);
     return respond_json($retour);
 };
 $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
+    $from = isset($_GET["from"])?intval($_GET["from"]):0;
+    $by = isset($_GET["by"])?intval($_GET["by"]):15;
     $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = filter_files($picture_dir.$path, $retour);
     $retour = relative_to($path, $retour);
     $retour = clean_paths($picture_dir, $retour);
+    $retour = reduce($retour,$from,$by);
     return respond_json($retour);
 };
 $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
