@@ -18,6 +18,9 @@ $default_config = [
         "update"=>"File updated by :user_name:\n\nReason is ",
         "trash"=>"File deleted by :user_name:\n\nReason is "
     ],
+    "display"=>[
+        "items_count"=>30,
+    ],
 ];
 
 require_once($app_dir."lib.php");
@@ -55,13 +58,13 @@ if( ! $VS->isRootReady() ){
 
 $www_dir = $config->www_path;
 $assets_dir = $config->www_path."/assets/";
-
+$items_count = $config->display->items_count;
 
 
 $routes = array();
-$routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir){
+$routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir,$items_count){
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
-    $by = isset($_GET["by"])?intval($_GET["by"]):15;
+    $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
     $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = relative_to($path, $retour);
@@ -69,9 +72,9 @@ $routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir){
     $retour = reduce($retour,$from,$by);
     return respond_json($retour);
 };
-$routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
+$routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir,$items_count){
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
-    $by = isset($_GET["by"])?intval($_GET["by"]):15;
+    $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
     $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = filter_dirs($picture_dir.$path, $retour);
@@ -80,9 +83,9 @@ $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir){
     $retour = reduce($retour,$from,$by);
     return respond_json($retour);
 };
-$routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir){
+$routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir,$items_count){
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
-    $by = isset($_GET["by"])?intval($_GET["by"]):15;
+    $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
     $path = secure_path($picture_dir, $path );
     $retour = read_directory($picture_dir.$path);
     $retour = filter_files($picture_dir.$path, $retour);
