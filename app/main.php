@@ -66,33 +66,51 @@ $routes["`^/list_directory(/.*)`i"] = function($path) use($picture_dir,$items_co
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
     $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
     $path = secure_path($picture_dir, $path );
-    $retour = read_directory($picture_dir.$path);
-    $retour = relative_to($path, $retour);
-    $retour = clean_paths($picture_dir, $retour);
-    $retour = reduce($retour,$from,$by);
-    return respond_json($retour);
+    $items = read_directory($picture_dir.$path);
+    $items = relative_to($path, $items);
+    $items = clean_paths($picture_dir, $items);
+    $length = count($items);
+    $items = reduce($items,$from,$by);
+    return respond_json(array(
+        "items"=>$items,
+        "length"=>$length,
+        "from"=>$from,
+        "by"=>$by,
+    ));
 };
 $routes["`^/list_directories(/.*)`i"] = function($path) use($picture_dir,$items_count){
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
     $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
     $path = secure_path($picture_dir, $path );
-    $retour = read_directory($picture_dir.$path);
-    $retour = filter_dirs($picture_dir.$path, $retour);
-    $retour = relative_to($path, $retour);
-    $retour = clean_paths($picture_dir, $retour);
-    $retour = reduce($retour,$from,$by);
-    return respond_json($retour);
+    $items = read_directory($picture_dir.$path);
+    $items = filter_dirs($picture_dir.$path, $items);
+    $items = relative_to($path, $items);
+    $items = clean_paths($picture_dir, $items);
+    $length = count($items);
+    $items = reduce($items,$from,$by);
+    return respond_json(array(
+        "items"=>$items,
+        "length"=>$length,
+        "from"=>$from,
+        "by"=>$by,
+    ));
 };
 $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir,$items_count){
     $from = isset($_GET["from"])?intval($_GET["from"]):0;
     $by = isset($_GET["by"])?intval($_GET["by"]):$items_count;
     $path = secure_path($picture_dir, $path );
-    $retour = read_directory($picture_dir.$path);
-    $retour = filter_files($picture_dir.$path, $retour);
-    $retour = relative_to($path, $retour);
-    $retour = clean_paths($picture_dir, $retour);
-    $retour = reduce($retour,$from,$by);
-    return respond_json($retour);
+    $items = read_directory($picture_dir.$path);
+    $items = filter_files($picture_dir.$path, $items);
+    $items = relative_to($path, $items);
+    $items = clean_paths($picture_dir, $items);
+    $length = count($items);
+    $items = reduce($items,$from,$by);
+    return respond_json(array(
+        "items"=>$items,
+        "length"=>$length,
+        "from"=>$from,
+        "by"=>$by,
+    ));
 };
 $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
     $path = secure_path($picture_dir, $path );
