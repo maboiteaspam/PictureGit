@@ -72,7 +72,7 @@
           }
           that.pager.items.push({
             name:">",
-            enabled:i!=that.pager.current_page(),
+            enabled:p!=that.pager.current_page(),
             selected:false
           });
         }
@@ -265,9 +265,11 @@
           var t = AppModel.pager.items()[i];
           if( i == 0 ){
             var c = AppModel.pager.current_page();
+            c = parseInt(c)
             if( c > 0 ) AppModel.pager.current_page(c-1);
-          }else if( i == AppModel.pager.items().length ){
+          }else if( i == AppModel.pager.items().length-1 ){
             var c = AppModel.pager.current_page();
+            c = parseInt(c)
             if( c < AppModel.pager.items().length ) AppModel.pager.current_page(c+1);
           }else{
             AppModel.pager.current_page(t.name);
@@ -282,7 +284,7 @@
     AppModel.navigation.location.subscribe(function(v){
       AppModel.files.loaded( false );
       if( v ){
-        var c = AppModel.pager.current_page()-1;
+        var c = parseInt(AppModel.pager.current_page())-1;
         var i = AppModel.pager.items_by_page();
         api.fetchDirectoryItems(v,c*i,i).always(function(data){
           AppModel.files.fill(data.items);
