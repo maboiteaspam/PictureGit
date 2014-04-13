@@ -131,8 +131,9 @@
                         <div data-bind="if: type()=='file'">
                             <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
                             <div class="actions  t-all">
-                                <a href="#" class="ion-ios7-trash t-color btn btn-primary"></a>
-                                <a href="#" class="ion-ios7-compose t-color btn  btn-primary"></a>
+                                <a href="#" class="ion-ios7-trash  btn btn-primary t-all"></a>
+                                <a href="#" class="ion-ios7-cloud-upload-outline  btn  btn-primary t-all"></a>
+                                <a href="#" class="ion-ios7-recording-outline  btn  btn-primary t-all"></a>
                             </div>
                         </div>
                     </li>
@@ -149,12 +150,51 @@
             </div>
         </div>
 
-        <div class="zoom t-all" data-bind="with: zoom,css:{disabled:zoom.path()==''}">
-            <div class="bg-primary">
-                <img data-bind="attr:{src:path,title:path}" />
-                <div data-bind="with: name"></div>
-                <a href="#" class="ion-ios7-close-outline t-color btn  btn-primary"></a>
+        <div class="fileEdit t-all bg-primary" data-bind="with: fileEdit, css:{active:fileEdit.tab()!=''}">
+
+            <div class="tabs">
+                <div class="zoom t-all" data-bind="css:{active:tab()=='zoom'}">
+                    <div>
+                        <img data-bind="attr:{src:preview_url,title:path}" />
+                        <div data-bind="with: name"></div>
+                    </div>
+                </div>
+                <div class="edit t-all" data-bind="css:{active:tab()=='edit'}">
+                    <div>
+                        <div class="ion-ios7-cloud-outline"></div>
+                        <input type="file" name="img" />
+                        <input type="text" name="name" />
+                        <textarea name="comment"></textarea>
+                    </div>
+                </div>
+                <div class="logs t-all" data-bind="css:{active:tab()=='logs'}">
+                    <div>
+                        <table>
+                            <tr>
+                                <th>rev</th>
+                                <th>date</th>
+                                <th>author</th>
+                                <th>message</th>
+                            </tr>
+                            <tr>
+                                <td>f </td>
+                                <td>f </td>
+                                <td>f </td>
+                                <td>f </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
+
+            <ul class="toolbar">
+                <li><a href="#" class="ion-ios7-close-outline t-color btn btn-primary"></a></li>
+                <li><a href="#" class="ion-ios7-eye t-color btn btn-primary" data-bind="css:{active:tab()=='zoom'}"></a></li>
+                <li><a href="#" class="ion-ios7-cloud-upload-outline t-color btn btn-primary" data-bind="css:{active:tab()=='edit'}"></a></li>
+                <li><a href="#" class="ion-ios7-recording-outline t-color btn btn-primary" data-bind="css:{active:tab()=='logs'}"></a></li>
+                <li><a href="#" class="ion-ios7-trash-outline t-color btn btn-primary" data-bind="css:{active:tab()=='trash'}"></a></li>
+            </ul>
+
         </div>
 
     </div>
@@ -170,7 +210,9 @@
 <script type="text/javascript" src="assets/vendors/jquery.scrollTo.min.js"></script>
 <script type="text/javascript" src="assets/vendors/jquery.ba-throttle-debounce.min.js"></script>
 <script type="text/javascript" src="assets/vendors/knockout-3.1.0.js"></script>
+<!--
 <script type="text/javascript" src="assets/vendors/bootstrap.min.js"></script>
+-->
 <script data-main="assets/main" src="assets/require-2.1.11.js"></script>
 
 </body>
