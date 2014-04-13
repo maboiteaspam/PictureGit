@@ -10,18 +10,19 @@
     margin-right: 5px;
 }
 
-.fileBrowser{
-    padding: 60px;
-    float: left;
+.pagination{
+}
+
+.container-pager{
+    display: inline-block;
     width: 100%;
 }
 
-.fileBrowser .pagination-container{
-    width: 100%;
-    position: fixed;
+.fileBrowser{
+    padding: 60px;
+    padding-bottom: 0px;
     float: left;
-    bottom: 60;
-    left: 0;
+    width: 100%;
 }
 
 .fileBrowser .loader{
@@ -57,6 +58,9 @@
     margin-left: -50px;
 }
 
+.fileBrowser .items-display{
+    min-height: 400px;
+}
 .fileBrowser .display-thumbs .directory:hover,
 .fileBrowser .display-thumbs .file:hover{
     transition: box-shadow 500ms;
