@@ -13,13 +13,13 @@
             top: 0;
             left: 0;
             text-align: center;
-            z-index: 20;
             background-color: #ffffff;
 
             -webkit-transition: all 250ms ease-in 0s;
             -moz-transition: all 250ms ease-in 0s;
             -o-transition: all 250ms ease-in 0s;
             transition: all 250ms ease-in 0s;
+            z-index: 50000;
         }
         .app-loader .loading{
             position: absolute;
@@ -40,20 +40,8 @@
 
 <div class="main">
 
-<!-- app loader -->
-    <div data-bind="ifnot: ready">
-        <div class="app-loader bg-primary" data-bind="css: {'t-slide-left':loaded}">
-            <div class="loading">
-                <span class="status">loading...</span>
-                <br/><br/>
-                <i class="ion-ios7-reloading"></i>
-            </div>
-        </div>
-    </div>
-<!-- app loader -->
-
 <!-- app -->
-    <div data-bind="if: ready">
+    <div>
 
         <!-- header -->
         <div class="navbar navbar-inverse navbar-fixed-top t-color">
@@ -309,6 +297,18 @@
     </div>
 <!-- app -->
 
+
+<!-- app loader -->
+<div data-bind="ifnot: ready">
+    <div class="app-loader bg-primary" data-bind="css: {'t-slide-left':loaded}">
+        <div class="loading">
+            <span class="status">loading...</span>
+            <br/><br/>
+            <i class="ion-ios7-reloading"></i>
+        </div>
+    </div>
+</div>
+<!-- app loader -->
 <!-- style switch -->
     <link rel='stylesheet' type='text/css' data-bind="attr:{href: theme.path}">
     <link rel='stylesheet' type='text/css' data-bind="attr:{href: theme.path_prev}">

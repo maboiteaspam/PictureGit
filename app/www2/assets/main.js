@@ -204,7 +204,9 @@
     AppModel.loaded.subscribe(function(loaded){
       if( loaded )
         AppModel.one("transitionend",".app-loader", function(){
-          AppModel.ready(true);
+          setTimeout(function(){
+            AppModel.ready(true);
+          },1000);
         });
     });
 
@@ -225,7 +227,7 @@
       AppModel.theme.loaded( false );
       setTimeout(function(){
         AppModel.theme.loaded( true );
-      },500)
+      },1000);
     });
 
     AppModel.on("click",".displaySelector ul li", function(){
@@ -306,7 +308,9 @@
             AppModel.files.fill(data.items);
             AppModel.navigation.fill(v);
             AppModel.pager.fill(data);
-            AppModel.files.loaded( true );
+            setTimeout(function(){
+              AppModel.files.loaded( true );
+            },500)
           }
         });
       }
