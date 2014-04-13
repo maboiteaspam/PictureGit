@@ -33,14 +33,18 @@
     padding-left: 4px;
     padding-right: 4px;
     bottom: 15px;
-    right: 15px;
+    right: 0px;
     opacity: 0;
+    white-space: nowrap;
+    text-align: right;
 }
 .fileBrowser .display-thumbs .actions a{
     padding: 0px;
     padding-left: 4px;
     padding-right: 4px;
     font-weight: lighter;
+    transition-duration: 0.2s;
+    vertical-align: bottom;
 }
 .fileBrowser .display-thumbs li:hover .actions{
     opacity: 0.5;
@@ -109,6 +113,9 @@
     font-size: 2.3em;
 }
 .fileBrowser .display-thumbs.size-1 .actions a{
+    font-size: 0.8em;
+}
+.fileBrowser .display-thumbs.size-1 .actions a:hover{
     font-size: 1.2em;
 }
 .fileBrowser .display-thumbs.size-2 .actions a{
@@ -134,29 +141,53 @@
     cursor: pointer;
 }
 
-.zoom{
+
+
+.fileEdit{
+    opacity: 0;
+    z-index: -1;
     position: fixed;
-    text-align: center;
+    width: 500px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -250px;
+}
+.fileEdit .toolbar{
+    position: absolute;
+    right: -27;
+    top: 19;
+}
+.fileEdit .toolbar a{
+    font-size: 20px;
+    width: 100%;
+    margin-top: 5;
+    box-shadow: 0px 0px 3px white;
+}
+.fileEdit.active{
     opacity: 1;
     z-index: auto;
 }
-.zoom.disabled{
-    z-index: -1;
+.fileEdit .tabs > div{
     opacity: 0;
-}
-.zoom img{
-    max-width: 80%;
-    max-height: 80%;
-}
-.zoom > div{
-    padding-top: 2%;
-    padding-bottom: 2%;
-    display: inline-block;
-    position: relative;
-}
-.zoom .ion-ios7-close-outline{
+    z-index: -1;
+    display: none;
+    width: 450px;
+    height: 450px;
+    top: 50%;
+    left: 50%;
+    margin-top: -225px;
+    margin-left: -225px;
     position: absolute;
-    right: 0px;
-    top:0px;
-    font-size: 100%;
+    box-shadow: 0px 0px 5px white;
+}
+.fileEdit.active .tabs .active{
+    opacity: 1;
+    z-index: auto;
+    display: block;
+}
+
+.fileEdit .zoom img{
+    width: 100%;
 }
