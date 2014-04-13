@@ -11,9 +11,17 @@
 }
 
 .fileBrowser{
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding: 60px;
     float: left;
+    width: 100%;
+}
+
+.fileBrowser .pagination-container{
+    width: 100%;
+    position: fixed;
+    float: left;
+    bottom: 60;
+    left: 0;
 }
 
 .fileBrowser .loader{
@@ -175,6 +183,7 @@
 }
 .fileBrowser .display-thumbs .file img{
     max-width: 100%;
+    min-width: 100%;
 }
 .fileBrowser .display-thumbs.size-1 .file img{
     max-height: 88px;
