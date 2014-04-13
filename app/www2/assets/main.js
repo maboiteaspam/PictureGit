@@ -97,6 +97,10 @@
               r = this.path.match(/[/]([^/]+)[/]$/)[1];
             else
               r = this.path.match(/[/]([^/]*)$/)[1];
+            return r;
+          },e);
+          e.short_name = ko.computed(function(){
+            var r = this.name();
             if(r.length>15 ) r = r.substr(0,15)+"...";
             return r;
           },e);
@@ -131,6 +135,7 @@
 
         var item = {
           name:"/",
+          short_name:"/",
           path:"/",
           active:ko.observable(false)
         };
@@ -140,8 +145,10 @@
           if( b[n] != "" ){
             var p = item.path+b[n]+"/";
             var name = b[n];
-            if(name.length>15 ) name = name.substr(0,15)+"...";
+            var short_name = name;
+            if(short_name.length>15 ) short_name = short_name.substr(0,15)+"...";
             item = {
+              short_name:short_name,
               name:name,
               path:p,
               active:ko.observable(false)
@@ -204,17 +211,17 @@
     AppModel.on("click",".themeSelector ul li", function(){
       var i = $(this).index();
       var t = AppModel.themes.items()[i];
-      AppModel.theme.name(t.name);
+      if( t ) AppModel.theme.name(t.name);
       return false;
     });
     AppModel.theme.name.subscribe(function(v){
       AppModel.theme.path('/assets/themes/'+v+'.bootstrap.min.css');
       localStorage.setValue("preferred_theme",v);
-      AppModel.one("transitionend",".themeSelector ul", $.debounce( 500, function(){
+      AppModel.one("transitionend",".themeSelector ul", $.debounce( 200, function(){
         $(".themeSelector ul").scrollTo( $(".themeSelector .active").get(0), 200, {easing:'easeOutExpo'} );
       }));
     });
-    AppModel.theme.path.subscribe(function(v){
+    AppModel.theme.path.subscribe(function(){
       AppModel.theme.loaded( false );
       setTimeout(function(){
         AppModel.theme.loaded( true );
@@ -228,9 +235,9 @@
       return false;
     });
     AppModel.on("click",".sizeSelector ul li", function(){
-      var mode = $(this).data("size");
-      AppModel.files.size( mode );
-      localStorage.setValue("preferred_size", mode);
+      var size = $(this).data("size");
+      AppModel.files.size( size );
+      localStorage.setValue("preferred_size", size);
       return false;
     });
 
@@ -310,53 +317,50 @@
     AppModel.fileEdit.preview_url.subscribe(function(){
       $(".fileEdit .edit form").get(0).reset();
     });
-    AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
-      var i = $(this).parentsUntil(".file").parent().index();
+    var find_item = function(i){
       if( i > -1 ){
         var t = AppModel.files.items()[i];
         if( t ){
-          AppModel.fileEdit.path(t.path);
-          AppModel.fileEdit.name(t.name());
-          AppModel.fileEdit.tab("logs");
+          return t;
         }
+      }
+      return false;
+    };
+    AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
+      var item = find_item($(this).parentsUntil(".file").parent().index());
+      if( item ){
+        AppModel.fileEdit.path(item.path);
+        AppModel.fileEdit.name(item.name());
+        AppModel.fileEdit.tab("logs");
       }
       return false;
     });
     AppModel.on("click",".fileBrowser .ion-ios7-cloud-upload-outline", function(){
-      var i = $(this).parentsUntil(".file").parent().index();
-      if( i > -1 ){
-        var t = AppModel.files.items()[i];
-        if( t ){
-          AppModel.fileEdit.path(t.path);
-          AppModel.fileEdit.name(t.name());
-          AppModel.fileEdit.tab("edit");
-        }
+      var item = find_item($(this).parentsUntil(".file").parent().index());
+      if( item ){
+        AppModel.fileEdit.path(item.path);
+        AppModel.fileEdit.name(item.name());
+        AppModel.fileEdit.tab("edit");
       }
       return false;
     });
     AppModel.on("click",".fileBrowser .ion-ios7-trash-outline", function(){
-      var i = $(this).parentsUntil(".file").parent().index();
-      if( i > -1 ){
-        var t = AppModel.files.items()[i];
-        if( t ){
-          var loc = AppModel.navigation.location();
-          AppModel.navigation.location("");
-          api.trashFile(t.path).always(function(){
-            AppModel.navigation.location(loc);
-          });
-        }
+      var item = find_item($(this).parentsUntil(".file").parent().index());
+      if( item ){
+        var loc = AppModel.navigation.location();
+        AppModel.navigation.location("");
+        api.trashFile(item.path).always(function(){
+          AppModel.navigation.location(loc);
+        });
       }
       return false;
     });
     AppModel.on("click",".fileBrowser .file", function(){
-      var i = $(this).index();
-      if( i > -1 ){
-        var t = AppModel.files.items()[i];
-        if( t ){
-          AppModel.fileEdit.path(t.path);
-          AppModel.fileEdit.name(t.name());
-          AppModel.fileEdit.tab("zoom");
-        }
+      var item = find_item($(this).index());
+      if( item ){
+        AppModel.fileEdit.path(t.path);
+        AppModel.fileEdit.name(t.name());
+        AppModel.fileEdit.tab("zoom");
       }
       return false;
     });
@@ -419,19 +423,6 @@
       })
       return false;
     });
-
-
-    AppModel.on("mouseenter",".fileBrowser .file", function(){
-      var i = $(this).index();
-      if( i > -1 ){
-        var t = AppModel.files.items()[i];
-        /*
-         console.log(t)
-         */
-      }
-      return false;
-    });
-
 
 
     var preferred_theme = localStorage.getValue("preferred_theme");
