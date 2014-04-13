@@ -52,7 +52,7 @@
 
     <div data-bind="if: ready">
 
-        <div class="navbar navbar-inverse navbar-fixed-bottom t-color">
+        <div class="navbar navbar-inverse navbar-fixed-top t-color">
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand t-font" href="#">Picture Git</a>
@@ -120,77 +120,102 @@
             </div>
         </div>
 
-
-        <div class="navbar navbar-inverse navbar-fixed-top  t-font t-color" data-bind="with: navigation">
-            <div class="container navigation">
-                <ul class="nav navbar-nav" data-bind="foreach: breadcrumb">
-                    <li data-bind="css:{active:active}"><a href="#" class="t-font" data-bind="text: name"></a></li>
-                </ul>
-            </div>
-        </div>
-
         <div class="fileBrowser" data-bind="with: files,css:{loading:!files.loaded()}">
-            <div class="display-table" data-bind="if: display()=='table'">
-                <table class="table table-striped table-hover table-condensed">
-                    <tr>
-                        <th>type</th>
-                        <th>name</th>
-                        <th>path</th>
-                        <th>edit</th>
-                        <th>logs</th>
-                        <th>trash</th>
-                    </tr>
-                    <tbody  data-bind="foreach: items">
-                        <tr data-bind="css:type()">
-                            <td data-bind="text: type"></td>
-                            <td data-bind="text: name"></td>
-                            <td data-bind="text: path"></td>
-                            <td><span class="ion-ios7-cloud-upload-outline  btn btn-primary t-all"></span></td>
-                            <td><span class="ion-ios7-recording-outline  btn btn-primary t-all"></span></td>
-                            <td><span class="ion-ios7-trash-outline  btn btn-primary t-all"></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
 
-            <div class="display-thumbs" data-bind="if: display()=='thumbs', css:size()">
-                <ul data-bind="foreach: items">
-                    <li class="t-all" data-bind="css:type()">
-                        <div data-bind="if: type()=='directory'">
-                            <a href="#" data-bind="attr:{title:name}">
-                                <i class="ion-ios7-folder"></i>
-                                <span data-bind="text:name"></span>
-                            </a>
-                            <div class="actions t-all">
-                                <a href="#" class="ion-ios7-trash-outline t-color btn btn-primary"></a>
-                                <a href="#" class="ion-ios7-compose t-color btn btn-primary"></a>
-                            </div>
-                        </div>
-                        <div data-bind="if: type()=='file'">
-                            <div class="ion-ios7-cloud-outline"></div>
-                            <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
-                            <div class="actions  t-all">
-                                <a href="#" class="ion-ios7-trash-outline  btn btn-primary t-all"></a>
-                                <a href="#" class="ion-ios7-cloud-upload-outline  btn  btn-primary t-all"></a>
-                                <a href="#" class="ion-ios7-recording-outline  btn  btn-primary t-all"></a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+            <div class="container-pager">
+                <div class="pull-left">
+                    <ul class="nav navbar-nav navigation" data-bind="foreach: $parent.navigation.breadcrumb">
+                        <li data-bind="css:{disabled:active}"><a href="#" class="t-font" data-bind="text: name"></a></li>
+                    </ul>
+                </div>
+                <div class="pull-right">
+                    <ul class="pagination pagination-sm">
+                        <li><a href="#" data-bind="text:'display '+items().length +' on '+$parent.pager.total_count()+' items'"></a></li>
+                    </ul>
+                    <ul class="items-pager pagination pagination-sm" data-bind="foreach: $parent.pager.items">
+                        <li data-bind="css:{active:selected,disabled:!enabled}"><a href="#" data-bind="text:name"></a></li>
+                    </ul>
+                </div>
             </div>
 
 
-            <div class="pagination-container text-center">
-                <ul class="pagination well well-sm">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
+            <div data-bind="if: items().length">
+                <div class="items-display">
+
+                    <div class="display-table" data-bind="if: display()=='table'">
+                        <table class="table table-striped table-hover table-condensed">
+                            <tr>
+                                <th>type</th>
+                                <th>name</th>
+                                <th>path</th>
+                                <th>edit</th>
+                                <th>logs</th>
+                                <th>trash</th>
+                            </tr>
+                            <tbody data-bind="foreach: items">
+                            <tr data-bind="css:type()">
+                                <td data-bind="text: type"></td>
+                                <td data-bind="text: name"></td>
+                                <td data-bind="text: path"></td>
+                                <td><span class="ion-ios7-cloud-upload-outline  btn btn-primary t-all"></span></td>
+                                <td><span class="ion-ios7-recording-outline  btn btn-primary t-all"></span></td>
+                                <td><span class="ion-ios7-trash-outline  btn btn-primary t-all"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="display-thumbs" data-bind="if: display()=='thumbs',css:size()">
+                        <ul data-bind="foreach: items">
+                            <li class="t-all" data-bind="css:type()">
+                                <div data-bind="if: type()=='directory'">
+                                    <a href="#" data-bind="attr:{title:name}">
+                                        <i class="ion-ios7-folder"></i>
+                                        <span data-bind="text:name"></span>
+                                    </a>
+                                    <div class="actions t-all">
+                                        <a href="#" class="ion-ios7-trash-outline t-color btn btn-primary"></a>
+                                        <a href="#" class="ion-ios7-compose t-color btn btn-primary"></a>
+                                    </div>
+                                </div>
+                                <div data-bind="if: type()=='file'">
+                                    <div class="ion-ios7-cloud-outline"></div>
+                                    <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
+                                    <div class="actions  t-all">
+                                        <a href="#" class="ion-ios7-trash-outline  btn btn-primary t-all"></a>
+                                        <a href="#" class="ion-ios7-cloud-upload-outline  btn  btn-primary t-all"></a>
+                                        <a href="#" class="ion-ios7-recording-outline  btn  btn-primary t-all"></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
             </div>
+
+            <div data-bind="if: !items().length">
+                <div class="items-display">
+                    No items !
+                </div>
+            </div>
+
+            <div class="container-pager">
+                <div class="pull-left">
+                    <ul class="nav navbar-nav navigation" data-bind="foreach: $parent.navigation.breadcrumb">
+                        <li data-bind="css:{disabled:active}"><a href="#" class="t-font" data-bind="text: name"></a></li>
+                    </ul>
+                </div>
+                <div class="pull-right">
+                    <ul class="pagination pagination-sm">
+                        <li><a href="#" data-bind="text:'display '+items().length +' on '+$parent.pager.total_count()+' items'"></a></li>
+                    </ul>
+                    <ul class="items-pager pagination pagination-sm" data-bind="foreach: $parent.pager.items">
+                        <li data-bind="css:{active:selected,disabled:!enabled}"><a href="#" data-bind="text:name"></a></li>
+                    </ul>
+                </div>
+            </div>
+
 
             <div class="loader">
                 <div class="bg-primary t-all"></div>
@@ -260,7 +285,12 @@
 
         </div>
 
+
+
+
     </div>
+
+
 
     <link rel='stylesheet' type='text/css' data-bind="attr:{href: theme.path}">
     <link rel='stylesheet' type='text/css' data-bind="attr:{href: theme.path_prev}">
