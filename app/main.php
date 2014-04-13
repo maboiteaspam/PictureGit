@@ -111,7 +111,7 @@ $routes["`^/new_file(/.*)`i"] = function($d_path) use($picture_dir,$VS){
     $VS->commit($picture_dir.$path,$message);
 };
 $routes["`^/trash_file(/.+)`i"] = function($path) use($picture_dir, $VS){
-    $path = urldecode( $path );
+    $path = secure_path($picture_dir, $path );
     $trashed = trash_file($picture_dir.$path);
     $trashed = $trashed && $VS->remove($picture_dir.$path);
     return respond_json( $trashed );
@@ -142,6 +142,7 @@ $routes["`^/$`"] = function() use($www_dir){
     return false;
 };
 $routes["catch_all"] = function($path) use($www_dir){
+    $path = secure_path($www_dir, $path );
     if( is_file($www_dir.$path) ){
         return respond_file($www_dir.$path);
     }
