@@ -10,5 +10,8 @@
     "template_message":{
         "update":"File updated by :user_name:\n\nReason is ",
         "trash":"File deleted by :user_name:\n\nReason is "
+    },
+    "display":{
+        "items_count":30
     }
 }
