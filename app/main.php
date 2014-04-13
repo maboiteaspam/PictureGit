@@ -19,7 +19,7 @@ $default_config = [
         "trash"=>"File deleted by :user_name:\n\nReason is "
     ],
     "display"=>[
-        "items_count"=>30,
+        "items_by_page"=>30,
     ],
 ];
 
