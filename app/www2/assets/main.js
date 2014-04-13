@@ -255,9 +255,10 @@
     AppModel.on("click",".fileBrowser .ion-ios7-trash-outline", function(){
       var i = $(this).parentsUntil(".file").parent().index();
       var t = AppModel.files.items()[i];
+      var loc = AppModel.navigation.location();
+      AppModel.navigation.location("");
       api.trashFile(t.path).always(function(){
-        AppModel.navigation.location("");
-        AppModel.navigation.location("/");
+        AppModel.navigation.location(loc);
       });
       return false;
     });
@@ -289,14 +290,16 @@
     });
     AppModel.on("click",".fileEdit .ion-ios7-trash-outline", function(){
       AppModel.fileEdit.tab("");
+      var loc = AppModel.navigation.location();
       AppModel.navigation.location("");
       api.trashFile(AppModel.fileEdit.path()).always(function(){
-        AppModel.navigation.location("/");
+        AppModel.navigation.location(loc);
       });
       return false;
     });
     AppModel.on("submit",".fileEdit form", function(ev){
       ev.preventDefault();
+      $('.fileEdit').addClass("loading");
       $('.fileEdit form input').attr("disabled","disabled");
       $('.fileEdit form textarea').attr("disabled","disabled");
 
@@ -305,6 +308,9 @@
       var data = new FormData();
       data.append(img.attr("name"), img[0].files[0]);
       data.append(txt.attr("name"), txt.val());
+
+      var loc = AppModel.navigation.location();
+      AppModel.navigation.location("");
       $.ajax({
         'type':'POST',
         'data': data,
@@ -317,6 +323,9 @@
         var h = $(".fileEdit .preview img").attr("src");
         $(".fileEdit .preview img").attr("src","");
         $(".fileEdit .preview img").attr("src",h+"?q="+(new Date()));
+        $('.fileEdit').removeClass("loading");
+        $(".fileEdit .edit form").get(0).reset();
+        AppModel.navigation.location(loc);
       })
       return false;
     });
