@@ -48,7 +48,7 @@ function respond_file($path){
     }
 
     $last_modified_time = filemtime($path);
-    $etag = md5_file($path);
+    $etag = sha1(sha1_file($path).$last_modified_time);
     header("Last-Modified: ".gmdate("D, d M Y H:i:s", $last_modified_time)." GMT");
     header("Etag: $etag");
 
@@ -65,6 +65,18 @@ function respond_file($path){
 function trash_file($path){
     if( is_file($path) ) return unlink($path);
     return false;
+}
+
+function secure_path($within, $path){
+    $path = urldecode($path);
+    $within = realpath($within);
+    $real = realpath($within.$path);
+    if( $real != false ){
+        $path = substr($real,strlen($within));
+    }else{
+        $path = "/";
+    }
+    return $path;
 }
 
 function read_directory($path){
