@@ -147,14 +147,14 @@
                                 <span data-bind="text:name"></span>
                             </a>
                             <div class="actions  t-all">
-                                <a href="#" class="ion-ios7-trash t-color btn btn-primary"></a>
+                                <a href="#" class="ion-ios7-trash-outline t-color btn btn-primary"></a>
                                 <a href="#" class="ion-ios7-compose t-color btn btn-primary"></a>
                             </div>
                         </div>
                         <div data-bind="if: type()=='file'">
                             <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
                             <div class="actions  t-all">
-                                <a href="#" class="ion-ios7-trash  btn btn-primary t-all"></a>
+                                <a href="#" class="ion-ios7-trash-outline  btn btn-primary t-all"></a>
                                 <a href="#" class="ion-ios7-cloud-upload-outline  btn  btn-primary t-all"></a>
                                 <a href="#" class="ion-ios7-recording-outline  btn  btn-primary t-all"></a>
                             </div>
@@ -187,7 +187,9 @@
                         <div class="ion-ios7-cloud-outline preview">
                             <img data-bind="attr:{src:preview_url,title:name}" />
                         </div>
-                        <form name="d">
+                        <form data-bind="attr:{action:edit_url}"
+                              method="post"
+                              enctype="multipart/form-data">
                             <br/>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon ion-ios7-cloud-upload-outline"></span>
@@ -199,7 +201,7 @@
                                 <textarea class="form-control" name="comment" placeholder="commit message"></textarea>
                             </div>
                             <br/>
-                            <button type="button" class="btn btn-lg pull-right btn-default">Save</button>
+                            <input type="submit" class="btn btn-lg pull-right btn-default submit" value="Save"/>
                         </form>
                     </div>
                 </div>
