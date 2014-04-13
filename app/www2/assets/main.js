@@ -41,6 +41,43 @@
         }
       };
 
+      that.pager = {};
+      that.pager.total_count = ko.observable(0);
+      that.pager.items_by_page = ko.observable(30);
+      that.pager.current_page = ko.observable(1);
+      that.pager.page_count = ko.computed(function(){
+        return Math.ceil(this.total_count()/this.items_by_page()) || 0;
+      },that.pager);
+      that.pager.display = ko.computed(function(){
+        return this.page_count() > 0;
+      },that.pager);
+      that.pager.items = ko.observableArray([]);
+      that.pager.fill = function(info){
+        that.pager.total_count(info.total_count);
+        that.pager.items_by_page(info.items_by_page);
+        var p = that.pager.page_count();
+        that.pager.items.removeAll();
+        if( p > 1 ){
+          that.pager.items.push({
+            name:"<",
+            enabled:1!=that.pager.current_page(),
+            selected:false
+          });
+          for( var i=1;i<=p;i++){
+            var e = {};
+            e.name = ""+i;
+            e.selected = i==that.pager.current_page();
+            e.enabled = true;
+            that.pager.items.push(e);
+          }
+          that.pager.items.push({
+            name:">",
+            enabled:i!=that.pager.current_page(),
+            selected:false
+          });
+        }
+      };
+
       that.files = {};
       that.files.display = ko.observable("table");
       that.files.size = ko.observable("size-1");
@@ -221,12 +258,36 @@
       }
       return false;
     });
+    AppModel.on("click",".items-pager li", function(){
+      if( !$(this).hasClass("disabled") ){
+        var i = $(this).index();
+        if( i > -1 ){
+          var t = AppModel.pager.items()[i];
+          if( i == 0 ){
+            var c = AppModel.pager.current_page();
+            if( c > 0 ) AppModel.pager.current_page(c-1);
+          }else if( i == AppModel.pager.items().length ){
+            var c = AppModel.pager.current_page();
+            if( c < AppModel.pager.items().length ) AppModel.pager.current_page(c+1);
+          }else{
+            AppModel.pager.current_page(t.name);
+          }
+          var l = AppModel.navigation.location();
+          AppModel.navigation.location("");
+          AppModel.navigation.location(l);
+        }
+      }
+      return false;
+    });
     AppModel.navigation.location.subscribe(function(v){
       AppModel.files.loaded( false );
       if( v ){
-        api.fetchDirectoryItems(v).always(function(data){
+        var c = AppModel.pager.current_page()-1;
+        var i = AppModel.pager.items_by_page();
+        api.fetchDirectoryItems(v,c*i,i).always(function(data){
           AppModel.files.fill(data.items);
           AppModel.navigation.fill(v);
+          AppModel.pager.fill(data);
           AppModel.files.loaded( true );
         });
       }
