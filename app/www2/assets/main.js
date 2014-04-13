@@ -205,15 +205,19 @@
     });
     AppModel.on("click",".fileBrowser .directory", function(){
       var i = $(this).index();
-      var t = AppModel.files.items()[i];
-      AppModel.navigation.location(t.path);
+      if( i > -1 ){
+        var t = AppModel.files.items()[i];
+        if( t ) AppModel.navigation.location(t.path);
+      }
       return false;
     });
     AppModel.on("click",".navigation li", function(){
       if( !$(this).hasClass("active") ){
         var i = $(this).index();
-        var t = AppModel.navigation.breadcrumb()[i];
-        AppModel.navigation.location(t.path);
+        if( i > -1 ){
+          var t = AppModel.navigation.breadcrumb()[i];
+          if( t ) AppModel.navigation.location(t.path);
+        }
       }
       return false;
     });
@@ -221,7 +225,7 @@
       AppModel.files.loaded( false );
       if( v ){
         api.fetchDirectoryItems(v).always(function(data){
-          AppModel.files.fill(data);
+          AppModel.files.fill(data.items);
           AppModel.navigation.fill(v);
           AppModel.files.loaded( true );
         });
@@ -235,36 +239,52 @@
     });
     AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
       var i = $(this).parentsUntil(".file").parent().index();
-      var t = AppModel.files.items()[i];
-      AppModel.fileEdit.path(t.path);
-      AppModel.fileEdit.name(t.name());
-      AppModel.fileEdit.tab("logs");
+      if( i > -1 ){
+        var t = AppModel.files.items()[i];
+        if( t ){
+          AppModel.fileEdit.path(t.path);
+          AppModel.fileEdit.name(t.name());
+          AppModel.fileEdit.tab("logs");
+        }
+      }
       return false;
     });
     AppModel.on("click",".fileBrowser .ion-ios7-cloud-upload-outline", function(){
       var i = $(this).parentsUntil(".file").parent().index();
-      var t = AppModel.files.items()[i];
-      AppModel.fileEdit.path(t.path);
-      AppModel.fileEdit.name(t.name());
-      AppModel.fileEdit.tab("edit");
+      if( i > -1 ){
+        var t = AppModel.files.items()[i];
+        if( t ){
+          AppModel.fileEdit.path(t.path);
+          AppModel.fileEdit.name(t.name());
+          AppModel.fileEdit.tab("edit");
+        }
+      }
       return false;
     });
     AppModel.on("click",".fileBrowser .ion-ios7-trash-outline", function(){
       var i = $(this).parentsUntil(".file").parent().index();
-      var t = AppModel.files.items()[i];
-      var loc = AppModel.navigation.location();
-      AppModel.navigation.location("");
-      api.trashFile(t.path).always(function(){
-        AppModel.navigation.location(loc);
-      });
+      if( i > -1 ){
+        var t = AppModel.files.items()[i];
+        if( t ){
+          var loc = AppModel.navigation.location();
+          AppModel.navigation.location("");
+          api.trashFile(t.path).always(function(){
+            AppModel.navigation.location(loc);
+          });
+        }
+      }
       return false;
     });
     AppModel.on("click",".fileBrowser .file", function(){
       var i = $(this).index();
-      var t = AppModel.files.items()[i];
-      AppModel.fileEdit.path(t.path);
-      AppModel.fileEdit.name(t.name());
-      AppModel.fileEdit.tab("zoom");
+      if( i > -1 ){
+        var t = AppModel.files.items()[i];
+        if( t ){
+          AppModel.fileEdit.path(t.path);
+          AppModel.fileEdit.name(t.name());
+          AppModel.fileEdit.tab("zoom");
+        }
+      }
       return false;
     });
     AppModel.on("click",".fileEdit .ion-ios7-cloud-upload-outline", function(){
@@ -330,10 +350,12 @@
 
     AppModel.on("mouseenter",".fileBrowser .file", function(){
       var i = $(this).index();
-      var t = AppModel.files.items()[i];
-      /*
-       console.log(t)
-       */
+      if( i > -1 ){
+        var t = AppModel.files.items()[i];
+        /*
+         console.log(t)
+         */
+      }
       return false;
     });
 
