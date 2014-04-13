@@ -23,7 +23,6 @@
       that.theme.loaded = ko.observable(false);
       that.theme.name = ko.observable("");
       that.theme.path = ko.observable("");
-      that.theme.path_prev = ko.observable("");
       that.theme.content_prev = ko.observable("");
       that.theme.content = ko.observable("");
 
@@ -172,7 +171,6 @@
       return false;
     });
     AppModel.theme.name.subscribe(function(v){
-      AppModel.theme.path_prev( AppModel.theme.path() );
       AppModel.theme.path('/assets/themes/'+v+'.bootstrap.min.css');
       localStorage.setValue("preferred_theme",v);
       AppModel.one("transitionend",".themeSelector ul", $.debounce( 500, function(){
@@ -182,7 +180,6 @@
     AppModel.theme.path.subscribe(function(v){
       AppModel.theme.loaded( false );
       setTimeout(function(){
-        AppModel.theme.path_prev( "" );
         AppModel.theme.loaded( true );
       },500)
     });
