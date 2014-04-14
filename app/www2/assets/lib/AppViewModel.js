@@ -91,8 +91,7 @@ define([],function(){
           return r;
         },e);
         e.preview_url = ko.computed(function(){
-          if( this.type() == "file" )
-            return "/read_file"+this.path;
+            return "/read_file"+this.path+"?q="+(new Date());
         },e);
 
         that.files.items.push(e);
@@ -106,10 +105,7 @@ define([],function(){
     that.fileEdit.name = ko.observable("");
     that.fileEdit.logs = ko.observableArray([]);
     that.fileEdit.preview_url = ko.computed(function(){
-      return "/read_file"+this.path();
-    },that.fileEdit);
-    that.fileEdit.edit_url = ko.computed(function(){
-      return "/edit_file"+this.path();
+      return "/read_file"+this.path()+"?q="+(new Date());
     },that.fileEdit);
 
     that.navigation = {};
