@@ -178,7 +178,7 @@
     AppModel.on("click",".fileBrowser .file", function(){
       var item = find_item($(this).index());
       if( item ){
-        AppModel.fileEdit.path(item.path);
+        AppModel.fileEdit.path(item.path());
         AppModel.fileEdit.name(item.name());
         AppModel.fileEdit.tab("zoom");
       }
