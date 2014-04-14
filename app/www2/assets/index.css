@@ -120,15 +120,20 @@
     padding-left: 10px;
     padding-right: 10px;
 }
-.fileBrowser .display-thumbs .directory a i{
+.fileBrowser .display-thumbs .directory i{
     vertical-align: middle;
-    opacity: 0.3;
+    opacity: 0.1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 .fileBrowser .display-thumbs .directory a:hover{
     text-decoration: none;
 }
-.fileBrowser .display-thumbs .directory:hover a i{
-    opacity: 1;
+.fileBrowser .display-thumbs .directory:hover i{
+    opacity: 0.2;
 }
 
 
@@ -158,14 +163,24 @@
 .fileBrowser .display-thumbs.size-3 .directory{
     width: 280px;
 }
-.fileBrowser .display-thumbs.size-1 .directory a i{
-    font-size: 2em;
+.fileBrowser .display-thumbs.size-1 .directory a{
+    font-size: 25px;
 }
-.fileBrowser .display-thumbs.size-2 .directory a i{
-    font-size: 3em;
+.fileBrowser .display-thumbs.size-2 .directory a{
+    font-size: 30px;
 }
-.fileBrowser .display-thumbs.size-3 .directory a i{
-    font-size: 4em;
+.fileBrowser .display-thumbs.size-3 .directory a{
+    font-size: 35px;
+}
+.fileBrowser .display-thumbs.size-1 .directory i{
+    font-size: 7em;
+}
+.fileBrowser .display-thumbs.size-2 .directory i{
+    font-size: 11em;
+}
+.fileBrowser .display-thumbs.size-3 .directory i{
+    font-size: 22em;
+    line-height: 90%;
 }
 .fileBrowser .display-thumbs.size-1 .directory a span{
     font-size: 0.7em;
