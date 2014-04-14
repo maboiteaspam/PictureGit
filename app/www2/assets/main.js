@@ -216,29 +216,23 @@
       $('.fileEdit form input').attr("disabled","disabled");
       $('.fileEdit form textarea').attr("disabled","disabled");
 
-      var img = $('.fileEdit form input[type="file"]');
-      var txt = $('.fileEdit form textarea');
-      var data = new FormData();
-      data.append(img.attr("name"), img[0].files[0]);
-      data.append(txt.attr("name"), txt.val());
+      var img = $('.fileEdit form input[type="file"]')[0].files[0];
+      var txt = $('.fileEdit form textarea').val();
+      var path = AppModel.fileEdit.path();
 
       AppModel.loaded(false);
-      $.ajax({
-        'type':'POST',
-        'data': data,
-        'url': $(this).attr("action"),
-        'contentType': false,
-        'processData': false
-      }).always(function(){
-        $('.fileEdit form input').attr("disabled",null);
-        $('.fileEdit form textarea').attr("disabled",null);
-        var h = $(".fileEdit .preview img").attr("src");
-        $(".fileEdit .preview img").attr("src","");
-        $(".fileEdit .preview img").attr("src",h+"?q="+(new Date()));
-        $('.fileEdit').removeClass("loading");
-        $(".fileEdit .edit form").get(0).reset();
-        AppModel.reload();
-      })
+      api.editPicture(path,txt,img)
+          .always(function(){
+            $('.fileEdit form input').attr("disabled",null);
+            $('.fileEdit form textarea').attr("disabled",null);
+
+            AppModel.fileEdit.path("");
+            AppModel.fileEdit.path(path);
+
+            $('.fileEdit').removeClass("loading");
+            $(".fileEdit .edit form").get(0).reset();
+            AppModel.reload();
+          });
       return false;
     });
 
