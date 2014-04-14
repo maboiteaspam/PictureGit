@@ -73,16 +73,16 @@ define([],function(){
       that.files.items.removeAll();
       for( var n in items ){
         var e = {};
-        e.path = items[n];
+        e.path = ko.observable(items[n]);
         e.type = ko.computed(function(){
-          return this.path.match(/\/$/)?'directory':'file';
+          return this.path().match(/\/$/)?'directory':'file';
         },e);
         e.name = ko.computed(function(){
           var r = "";
           if( this.type() == "directory" )
-            r = this.path.match(/[/]([^/]+)[/]$/)[1];
+            r = this.path().match(/[/]([^/]+)[/]$/)[1];
           else
-            r = this.path.match(/[/]([^/]*)$/)[1];
+            r = this.path().match(/[/]([^/]*)$/)[1];
           return r;
         },e);
         e.short_name = ko.computed(function(){
@@ -91,12 +91,21 @@ define([],function(){
           return r;
         },e);
         e.preview_url = ko.computed(function(){
-          if( this.path.match(/^http/))
-            return this.path;
-            return "/read_file"+this.path;
+          if( this.path().match(/^http/))
+            return this.path();
+            return "/read_file"+this.path();
         },e);
 
         that.files.items.push(e);
+      }
+    };
+    that.files.findByPath = function(p){
+      var items = that.files.items();
+      for( var n in items ){
+        var e = items[n];
+        if( e.path() == p ){
+          return e;
+        }
       }
     };
 
