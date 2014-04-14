@@ -72,7 +72,7 @@
       var i = $(this).index();
       if( i > -1 ){
         var t = AppModel.files.items()[i];
-        if( t ) AppModel.navigation.location(t.path);
+        if( t ) AppModel.navigation.location(t.path());
       }
       return false;
     });
@@ -150,7 +150,7 @@
     AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
       var item = find_item($(this).parentsUntil(".file").parent().index());
       if( item ){
-        AppModel.fileEdit.path(item.path);
+        AppModel.fileEdit.path(item.path());
         AppModel.fileEdit.name(item.name());
         AppModel.fileEdit.tab("logs");
       }
@@ -159,7 +159,7 @@
     AppModel.on("click",".fileBrowser .ion-ios7-cloud-upload-outline", function(){
       var item = find_item($(this).parentsUntil(".file").parent().index());
       if( item ){
-        AppModel.fileEdit.path(item.path);
+        AppModel.fileEdit.path(item.path());
         AppModel.fileEdit.name(item.name());
         AppModel.fileEdit.tab("edit");
       }
@@ -169,7 +169,7 @@
       var item = find_item($(this).parentsUntil(".file").parent().index());
       if( item ){
         AppModel.loaded(false);
-        api.trashFile(item.path).always(function(){
+        api.trashFile(item.path()).always(function(){
           AppModel.reload();
         });
       }
@@ -226,12 +226,11 @@
             $('.fileEdit form input').attr("disabled",null);
             $('.fileEdit form textarea').attr("disabled",null);
 
-            AppModel.fileEdit.path("");
-            AppModel.fileEdit.path(path);
+            AppModel.fileEdit.path(path+"?q="+(new Date()));
+            AppModel.files.findByPath(path).path(path+"?q="+(new Date()));
 
             $('.fileEdit').removeClass("loading");
             $(".fileEdit .edit form").get(0).reset();
-            AppModel.reload();
           });
       return false;
     });
