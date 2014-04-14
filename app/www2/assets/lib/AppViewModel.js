@@ -93,7 +93,7 @@ define([],function(){
         e.preview_url = ko.computed(function(){
           if( this.path.match(/^http/))
             return this.path;
-            return "/read_file"+this.path+"?q="+(new Date());
+            return "/read_file"+this.path;
         },e);
 
         that.files.items.push(e);
@@ -109,7 +109,7 @@ define([],function(){
     that.fileEdit.preview_url = ko.computed(function(){
       if( this.path().match(/^http/))
         return this.path();
-      return "/read_file"+this.path()+"?q="+(new Date());
+      return "/read_file"+this.path();
     },that.fileEdit);
 
     that.navigation = {};
