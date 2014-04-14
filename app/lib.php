@@ -46,9 +46,30 @@ function respond_file($path){
     }else{
         header('Content-type: '.mime_content_type($path));
     }
-
-    $result = file_get_contents($path);
+    $result = etaged_file($path);
     return $result;
+}
+function etaged_file($path){
+    $last_modified  = filemtime( $path );
+
+    $modified_since = ( isset( $_SERVER["HTTP_IF_MODIFIED_SINCE"] )
+        ? strtotime( $_SERVER["HTTP_IF_MODIFIED_SINCE"] ) : false );
+    $etagHeader     = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] )
+        ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
+
+    $etag = sha1(sha1_file($path).$path.$last_modified);
+
+    //set last-modified header
+    header( "Last-Modified: ".gmdate( "D, d M Y H:i:s", $last_modified )." GMT" );
+    //set etag-header
+    header( "Etag: ".$etag );
+
+    // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
+    if ( (int)$modified_since === (int)$last_modified && $etag === $etagHeader ) {
+        header( "HTTP/1.1 304 Not Modified" );
+        return "";
+    }
+    return file_get_contents($path);
 }
 
 function trash_file($path){
