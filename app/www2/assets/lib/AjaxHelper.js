@@ -11,6 +11,24 @@ define([],function(){
       });
     };
 
+    that.postJSON = function(url,data){
+      return $.ajax({
+        'type':'POST',
+        "url":base_url+url,
+        "data":data
+      });
+    };
+
+    that.uploadJSON = function(url,data){
+      return $.ajax({
+        'type':'POST',
+        "url":base_url+url,
+        'contentType': false,
+        'processData': false,
+        "data":data
+      });
+    };
+
     that.getCSS = function(url,data){
       return $.ajax({
         "url":base_url+url,
