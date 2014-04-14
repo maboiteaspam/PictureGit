@@ -91,6 +91,8 @@ define([],function(){
           return r;
         },e);
         e.preview_url = ko.computed(function(){
+          if( this.path.match(/^http/))
+            return this.path;
             return "/read_file"+this.path+"?q="+(new Date());
         },e);
 
@@ -105,6 +107,8 @@ define([],function(){
     that.fileEdit.name = ko.observable("");
     that.fileEdit.logs = ko.observableArray([]);
     that.fileEdit.preview_url = ko.computed(function(){
+      if( this.path().match(/^http/))
+        return this.path();
       return "/read_file"+this.path()+"?q="+(new Date());
     },that.fileEdit);
 
