@@ -28,6 +28,12 @@ define([],function(){
     that.trashFile = function(path){
       return ajaxHelper.getJSON("/trash_file/"+path);
     };
+    that.editPicture = function(path,message,file){
+      var data = new FormData();
+      data.append("img", file);
+      data.append("comment", message);
+      return ajaxHelper.uploadJSON("/edit_file"+path,data);
+    };
     that.fetchThemes = function(){
       return ajaxHelper.getJSON("/list_bootstrap_themes");
     };
