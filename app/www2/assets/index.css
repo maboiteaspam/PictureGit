@@ -307,3 +307,58 @@
 .fileEdit .edit textarea{
     height: 130px;
 }
+
+
+
+.display-table .ion-ios7-folder-outline{
+    font-size: 2.7em;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.display-table .ion-ios7-trash-outline,
+.display-table .ion-ios7-recording-outline,
+.display-table .ion-ios7-cloud-upload-outline,
+.display-table .ion-ios7-photos-outline{
+    font-size: 2em;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.display-table .ion-ios7-trash-outline,
+.display-table .ion-ios7-recording-outline,
+.display-table .ion-ios7-cloud-upload-outline{
+    font-size: 1.5em;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0.5;
+    line-height: 2em;
+}
+.display-table .ion-ios7-trash-outline:hover,
+.display-table .ion-ios7-recording-outline:hover,
+.display-table .ion-ios7-cloud-upload-outline:hover{
+    opacity: 1;
+}
+.edit-col,
+.logs-col,
+.trash-col{
+    text-align: right;
+    width: 50px;
+}
+.name-col{
+    vertical-align: middle !important;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+th.type-col,
+th.name-col{
+    text-transform: uppercase;
+    font-weight: bold;
+    vertical-align: middle !important;
+}
+.display-table .ion-ios7-photos-outline,
+.display-table .ion-ios7-folder-outline{
+    opacity: 0.4;
+}
+.display-table tr:hover .ion-ios7-photos-outline,
+.display-table tr:hover .ion-ios7-folder-outline{
+    opacity: 1;
+}
