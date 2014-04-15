@@ -46,18 +46,24 @@
         <!-- header -->
         <div class="navbar navbar-inverse navbar-fixed-top t-color">
             <div class="container">
+
                 <div class="navbar-header">
                     <a class="navbar-brand t-font" href="#">Picture Git</a>
                 </div>
+
                 <div class="navbar-collapse collapse pull-right">
                     <ul class="nav navbar-nav">
 
-                        <li data-bind="with:navigation, css: {disabled:navigation.location()=='/'}" class="up">
+                        <!-- up -->
+                        <li data-bind="with:navigation, css: {disabled:navigation.location()=='/'}"
+                            class="up">
                             <a href="#" class="t-font"
                                     ><span class=" ion-ios7-arrow-thin-up"></span>Up
                             </a>
                         </li>
+                        <!-- up -->
 
+                        <!-- new -->
                         <li class="dropdown newSelector">
                             <a href="#" class="dropdown-toggle t-color t-font"
                                data-toggle="dropdown">New <b class="caret"></b></a>
@@ -70,8 +76,11 @@
                                 </li>
                             </ul>
                         </li>
+                        <!-- new -->
 
-                        <li class="dropdown displaySelector" data-bind="with: files">
+                        <!-- Display -->
+                        <li class="dropdown displaySelector"
+                            data-bind="with: files">
                             <a href="#" class="dropdown-toggle t-font"
                                data-toggle="dropdown">Display <b class="caret"></b></a>
                             <ul class="dropdown-menu pull-right">
@@ -85,19 +94,31 @@
                                 </li>
                             </ul>
                         </li>
+                        <!-- Display -->
 
-                        <li class="dropdown sizeSelector" data-bind="with: files, css: {disabled:files.display()!='thumbs'}">
+                        <!-- Size -->
+                        <li class="dropdown sizeSelector"
+                            data-bind="with: files, css: {disabled:files.display()!='thumbs'}">
                             <a href="#" class="dropdown-toggle t-font"
                                data-toggle="dropdown"
                                     >Size <b class="caret"></b></a>
                             <ul class="dropdown-menu pull-right">
-                                <li data-size="size-1" data-bind="css:{active:size()=='size-1'}"><a>Size 1</a></li>
-                                <li data-size="size-2" data-bind="css:{active:size()=='size-2'}"><a>Size 2</a></li>
-                                <li data-size="size-3" data-bind="css:{active:size()=='size-3'}"><a>Size 3</a></li>
+                                <li data-size="size-1"
+                                    data-bind="css:{active:size()=='size-1'}"
+                                        ><a>Size 1</a></li>
+                                <li data-size="size-2"
+                                    data-bind="css:{active:size()=='size-2'}"
+                                        ><a>Size 2</a></li>
+                                <li data-size="size-3"
+                                    data-bind="css:{active:size()=='size-3'}"
+                                        ><a>Size 3</a></li>
                             </ul>
                         </li>
+                        <!-- Size -->
 
-                        <li class="dropdown themeSelector" data-bind="with: themes">
+                        <!-- Themes -->
+                        <li class="dropdown themeSelector"
+                            data-bind="with: themes">
                             <a href="#" class="dropdown-toggle t-color t-font"
                                data-toggle="dropdown">Themes <b class="caret"></b></a>
                             <ul class="dropdown-menu pull-right t-all" data-bind="foreach: items">
@@ -106,6 +127,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <!-- Themes -->
 
                     </ul>
                 </div>
@@ -175,7 +197,7 @@
                         <ul data-bind="foreach: items">
                             <li class="t-all" data-bind="css:type()">
                                 <!-- directory -->
-                                <div data-bind="if: type()=='directory'">
+                                <div data-bind="if: type()=='directory', css:{hidden:type()!='directory'}">
                                     <i class="ion-ios7-folder-outline t-all"></i>
                                     <a href="#" data-bind="attr:{title:name}">
                                         <span data-bind="text:short_name"></span>
@@ -187,7 +209,7 @@
                                 </div>
                                 <!-- directory -->
                                 <!-- file -->
-                                <div data-bind="if: type()=='file'">
+                                <div data-bind="if: type()=='file', css:{hidden:type()!='file'}">
                                     <div class="ion-ios7-cloud-outline"></div>
                                     <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
                                     <div class="actions  t-all">
