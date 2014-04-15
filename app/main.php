@@ -176,6 +176,7 @@ $routes["catch_all"] = function($path) use($www_dir){
     if( is_file($www_dir.$path) ){
         return respond_file($www_dir.$path);
     }
+    header ("HTTP/1.0 404 Not Found");
     return false;
 };
 
