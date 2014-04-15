@@ -36,17 +36,19 @@
       return false;
     });
     AppModel.theme.name.subscribe(function(v){
-      AppModel.theme.path('/assets/themes/'+v+'.bootstrap.min.css');
-      localStorage.setValue("preferred_theme",v);
-      AppModel.one("transitionend",".themeSelector ul", $.debounce( 200, function(){
-        $(".themeSelector ul").scrollTo( $(".themeSelector .active").get(0), 200, {easing:'easeOutExpo'} );
-      }));
-    });
-    AppModel.theme.path.subscribe(function(){
       AppModel.theme.loaded( false );
-      setTimeout(function(){
+      var url = '/assets/themes/'+v+'.bootstrap.min.css';
+      ajaxHelper.getCSS(url).always(function(css){
+        AppModel.theme.content_prev( AppModel.theme.content() );
+        AppModel.theme.content(css);
+        AppModel.theme.content_prev("");
         AppModel.theme.loaded( true );
-      },1000);
+        setTimeout(function(){
+          $(".themeSelector ul")
+              .scrollTo( $(".themeSelector .active").get(0), 200, {easing:'easeOutExpo'} );
+        },450);
+      });
+      localStorage.setValue("preferred_theme",v);
     });
 
     AppModel.on("click",".displaySelector ul li", function(){

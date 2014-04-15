@@ -8,7 +8,6 @@ define([],function(){
     that.theme = {};
     that.theme.loaded = ko.observable(false);
     that.theme.name = ko.observable("");
-    that.theme.path = ko.observable("");
     that.theme.content_prev = ko.observable("");
     that.theme.content = ko.observable("");
 
