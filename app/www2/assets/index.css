@@ -350,6 +350,7 @@
     width: 50px;
 }
 .name-col{
+    width: 100%;
     vertical-align: middle !important;
     font-size: 1.2em;
     cursor: pointer;
