@@ -149,8 +149,24 @@
       }
       return false;
     };
+    var trash_item = function(path){
+      AppModel.modal.display(true);
+      $(".modal .confirm").one("click",function(){
+        AppModel.fileEdit.tab("");
+        AppModel.modal.display(false);
+        AppModel.modal.title("");
+        api.trashFile(path).always(function(){
+          AppModel.reload();
+        });
+      });
+    };
     AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
-      var item = find_item($(this).parentsUntil(".file").parent().index());
+      var item;
+      if( $(this).parentsUntil(".file").is("tr") ){
+        item = find_item($(this).parentsUntil(".file").index());
+      }else{
+        item = find_item($(this).parentsUntil(".file").parent().index());
+      }
       if( item ){
         AppModel.fileEdit.path(item.path());
         AppModel.fileEdit.name(item.name());
@@ -159,7 +175,12 @@
       return false;
     });
     AppModel.on("click",".fileBrowser .ion-ios7-cloud-upload-outline", function(){
-      var item = find_item($(this).parentsUntil(".file").parent().index());
+      var item;
+      if( $(this).parentsUntil(".file").is("tr") ){
+        item = find_item($(this).parentsUntil(".file").index());
+      }else{
+        item = find_item($(this).parentsUntil(".file").parent().index());
+      }
       if( item ){
         AppModel.fileEdit.path(item.path());
         AppModel.fileEdit.name(item.name());
@@ -168,12 +189,15 @@
       return false;
     });
     AppModel.on("click",".fileBrowser .ion-ios7-trash-outline", function(){
-      var item = find_item($(this).parentsUntil(".file").parent().index());
+      var item;
+      if( $(this).parentsUntil(".file").is("tr") ){
+        item = find_item($(this).parentsUntil(".file").index());
+      }else{
+        item = find_item($(this).parentsUntil(".file").parent().index());
+      }
       if( item ){
-        AppModel.loaded(false);
-        api.trashFile(item.path()).always(function(){
-          AppModel.reload();
-        });
+        AppModel.modal.title(item.name());
+        trash_item(item.path());
       }
       return false;
     });
@@ -205,11 +229,8 @@
       return false;
     });
     AppModel.on("click",".fileEdit .ion-ios7-trash-outline", function(){
-      AppModel.fileEdit.tab("");
-      AppModel.loaded(false);
-      api.trashFile(AppModel.fileEdit.path()).always(function(){
-        AppModel.reload();
-      });
+      AppModel.modal.title(AppModel.fileEdit.name());
+      trash_item(AppModel.fileEdit.path());
       return false;
     });
     AppModel.on("submit",".fileEdit form", function(ev){
@@ -236,6 +257,15 @@
           });
       return false;
     });
+
+    $(".modal [data-dismiss]").click(function(){
+      AppModel.modal.display(false);
+    });
+    AppModel.modal.display.subscribe(function(value){
+      AppModel.files.loaded( !value );
+    });
+
+
 
 
     var preferred_theme = localStorage.getValue("preferred_theme");

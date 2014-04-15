@@ -246,14 +246,19 @@
     top: 19;
 }
 .fileEdit .toolbar a{
-    font-size: 20px;
+    font-size: 29px;
     width: 100%;
     margin-top: 5;
     box-shadow: 0px 0px 3px white;
+    padding: 11;
 }
 .fileEdit.active{
     opacity: 1;
     z-index: auto;
+}
+.fileEdit .tabs{
+    padding: 25px;
+    overflow: hidden;
 }
 .fileEdit .tabs > div{
     opacity: 0;
@@ -261,12 +266,6 @@
     display: none;
     width: 450px;
     height: 450px;
-    top: 50%;
-    left: 50%;
-    margin-top: -225px;
-    margin-left: -225px;
-    position: absolute;
-    box-shadow: 0px 0px 5px white;
 }
 .fileEdit.active .tabs .active{
     opacity: 1;
@@ -276,6 +275,7 @@
 
 .fileEdit .zoom img{
     width: 100%;
+    box-shadow: 0 0px 6px whitesmoke;
 }
 
 .fileEdit .edit .preview{
@@ -367,4 +367,21 @@ th.name-col{
 .display-table tr:hover .ion-ios7-photos-outline,
 .display-table tr:hover .ion-ios7-folder-outline{
     opacity: 1;
+}
+
+
+
+
+.modal{
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -200px !important;
+    margin-left: -225px !important;
+    width: 450px !important;
+    height: 400px !important;
+    overflow: hidden !important;
+    display: block !important;
+}
+.modal-footer{
+    margin-top:0 !important;
 }

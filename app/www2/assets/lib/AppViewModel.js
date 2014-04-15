@@ -5,6 +5,14 @@ define([],function(){
     that.loaded = ko.observable(false);
     that.ready = ko.observable(false);
 
+    that.modal = {};
+    that.modal.display = ko.observable(false);
+    that.modal.title = ko.observable("");
+    that.modal.message = ko.observable("");
+    that.modal.is_valid = ko.computed(function(){
+      return this.display() && this.message()!="";
+    },that.modal);
+
     that.theme = {};
     that.theme.loaded = ko.observable(false);
     that.theme.name = ko.observable("");
