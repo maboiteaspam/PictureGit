@@ -264,7 +264,7 @@
 
 
 
-.fileEdit{
+.fileDetail{
     opacity: 0;
     z-index: -1;
     position: fixed;
@@ -275,45 +275,45 @@
     margin-top: -250px;
     margin-left: -250px;
 }
-.fileEdit .toolbar{
+.fileDetail .toolbar{
     position: absolute;
     right: -27;
     top: 19;
 }
-.fileEdit .toolbar a{
+.fileDetail .toolbar a{
     font-size: 29px;
     width: 100%;
     margin-top: 5;
     box-shadow: 0px 0px 3px white;
     padding: 11;
 }
-.fileEdit.active{
+.fileDetail.active{
     opacity: 1;
     z-index: auto;
 }
-.fileEdit .tabs{
+.fileDetail .tabs{
     padding: 25px;
     overflow: hidden;
 }
-.fileEdit .tabs > div{
+.fileDetail .tabs > div{
     opacity: 0;
     z-index: -1;
     display: none;
     width: 450px;
     height: 450px;
 }
-.fileEdit.active .tabs .active{
+.fileDetail.active .tabs .active{
     opacity: 1;
     z-index: auto;
     display: block;
 }
 
-.fileEdit .zoom img{
+.fileDetail .zoom img{
     width: 100%;
     box-shadow: 0 0px 6px whitesmoke;
 }
 
-.fileEdit .edit .preview{
+.fileDetail .edit .preview{
     width: 120px;
     height: 120px;
     text-align: center;
@@ -325,27 +325,27 @@
     margin-left: 165px;
     position: relative;
 }
-.fileEdit .edit .preview img{
+.fileDetail .edit .preview img{
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
 }
-.fileEdit.loading .edit .preview img{
+.fileDetail.loading .edit .preview img{
     opacity: 0;
 }
 
-.fileEdit .edit form{
+.fileDetail .edit form{
     width: 80%;
     margin-left: 10%;
 }
 
 
-.fileEdit .edit .form-control{
+.fileDetail .edit .form-control{
     font-size: 16px;
 }
 
-.fileEdit .edit textarea{
+.fileDetail .edit textarea{
     height: 130px;
 }
 

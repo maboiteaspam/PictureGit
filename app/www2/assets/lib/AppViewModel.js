@@ -120,16 +120,16 @@ define([],function(){
     };
 
 
-    that.fileEdit = {};
-    that.fileEdit.tab = ko.observable("");
-    that.fileEdit.path = ko.observable("");
-    that.fileEdit.name = ko.observable("");
-    that.fileEdit.logs = ko.observableArray([]);
-    that.fileEdit.preview_url = ko.computed(function(){
+    that.fileDetail = {};
+    that.fileDetail.tab = ko.observable("");
+    that.fileDetail.path = ko.observable("");
+    that.fileDetail.name = ko.observable("");
+    that.fileDetail.logs = ko.observableArray([]);
+    that.fileDetail.preview_url = ko.computed(function(){
       if( this.path().match(/^http/))
         return this.path();
       return "/read_file"+this.path();
-    },that.fileEdit);
+    },that.fileDetail);
 
     that.navigation = {};
     that.navigation.location = ko.observable("");

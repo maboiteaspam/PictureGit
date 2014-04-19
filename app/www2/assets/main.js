@@ -148,8 +148,8 @@
 
 
 
-    AppModel.fileEdit.preview_url.subscribe(function(){
-      $(".fileEdit .edit form").get(0).reset();
+    AppModel.fileDetail.preview_url.subscribe(function(){
+      $(".fileDetail .edit form").get(0).reset();
     });
     var find_item = function(i){
       if( i > -1 ){
@@ -163,7 +163,7 @@
     var trash_item = function(path){
       AppModel.modal.display(true);
       $(".modal .confirm").one("click",function(){
-        AppModel.fileEdit.tab("");
+        AppModel.fileDetail.tab("");
         AppModel.modal.display(false);
         AppModel.modal.title("");
         api.trashFile(path).always(function(){
@@ -179,9 +179,9 @@
         item = find_item($(this).parentsUntil(".file").parent().index());
       }
       if( item ){
-        AppModel.fileEdit.path(item.path());
-        AppModel.fileEdit.name(item.name());
-        AppModel.fileEdit.tab("logs");
+        AppModel.fileDetail.path(item.path());
+        AppModel.fileDetail.name(item.name());
+        AppModel.fileDetail.tab("logs");
       }
       return false;
     });
@@ -193,9 +193,9 @@
         item = find_item($(this).parentsUntil(".file").parent().index());
       }
       if( item ){
-        AppModel.fileEdit.path(item.path());
-        AppModel.fileEdit.name(item.name());
-        AppModel.fileEdit.tab("edit");
+        AppModel.fileDetail.path(item.path());
+        AppModel.fileDetail.name(item.name());
+        AppModel.fileDetail.tab("edit");
       }
       return false;
     });
@@ -215,56 +215,56 @@
     AppModel.on("click",".fileBrowser .file", function(){
       var item = find_item($(this).index());
       if( item ){
-        AppModel.fileEdit.path(item.path());
-        AppModel.fileEdit.name(item.name());
-        AppModel.fileEdit.tab("zoom");
+        AppModel.fileDetail.path(item.path());
+        AppModel.fileDetail.name(item.name());
+        AppModel.fileDetail.tab("zoom");
       }
       return false;
     });
-    AppModel.on("click",".fileEdit .ion-ios7-cloud-upload-outline", function(){
-      AppModel.fileEdit.tab("edit");
+    AppModel.on("click",".fileDetail .ion-ios7-cloud-upload-outline", function(){
+      AppModel.fileDetail.tab("edit");
       return false;
     });
-    AppModel.on("click",".fileEdit .ion-ios7-recording-outline", function(){
-      AppModel.fileEdit.tab("logs");
+    AppModel.on("click",".fileDetail .ion-ios7-recording-outline", function(){
+      AppModel.fileDetail.tab("logs");
       return false;
     });
-    AppModel.on("click",".fileEdit .ion-ios7-eye", function(){
-      AppModel.fileEdit.tab("zoom");
+    AppModel.on("click",".fileDetail .ion-ios7-eye", function(){
+      AppModel.fileDetail.tab("zoom");
       return false;
     });
-    AppModel.on("click",".fileEdit .ion-ios7-close-outline", function(){
-      AppModel.fileEdit.tab("");
-      AppModel.fileEdit.path("");
-      AppModel.fileEdit.name("");
+    AppModel.on("click",".fileDetail .ion-ios7-close-outline", function(){
+      AppModel.fileDetail.tab("");
+      AppModel.fileDetail.path("");
+      AppModel.fileDetail.name("");
       return false;
     });
-    AppModel.on("click",".fileEdit .ion-ios7-trash-outline", function(){
-      AppModel.modal.title(AppModel.fileEdit.name());
-      trash_item(AppModel.fileEdit.path());
+    AppModel.on("click",".fileDetail .ion-ios7-trash-outline", function(){
+      AppModel.modal.title(AppModel.fileDetail.name());
+      trash_item(AppModel.fileDetail.path());
       return false;
     });
-    AppModel.on("submit",".fileEdit form", function(ev){
+    AppModel.on("submit",".fileDetail form", function(ev){
       ev.preventDefault();
-      $('.fileEdit').addClass("loading");
-      $('.fileEdit form input').attr("disabled","disabled");
-      $('.fileEdit form textarea').attr("disabled","disabled");
+      $('.fileDetail').addClass("loading");
+      $('.fileDetail form input').attr("disabled","disabled");
+      $('.fileDetail form textarea').attr("disabled","disabled");
 
-      var img = $('.fileEdit form input[type="file"]')[0].files[0];
-      var txt = $('.fileEdit form textarea').val();
-      var path = AppModel.fileEdit.path();
+      var img = $('.fileDetail form input[type="file"]')[0].files[0];
+      var txt = $('.fileDetail form textarea').val();
+      var path = AppModel.fileDetail.path();
 
       AppModel.loaded(false);
       api.editPicture(path,txt,img)
           .always(function(){
-            $('.fileEdit form input').attr("disabled",null);
-            $('.fileEdit form textarea').attr("disabled",null);
+            $('.fileDetail form input').attr("disabled",null);
+            $('.fileDetail form textarea').attr("disabled",null);
 
-            AppModel.fileEdit.path(path+"?q="+(new Date()));
+            AppModel.fileDetail.path(path+"?q="+(new Date()));
             AppModel.files.findByPath(path).path(path+"?q="+(new Date()));
 
-            $('.fileEdit').removeClass("loading");
-            $(".fileEdit .edit form").get(0).reset();
+            $('.fileDetail').removeClass("loading");
+            $(".fileDetail .edit form").get(0).reset();
           });
       return false;
     });
