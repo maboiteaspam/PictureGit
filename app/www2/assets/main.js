@@ -74,7 +74,10 @@
       var i = $(this).index();
       if( i > -1 ){
         var t = AppModel.files.items()[i];
-        if( t ) AppModel.navigation.location(t.path());
+        if( t ){
+          AppModel.pager.current_page(1);
+          AppModel.navigation.location(t.path());
+        }
       }
       return false;
     });
@@ -83,7 +86,10 @@
         var i = $(this).index();
         if( i > -1 ){
           var t = AppModel.navigation.breadcrumb()[i];
-          if( t ) AppModel.navigation.location(t.path);
+          if( t ){
+            AppModel.pager.current_page(1);
+            AppModel.navigation.location(t.path);
+          }
         }
       }
       return false;
