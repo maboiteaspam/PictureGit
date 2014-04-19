@@ -232,6 +232,22 @@
     margin-right: 30px;
 }
 
+.fileBrowser .sizeSelector{
+    margin: 21px 0;
+}
+
+.fileBrowser .sizeSelector .size-1{
+    font-size: 10px;
+}
+
+.fileBrowser .sizeSelector .size-2{
+    font-size: 14px;
+}
+
+.fileBrowser .sizeSelector .size-3{
+    font-size: 16px;
+}
+
 
 
 .fileEdit{

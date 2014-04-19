@@ -170,6 +170,28 @@
                     </ul>
                 </div>
                 <!-- Display -->
+                <!-- Size -->
+                <div class="sizeSelector pull-right"
+                     data-bind="css: {disabled:display()!='thumbs'}">
+                    <ul class="nav nav-pills ">
+                        <li class="size-1"
+                            data-size="size-1"
+                            data-bind="css:{active:size()=='size-1'}">
+                            <a href="#" class="ion-arrow-resize"></a>
+                        </li>
+                        <li class="size-2"
+                            data-size="size-2"
+                            data-bind="css:{active:size()=='size-2'}">
+                            <a href="#" class="ion-arrow-resize"></a>
+                        </li>
+                        <li class="size-3"
+                            data-size="size-3"
+                            data-bind="css:{active:size()=='size-3'}">
+                            <a href="#" class="ion-arrow-resize"></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Size -->
             </div>
             <!-- navigation -->
 
