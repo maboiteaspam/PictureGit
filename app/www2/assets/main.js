@@ -300,9 +300,10 @@
       if(!preferred_theme ) AppModel.theme.name( k[0].name );
       AppModel.themes.loaded( true );
     });
+    console.log(AppModel)
     api.fetchConfig().always(function(config){
-      AppModel.pager.items_by_page(config.display.items_by_page)
-      AppModel.config.loaded( true );
+      AppModel.pager.items_by_page(config.display.items_by_page);
+      AppModel.user_config.loaded( true );
       AppModel.navigation.location("/");
     });
 

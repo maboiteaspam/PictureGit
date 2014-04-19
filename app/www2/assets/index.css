@@ -228,12 +228,11 @@
 }
 
 .fileBrowser .displaySelector{
-    margin: 21px 0;
-    margin-right: 30px;
+    margin-left: 15px;
 }
 
 .fileBrowser .sizeSelector{
-    margin: 21px 0;
+    margin-left: 30px;
 }
 
 .fileBrowser .sizeSelector.disabled{
@@ -249,10 +248,6 @@
 }
 
 .fileBrowser .sizeSelector .size-2{
-    font-size: 14px;
-}
-
-.fileBrowser .sizeSelector .size-3{
     font-size: 16px;
 }
 

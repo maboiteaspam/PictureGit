@@ -5,8 +5,8 @@ define([],function(){
     that.loaded = ko.observable(false);
     that.ready = ko.observable(false);
 
-    that.config = {};
-    that.config.loaded = ko.observable(false);
+    that.user_config = {};
+    that.user_config.loaded = ko.observable(false);
 
     that.modal = {};
     that.modal.display = ko.observable(false);
@@ -175,15 +175,15 @@ define([],function(){
       }
     });
     that.theme.loaded.subscribe(function(v){
-      that.loaded( v && that.themes.loaded() && that.files.loaded() && that.config.loaded() );
+      that.loaded( v && that.themes.loaded() && that.files.loaded() && that.user_config.loaded() );
     });
     that.themes.loaded.subscribe(function(v){
-      that.loaded( v && that.theme.loaded() && that.files.loaded() && that.config.loaded() );
+      that.loaded( v && that.theme.loaded() && that.files.loaded() && that.user_config.loaded() );
     });
     that.files.loaded.subscribe(function(v){
-      that.loaded( v && that.theme.loaded() && that.themes.loaded() && that.config.loaded() );
+      that.loaded( v && that.theme.loaded() && that.themes.loaded() && that.user_config.loaded() );
     });
-    that.config.loaded.subscribe(function(v){
+    that.user_config.loaded.subscribe(function(v){
       that.loaded( v && that.theme.loaded() && that.themes.loaded() && that.files.loaded() );
     });
 

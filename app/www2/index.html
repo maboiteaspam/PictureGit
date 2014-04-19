@@ -139,26 +139,31 @@
 
             <!-- navigation -->
             <div class="container-pager">
-                <!-- Pagination items -->
-                <div class="pull-left">
-                    <ul class="nav navbar-nav navigation" data-bind="foreach: $parent.navigation.breadcrumb">
-                        <li data-bind="css:{disabled:active}"><a href="#" class="t-font" data-bind="text: short_name"></a></li>
+                <!-- Size -->
+                <div class="sizeSelector pull-right"
+                     data-bind="css: {disabled:display()!='thumbs'}">
+                    <ul class=" pagination pagination-sm ">
+                        <li class="size-1"
+                            data-size="size-1"
+                            data-bind="css:{active:size()=='size-1'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize">1</a>
+                        </li>
+                        <li class="size-2"
+                            data-size="size-2"
+                            data-bind="css:{active:size()=='size-2'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize">2</a>
+                        </li>
+                        <li class="size-3"
+                            data-size="size-3"
+                            data-bind="css:{active:size()=='size-3'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize">3</a>
+                        </li>
                     </ul>
                 </div>
-                <!-- Pagination items -->
-                <!-- Pagination status -->
-                <div class="pull-right">
-                    <ul class="pagination pagination-sm">
-                        <li><a href="#" data-bind="text:'display '+items().length +' on '+$parent.pager.total_count()+' items'"></a></li>
-                    </ul>
-                    <ul class="items-pager pagination pagination-sm" data-bind="foreach: $parent.pager.items">
-                        <li data-bind="css:{active:selected,disabled:!enabled}"><a href="#" data-bind="text:name"></a></li>
-                    </ul>
-                </div>
-                <!-- Pagination status -->
+                <!-- Size -->
                 <!-- Display -->
                 <div class="displaySelector pull-right">
-                    <ul class="nav nav-pills ">
+                    <ul class=" pagination pagination-sm ">
                         <li data-mode="table"
                             data-bind="css:{active:display()=='table'}">
                             <a href="#" class="ion-ios7-drag"></a>
@@ -170,28 +175,23 @@
                     </ul>
                 </div>
                 <!-- Display -->
-                <!-- Size -->
-                <div class="sizeSelector pull-right"
-                     data-bind="css: {disabled:display()!='thumbs'}">
-                    <ul class="nav nav-pills ">
-                        <li class="size-1"
-                            data-size="size-1"
-                            data-bind="css:{active:size()=='size-1',disabled:display()!='thumbs'}">
-                            <a href="#" class="ion-arrow-resize"></a>
-                        </li>
-                        <li class="size-2"
-                            data-size="size-2"
-                            data-bind="css:{active:size()=='size-2',disabled:display()!='thumbs'}">
-                            <a href="#" class="ion-arrow-resize"></a>
-                        </li>
-                        <li class="size-3"
-                            data-size="size-3"
-                            data-bind="css:{active:size()=='size-3',disabled:display()!='thumbs'}">
-                            <a href="#" class="ion-arrow-resize"></a>
-                        </li>
+                <!-- Pagination status -->
+                <div class="pull-right">
+                    <ul class="items-pager pagination pagination-sm" data-bind="foreach: $parent.pager.items">
+                        <li data-bind="css:{active:selected,disabled:!enabled}"><a href="#" data-bind="text:name"></a></li>
+                    </ul>
+                    <ul class="pagination pagination-sm">
+                        <li><a href="#" data-bind="text:'display '+items().length +' on '+$parent.pager.total_count()+' items'"></a></li>
                     </ul>
                 </div>
-                <!-- Size -->
+                <!-- Pagination status -->
+                <!-- Breadcrumb items -->
+                <div class="pull-left">
+                    <ul class="nav navbar-nav navigation" data-bind="foreach: $parent.navigation.breadcrumb">
+                        <li data-bind="css:{disabled:active}"><a href="#" class="t-font" data-bind="text: short_name"></a></li>
+                    </ul>
+                </div>
+                <!-- Breadcrumb items -->
             </div>
             <!-- navigation -->
 
@@ -276,26 +276,31 @@
 
             <!-- navigation -->
             <div class="container-pager">
-                <!-- Pagination items -->
-                <div class="pull-left">
-                    <ul class="nav navbar-nav navigation" data-bind="foreach: $parent.navigation.breadcrumb">
-                        <li data-bind="css:{disabled:active}"><a href="#" class="t-font" data-bind="text: short_name"></a></li>
+                <!-- Size -->
+                <div class="sizeSelector pull-right"
+                     data-bind="css: {disabled:display()!='thumbs'}">
+                    <ul class=" pagination pagination-sm ">
+                        <li class="size-1"
+                            data-size="size-1"
+                            data-bind="css:{active:size()=='size-1'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize">1</a>
+                        </li>
+                        <li class="size-2"
+                            data-size="size-2"
+                            data-bind="css:{active:size()=='size-2'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize">2</a>
+                        </li>
+                        <li class="size-3"
+                            data-size="size-3"
+                            data-bind="css:{active:size()=='size-3'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize">3</a>
+                        </li>
                     </ul>
                 </div>
-                <!-- Pagination items -->
-                <!-- Pagination status -->
-                <div class="pull-right">
-                    <ul class="pagination pagination-sm">
-                        <li><a href="#" data-bind="text:'display '+items().length +' on '+$parent.pager.total_count()+' items'"></a></li>
-                    </ul>
-                    <ul class="items-pager pagination pagination-sm" data-bind="foreach: $parent.pager.items">
-                        <li data-bind="css:{active:selected,disabled:!enabled}"><a href="#" data-bind="text:name"></a></li>
-                    </ul>
-                </div>
-                <!-- Pagination status -->
+                <!-- Size -->
                 <!-- Display -->
                 <div class="displaySelector pull-right">
-                    <ul class="nav nav-pills ">
+                    <ul class=" pagination pagination-sm ">
                         <li data-mode="table"
                             data-bind="css:{active:display()=='table'}">
                             <a href="#" class="ion-ios7-drag"></a>
@@ -307,28 +312,23 @@
                     </ul>
                 </div>
                 <!-- Display -->
-                <!-- Size -->
-                <div class="sizeSelector pull-right"
-                     data-bind="css: {disabled:display()!='thumbs'}">
-                    <ul class="nav nav-pills ">
-                        <li class="size-1"
-                            data-size="size-1"
-                            data-bind="css:{active:size()=='size-1',disabled:display()!='thumbs'}">
-                            <a href="#" class="ion-arrow-resize"></a>
-                        </li>
-                        <li class="size-2"
-                            data-size="size-2"
-                            data-bind="css:{active:size()=='size-2',disabled:display()!='thumbs'}">
-                            <a href="#" class="ion-arrow-resize"></a>
-                        </li>
-                        <li class="size-3"
-                            data-size="size-3"
-                            data-bind="css:{active:size()=='size-3',disabled:display()!='thumbs'}">
-                            <a href="#" class="ion-arrow-resize"></a>
-                        </li>
+                <!-- Pagination status -->
+                <div class="pull-right">
+                    <ul class="items-pager pagination pagination-sm" data-bind="foreach: $parent.pager.items">
+                        <li data-bind="css:{active:selected,disabled:!enabled}"><a href="#" data-bind="text:name"></a></li>
+                    </ul>
+                    <ul class="pagination pagination-sm">
+                        <li><a href="#" data-bind="text:'display '+items().length +' on '+$parent.pager.total_count()+' items'"></a></li>
                     </ul>
                 </div>
-                <!-- Size -->
+                <!-- Pagination status -->
+                <!-- Breadcrumb items -->
+                <div class="pull-left">
+                    <ul class="nav navbar-nav navigation" data-bind="foreach: $parent.navigation.breadcrumb">
+                        <li data-bind="css:{disabled:active}"><a href="#" class="t-font" data-bind="text: short_name"></a></li>
+                    </ul>
+                </div>
+                <!-- Breadcrumb items -->
             </div>
             <!-- navigation -->
 
