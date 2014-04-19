@@ -95,7 +95,8 @@
       return false;
     });
     AppModel.on("click",".items-pager li", function(){
-      if( !$(this).hasClass("disabled") ){
+      if( !$(this).hasClass("disabled")
+          && !$(this).hasClass("active") ){
         var i = $(this).index();
         if( i > -1 ){
           var t = AppModel.pager.items()[i];
