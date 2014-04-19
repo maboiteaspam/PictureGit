@@ -12,6 +12,6 @@
         "trash":"File deleted by :user_name:\n\nReason is "
     },
     "display":{
-        "items_by_page":60
+        "items_by_page":120
     }
 }
