@@ -176,17 +176,17 @@
                     <ul class="nav nav-pills ">
                         <li class="size-1"
                             data-size="size-1"
-                            data-bind="css:{active:size()=='size-1'}">
+                            data-bind="css:{active:size()=='size-1',disabled:display()!='thumbs'}">
                             <a href="#" class="ion-arrow-resize"></a>
                         </li>
                         <li class="size-2"
                             data-size="size-2"
-                            data-bind="css:{active:size()=='size-2'}">
+                            data-bind="css:{active:size()=='size-2',disabled:display()!='thumbs'}">
                             <a href="#" class="ion-arrow-resize"></a>
                         </li>
                         <li class="size-3"
                             data-size="size-3"
-                            data-bind="css:{active:size()=='size-3'}">
+                            data-bind="css:{active:size()=='size-3',disabled:display()!='thumbs'}">
                             <a href="#" class="ion-arrow-resize"></a>
                         </li>
                     </ul>
@@ -307,6 +307,28 @@
                     </ul>
                 </div>
                 <!-- Display -->
+                <!-- Size -->
+                <div class="sizeSelector pull-right"
+                     data-bind="css: {disabled:display()!='thumbs'}">
+                    <ul class="nav nav-pills ">
+                        <li class="size-1"
+                            data-size="size-1"
+                            data-bind="css:{active:size()=='size-1',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize"></a>
+                        </li>
+                        <li class="size-2"
+                            data-size="size-2"
+                            data-bind="css:{active:size()=='size-2',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize"></a>
+                        </li>
+                        <li class="size-3"
+                            data-size="size-3"
+                            data-bind="css:{active:size()=='size-3',disabled:display()!='thumbs'}">
+                            <a href="#" class="ion-arrow-resize"></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Size -->
             </div>
             <!-- navigation -->
 

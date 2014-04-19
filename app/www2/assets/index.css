@@ -236,6 +236,14 @@
     margin: 21px 0;
 }
 
+.fileBrowser .sizeSelector.disabled{
+    cursor: not-allowed;
+}
+
+.fileBrowser .sizeSelector.disabled ul li{
+    cursor: not-allowed;
+}
+
 .fileBrowser .sizeSelector .size-1{
     font-size: 10px;
 }

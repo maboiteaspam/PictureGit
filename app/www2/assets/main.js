@@ -57,10 +57,14 @@
       localStorage.setValue("preferred_display", mode);
       return false;
     });
-    AppModel.on("click",".sizeSelector ul li", function(){
-      var size = $(this).data("size");
-      AppModel.files.size( size );
-      localStorage.setValue("preferred_size", size);
+    AppModel.on("click",".sizeSelector ul li", function(ev){
+      if( $(this).hasClass("disabled") ){
+        ev.preventDefault();
+      }else{
+        var size = $(this).data("size");
+        AppModel.files.size( size );
+        localStorage.setValue("preferred_size", size);
+      }
       return false;
     });
 
