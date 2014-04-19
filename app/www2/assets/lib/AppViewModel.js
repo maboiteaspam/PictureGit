@@ -42,6 +42,16 @@ define([],function(){
     that.pager.total_count = ko.observable(0);
     that.pager.items_by_page = ko.observable(30);
     that.pager.current_page = ko.observable(1);
+    that.pager.limit_start = ko.computed(function(){
+      var c_page = this.current_page()-1;
+      c_page = c_page<0?0:c_page;
+      return Math.ceil(this.items_by_page()*c_page)+1;
+    },that.pager);
+    that.pager.limit_end = ko.computed(function(){
+      var limit_end = this.limit_start()+this.items_by_page();
+      limit_end = limit_end>this.total_count()?this.total_count():limit_end;
+      return limit_end;
+    },that.pager);
     that.pager.page_count = ko.computed(function(){
       return Math.ceil(this.total_count()/this.items_by_page()) || 0;
     },that.pager);
@@ -75,6 +85,8 @@ define([],function(){
       }
     };
 
+
+
     that.files = {};
     that.files.display = ko.observable("table");
     that.files.size = ko.observable("size-1");
@@ -104,7 +116,7 @@ define([],function(){
         e.preview_url = ko.computed(function(){
           if( this.path().match(/^http/))
             return this.path();
-            return "/read_file"+this.path();
+          return "/read_file"+this.path();
         },e);
 
         that.files.items.push(e);

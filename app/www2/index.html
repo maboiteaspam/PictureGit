@@ -266,10 +266,12 @@
                         <ul class="pagination pagination-sm">
                             <li>
                                 <a href="#">
-                                    display
-                                    <span data-bind="text:$parent.pager.total_count()+' items'"></span>
-                                    on
-                                    <span data-bind="text:$parent.pager.total_count()+' items'"></span>
+                                    <span data-bind="text:$root.pager.limit_start()"></span>
+                                    to
+                                    <span data-bind="text:$root.pager.limit_end()"></span>
+                                    |
+                                    total
+                                    <span data-bind="text:$root.pager.total_count()+' items'"></span>
                                 </a>
                             </li>
                         </ul>
