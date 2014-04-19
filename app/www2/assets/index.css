@@ -227,6 +227,11 @@
     height: 266px;
 }
 
+.fileBrowser .displaySelector{
+    margin: 21px 0;
+    margin-right: 30px;
+}
+
 
 
 .fileEdit{
