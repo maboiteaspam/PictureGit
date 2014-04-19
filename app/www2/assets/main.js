@@ -107,6 +107,7 @@
         var t = AppModel.navigation.breadcrumb_next()[i];
         if( t ){
           var p = AppModel.navigation.location();
+          AppModel.pager.current_page(1);
           AppModel.navigation.location(p+""+t.name()+"/");
         }
       }

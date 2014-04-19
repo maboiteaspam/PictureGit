@@ -189,6 +189,7 @@ define([],function(){
     };
     that.navigation.up = function(){
       var l = that.navigation.location().split("/").slice(0,-2).join("/")+"/";
+      that.pager.current_page(1);
       that.navigation.location(l);
     };
 
