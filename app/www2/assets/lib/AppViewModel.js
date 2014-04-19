@@ -25,7 +25,7 @@ define([],function(){
 
     that.themes = {};
     that.themes.loaded = ko.observable(false);
-    that.themes.items = ko.observableArray([]);
+    that.themes.items = ko.observableArray([]).extend({ rateLimit: 500 });;
     that.themes.fill = function(items){
       that.themes.items.removeAll();
       for( var n in items ){
@@ -48,7 +48,7 @@ define([],function(){
     that.pager.display = ko.computed(function(){
       return this.page_count() > 0;
     },that.pager);
-    that.pager.items = ko.observableArray([]);
+    that.pager.items = ko.observableArray([]).extend({ rateLimit: 500 });;
     that.pager.fill = function(info){
       that.pager.total_count(info.total_count);
       that.pager.items_by_page(info.items_by_page);
@@ -79,7 +79,7 @@ define([],function(){
     that.files.display = ko.observable("table");
     that.files.size = ko.observable("size-1");
     that.files.loaded = ko.observable(false);
-    that.files.items = ko.observableArray([]);
+    that.files.items = ko.observableArray([]).extend({ rateLimit: 500 });
     that.files.fill = function(items){
       that.files.items.removeAll();
       for( var n in items ){
@@ -136,6 +136,16 @@ define([],function(){
     that.navigation = {};
     that.navigation.location = ko.observable("");
     that.navigation.breadcrumb = ko.observableArray([]);
+    that.navigation.breadcrumb_next = ko.computed(function(){
+      var retour = [];
+      var items = this.items();
+      for(var n in items ){
+        if( items[n].type() == 'directory' ){
+          retour.push(items[n]);
+        }
+      }
+      return retour;
+    },that.files);
     that.navigation.fill = function(path){
       that.navigation.breadcrumb.removeAll();
       var b = path.split("/");
@@ -163,6 +173,7 @@ define([],function(){
           that.navigation.breadcrumb.push(item);
         }
       }
+      console.log(that.navigation.breadcrumb);
       item.active(true);
     };
     that.navigation.up = function(){

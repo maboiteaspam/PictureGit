@@ -8,9 +8,6 @@
     margin-right: 5px;
 }
 
-.pagination{
-}
-
 .container-pager{
     display: inline-block;
     width: 100%;
@@ -261,6 +258,17 @@
     padding-left: 30;
     padding-right: 30;
 }
+
+
+.breadcrumb_next .btn-default{
+    padding: 5;
+    margin: 0px;
+}
+.breadcrumb_next .caret{
+    margin-left: 5px !important;
+}
+
+
 
 
 
