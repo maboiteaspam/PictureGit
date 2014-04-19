@@ -111,7 +111,7 @@
         }
       }
     });
-    AppModel.on("click",".navigation li .prev", function(){
+    AppModel.on("click",".navigation .prev", function(){
       if( !$(this).hasClass("active") ){
         var i = $(this).index();
         if( i > -1 ){
