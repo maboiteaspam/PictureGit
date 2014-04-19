@@ -260,9 +260,8 @@
 }
 
 
-.breadcrumb_next .btn-default{
-    padding: 5;
-    margin: 0px;
+.breadcrumb_next{
+    position: relative;
 }
 .breadcrumb_next .caret{
     margin-left: 5px !important;

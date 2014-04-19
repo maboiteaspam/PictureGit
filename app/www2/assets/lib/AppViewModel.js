@@ -185,7 +185,6 @@ define([],function(){
           that.navigation.breadcrumb.push(item);
         }
       }
-      console.log(that.navigation.breadcrumb);
       item.active(true);
     };
     that.navigation.up = function(){

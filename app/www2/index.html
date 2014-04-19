@@ -310,19 +310,23 @@
                     <!-- Breadcrumb items -->
                     <!-- Breadcrumb next -->
                     <div class="pull-left breadcrumb_next">
-                        <div class="btn-group dropup"
-                             data-bind="css:{disabled:$root.navigation.breadcrumb_next().length==0}">
-                            <button type="button" class="btn btn-default">
-                                Next
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu"
-                                data-bind="foreach: $root.navigation.breadcrumb_next">
-                                <li class="next">
-                                    <a href="#" class="t-font" data-bind="text: short_name"></a>
-                                </li>
-                            </ul>
-                        </div>
+                        <ul class="pagination pagination-sm">
+                            <li class=" dropup"
+                                data-bind="css:{disabled:$root.navigation.breadcrumb_next().length==0}">
+                                <a href="#">
+                                    Next
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu"
+                                    data-bind="foreach: $root.navigation.breadcrumb_next">
+                                    <li class="next">
+                                        <a href="#" class="t-font" data-bind="text: short_name"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pull-left breadcrumb_next">
                     </div>
                     <!-- Breadcrumb next -->
                 </div>
