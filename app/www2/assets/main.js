@@ -171,7 +171,7 @@
         });
       });
     };
-    AppModel.on("click",".fileBrowser .ion-ios7-recording-outline", function(){
+    AppModel.on("click",".fileBrowser .btn-logs", function(ev){
       var item;
       if( $(this).parentsUntil(".file").is("tr") ){
         item = find_item($(this).parentsUntil(".file").index());
@@ -183,9 +183,10 @@
         AppModel.fileDetail.name(item.name());
         AppModel.fileDetail.tab("logs");
       }
+      ev.preventDefault();
       return false;
     });
-    AppModel.on("click",".fileBrowser .ion-ios7-cloud-upload-outline", function(){
+    AppModel.on("click",".fileBrowser .btn-edit", function(ev){
       var item;
       if( $(this).parentsUntil(".file").is("tr") ){
         item = find_item($(this).parentsUntil(".file").index());
@@ -197,9 +198,10 @@
         AppModel.fileDetail.name(item.name());
         AppModel.fileDetail.tab("edit");
       }
+      ev.preventDefault();
       return false;
     });
-    AppModel.on("click",".fileBrowser .ion-ios7-trash-outline", function(){
+    AppModel.on("click",".fileBrowser .btn-trash", function(ev){
       var item;
       if( $(this).parentsUntil(".file").is("tr") ){
         item = find_item($(this).parentsUntil(".file").index());
@@ -210,6 +212,7 @@
         AppModel.modal.title(item.name());
         trash_item(item.path());
       }
+      ev.preventDefault();
       return false;
     });
     AppModel.on("click",".fileBrowser .file", function(){
@@ -221,25 +224,25 @@
       }
       return false;
     });
-    AppModel.on("click",".fileDetail .ion-ios7-cloud-upload-outline", function(){
+    AppModel.on("click",".fileDetail .btn-edit", function(){
       AppModel.fileDetail.tab("edit");
       return false;
     });
-    AppModel.on("click",".fileDetail .ion-ios7-recording-outline", function(){
+    AppModel.on("click",".fileDetail .btn-logs", function(){
       AppModel.fileDetail.tab("logs");
       return false;
     });
-    AppModel.on("click",".fileDetail .ion-ios7-eye", function(){
+    AppModel.on("click",".fileDetail .btn-zoom", function(){
       AppModel.fileDetail.tab("zoom");
       return false;
     });
-    AppModel.on("click",".fileDetail .ion-ios7-close-outline", function(){
+    AppModel.on("click",".fileDetail .btn-close", function(){
       AppModel.fileDetail.tab("");
       AppModel.fileDetail.path("");
       AppModel.fileDetail.name("");
       return false;
     });
-    AppModel.on("click",".fileDetail .ion-ios7-trash-outline", function(){
+    AppModel.on("click",".fileDetail .btn-trash", function(){
       AppModel.modal.title(AppModel.fileDetail.name());
       trash_item(AppModel.fileDetail.path());
       return false;

@@ -159,13 +159,13 @@
                                 </td>
                                 <td class="name-col" data-bind="text: name"></td>
                                 <td class="edit-col">
-                                    <span class="ion-ios7-cloud-upload-outline btn t-all"></span>
+                                    <span class="ion-ios7-cloud-upload-outline btn btn-edit btn t-all"></span>
                                 </td>
                                 <td class="logs-col">
-                                    <span class="ion-ios7-recording-outline btn t-all"></span>
+                                    <span class="ion-ios7-recording-outline btn btn-logs btn t-all"></span>
                                 </td>
                                 <td class="trash-col">
-                                    <span class="ion-ios7-trash-outline btn t-all"></span>
+                                    <span class="ion-ios7-trash-outline btn-trash btn t-all"></span>
                                 </td>
                             </tr>
                             </tbody>
@@ -194,9 +194,9 @@
                                     <div class="ion-ios7-cloud-outline"></div>
                                     <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
                                     <div class="actions  t-all">
-                                        <a href="#" class="ion-ios7-trash-outline  btn btn-primary t-all"></a>
-                                        <a href="#" class="ion-ios7-cloud-upload-outline  btn  btn-primary t-all"></a>
-                                        <a href="#" class="ion-ios7-recording-outline  btn  btn-primary t-all"></a>
+                                        <a href="#" class="ion-ios7-trash-outline btn btn-trash btn-primary t-all"></a>
+                                        <a href="#" class="ion-ios7-cloud-upload-outline btn-edit  btn  btn-primary t-all"></a>
+                                        <a href="#" class="ion-ios7-recording-outline btn-logs btn  btn-primary t-all"></a>
                                     </div>
                                 </div>
                                 <!-- file -->
@@ -374,22 +374,22 @@
             <!-- toolbar -->
             <ul class="toolbar">
                 <li>
-                    <a href="#" class="ion-ios7-close-outline t-color btn btn-primary"></a>
+                    <a href="#" class="ion-ios7-close-outline btn-close t-color btn btn-primary"></a>
                 </li>
                 <li>
-                    <a href="#" class="ion-ios7-eye t-color btn btn-primary"
+                    <a href="#" class="ion-ios7-eye t-color btn-zoom btn btn-primary"
                        data-bind="css:{active:tab()=='zoom'}"></a>
                 </li>
                 <li>
-                    <a href="#" class="ion-ios7-cloud-upload-outline t-color btn btn-primary"
+                    <a href="#" class="ion-ios7-cloud-upload-outline btn-edit t-color btn btn-primary"
                        data-bind="css:{active:tab()=='edit'}"></a>
                 </li>
                 <li>
-                    <a href="#" class="ion-ios7-recording-outline t-color btn btn-primary"
+                    <a href="#" class="ion-ios7-recording-outline btn-logs t-color btn btn-primary"
                        data-bind="css:{active:tab()=='logs'}"></a>
                 </li>
                 <li>
-                    <a href="#" class="ion-ios7-trash-outline t-color btn btn-primary"
+                    <a href="#" class="ion-ios7-trash-outline t-color btn-trash btn btn-primary"
                        data-bind="css:{active:tab()=='trash'}"></a>
                 </li>
             </ul>
