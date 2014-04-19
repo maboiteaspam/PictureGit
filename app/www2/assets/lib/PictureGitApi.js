@@ -37,6 +37,9 @@ define([],function(){
     that.fetchThemes = function(){
       return ajaxHelper.getJSON("/list_bootstrap_themes");
     };
+    that.fetchConfig = function(){
+      return ajaxHelper.getJSON("/config");
+    };
 
   }
 });

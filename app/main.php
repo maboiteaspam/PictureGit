@@ -160,6 +160,7 @@ $routes["`^/config$`"] = function() use($config,$VS){
         "app_title"=>$config->app_title,
         "vcs_ready"=>get_class($VS)!=="\\VersionSystem\\TrueStub",
         "template_message"=>$config->template_message,
+        "display"=>$config->display,
     ]);
 };
 $routes["`^/$`"] = function() use($www_dir){

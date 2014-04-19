@@ -5,6 +5,9 @@ define([],function(){
     that.loaded = ko.observable(false);
     that.ready = ko.observable(false);
 
+    that.config = {};
+    that.config.loaded = ko.observable(false);
+
     that.modal = {};
     that.modal.display = ko.observable(false);
     that.modal.title = ko.observable("");
@@ -171,14 +174,17 @@ define([],function(){
         items[n].selected(items[n].name == v);
       }
     });
-    that.theme.loaded.subscribe(function(){
-      that.loaded( that.theme.loaded() && that.themes.loaded() && that.files.loaded() );
+    that.theme.loaded.subscribe(function(v){
+      that.loaded( v && that.themes.loaded() && that.files.loaded() && that.config.loaded() );
     });
-    that.themes.loaded.subscribe(function(){
-      that.loaded( that.theme.loaded() && that.themes.loaded() && that.files.loaded() );
+    that.themes.loaded.subscribe(function(v){
+      that.loaded( v && that.theme.loaded() && that.files.loaded() && that.config.loaded() );
     });
-    that.files.loaded.subscribe(function(){
-      that.loaded( that.theme.loaded() && that.themes.loaded() && that.files.loaded() );
+    that.files.loaded.subscribe(function(v){
+      that.loaded( v && that.theme.loaded() && that.themes.loaded() && that.config.loaded() );
+    });
+    that.config.loaded.subscribe(function(v){
+      that.loaded( v && that.theme.loaded() && that.themes.loaded() && that.files.loaded() );
     });
 
     that.reload = function(){
