@@ -41,12 +41,25 @@ function respond_file($path){
     if( !is_file($path) || !is_readable($path) ) return "";
     if( preg_match("/[.]css$/i",$path)>0){
         header('Content-type: text/css');
+        $result = etaged_file($path);
     }else if( preg_match("/[.]js$/i",$path)>0){
         header('Content-type: text/javascript');
+        $result = etaged_file($path);
+    }else if( preg_match("/[.](jpeg|jpg|gif|png)$/i",$path)>0){
+        $result = "";
+        if( etaged_file($path) != "" ){
+            $image = new SimpleImage();
+            if( $image->load($path) ){
+                $image->resizeToWidth(150);
+                $image->output();
+            }else{
+                $result = "wont image";
+            }
+        }
     }else{
         header('Content-type: '.mime_content_type($path));
+        $result = etaged_file($path);
     }
-    $result = etaged_file($path);
     return $result;
 }
 function etaged_file($path){

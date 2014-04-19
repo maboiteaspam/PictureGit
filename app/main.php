@@ -23,6 +23,7 @@ $default_config = [
     ],
 ];
 
+require_once($app_dir."SimpleImage.php");
 require_once($app_dir."lib.php");
 require_once($app_dir."lib-git.php");
 
