@@ -68,11 +68,17 @@
                             <a href="#" class="dropdown-toggle t-color t-font"
                                data-toggle="dropdown">New <b class="caret"></b></a>
                             <ul class="dropdown-menu pull-right t-all">
-                                <li><a><span class="ion-ios7-cloud-upload-outline"></span>
-                                        File</a>
+                                <li class="btn-new-file">
+                                    <a>
+                                        <span class="ion-ios7-cloud-upload-outline "></span>
+                                        File
+                                    </a>
                                 </li>
-                                <li><a><span class="ion-ios7-folder-outline"></span>
-                                        Folder</a>
+                                <li class="btn-new-directory">
+                                    <a>
+                                    <span class="ion-ios7-folder-outline "></span>
+                                        Folder
+                                </a>
                                 </li>
                             </ul>
                         </li>
@@ -184,8 +190,8 @@
                                         <span data-bind="text:short_name"></span>
                                     </a>
                                     <div class="actions t-all">
-                                        <a href="#" class="ion-ios7-trash-outline t-color btn btn-primary"></a>
-                                        <a href="#" class="ion-ios7-compose t-color btn btn-primary"></a>
+                                        <a href="#" class="ion-ios7-trash-outline btn-trash t-color btn btn-primary"></a>
+                                        <a href="#" class="ion-ios7-compose t-color btn-edit btn btn-primary"></a>
                                     </div>
                                 </div>
                                 <!-- directory -->
@@ -317,97 +323,136 @@
         <!-- pop-in -->
         <div class="fileDetail t-all bg-primary" data-bind="with: fileDetail, css:{active:fileDetail.tab()!=''}">
 
-            <div class="tabs">
-                <!-- zoom -->
-                <div class="zoom t-all" data-bind="css:{active:tab()=='zoom'}">
-                    <div>
-                        <img data-bind="attr:{src:preview_url,title:name}" />
-                        <div data-bind="with: name"></div>
-                    </div>
+            <!-- new-file -->
+            <div data-bind="if:tab()=='new-file'" class="new-file">
+                <div class="ion-ios7-cloud-outline preview">
+                    <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
                 </div>
-                <!-- zoom -->
-                <!-- edit -->
-                <div class="edit t-all" data-bind="css:{active:tab()=='edit'}">
-                    <div>
-                        <div class="ion-ios7-cloud-outline preview">
-                            <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
-                        </div>
-                        <form>
-                            <br/>
-                            <div class="input-group ">
-                                <span class="input-group-addon ion-ios7-cloud-upload-outline"></span>
-                                <input type="file" class="form-control" name="img" />
-                            </div>
-                            <br/>
-                            <div class="input-group ">
-                                <span class="input-group-addon ion-ios7-compose-outline"></span>
-                                <textarea class="form-control" name="comment" placeholder="commit message"></textarea>
-                            </div>
-                            <br/>
-                            <input type="submit" class="btn pull-right btn-default submit" value="Save"/>
-                        </form>
+                <form>
+                    <br/>
+                    <div class="input-group ">
+                        <span class="input-group-addon ion-ios7-cloud-upload-outline"></span>
+                        <input type="file" class="form-control" name="img" required="true" />
                     </div>
-                </div>
-                <!-- edit -->
-                <!-- logs -->
-                <div class="logs t-all" data-bind="css:{active:tab()=='logs'}">
-                    <div>
-                        <table>
-                            <tr>
-                                <th>rev</th>
-                                <th>date</th>
-                                <th>author</th>
-                                <th>message</th>
-                            </tr>
-                            <tr>
-                                <td>f </td>
-                                <td>f </td>
-                                <td>f </td>
-                                <td>f </td>
-                            </tr>
-                        </table>
+                    <br/>
+                    <div class="input-group ">
+                        <span class="input-group-addon ion-ios7-compose-outline"></span>
+                        <textarea class="form-control" name="comment" placeholder="commit message" required="true"></textarea>
                     </div>
-                </div>
-                <!-- logs -->
+                    <br/>
+                    <input type="submit" class="btn pull-right btn-default submit" value="Save"/>
+                </form>
             </div>
+            <!-- new-file -->
+            <!-- new-directory -->
+            <div data-bind="if:tab()=='new-directory'" class="new-directory">
+                <form>
+                    <br/>
+                    <div class="input-group ">
+                        <span class="input-group-addon ion-ios7-cloud-upload-outline"></span>
+                        <input type="text" class="form-control" required="true" name="name" placeholder="Directory name" />
+                    </div>
+                    <br/>
+                    <input type="submit" class="btn pull-right btn-default submit" value="Save"/>
+                </form>
+            </div>
+            <!-- new-directory -->
+            <!-- edit -->
+            <div data-bind="if:tab()!='new-directory' && tab()!='new-file'">
 
-            <!-- toolbar -->
-            <ul class="toolbar">
-                <li>
-                    <a href="#" class="ion-ios7-close-outline btn-close t-color btn btn-primary"></a>
-                </li>
-                <li>
-                    <a href="#" class="ion-ios7-eye t-color btn-zoom btn btn-primary"
-                       data-bind="css:{active:tab()=='zoom'}"></a>
-                </li>
-                <li>
-                    <a href="#" class="ion-ios7-cloud-upload-outline btn-edit t-color btn btn-primary"
-                       data-bind="css:{active:tab()=='edit'}"></a>
-                </li>
-                <li>
-                    <a href="#" class="ion-ios7-recording-outline btn-logs t-color btn btn-primary"
-                       data-bind="css:{active:tab()=='logs'}"></a>
-                </li>
-                <li>
-                    <a href="#" class="ion-ios7-trash-outline t-color btn-trash btn btn-primary"
-                       data-bind="css:{active:tab()=='trash'}"></a>
-                </li>
-            </ul>
-            <!-- toolbar -->
 
+                <div class="tabs">
+                    <!-- zoom -->
+                    <div class="zoom t-all" data-bind="css:{active:tab()=='zoom'}">
+                        <div>
+                            <img data-bind="attr:{src:preview_url,title:name}" />
+                            <div data-bind="with: name"></div>
+                        </div>
+                    </div>
+                    <!-- zoom -->
+                    <!-- edit -->
+                    <div class="edit t-all" data-bind="css:{active:tab()=='edit'}">
+                        <div>
+                            <div class="ion-ios7-cloud-outline preview">
+                                <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
+                            </div>
+                            <form>
+                                <br/>
+                                <div class="input-group ">
+                                    <span class="input-group-addon ion-ios7-cloud-upload-outline"></span>
+                                    <input type="file" class="form-control" required="true" name="img" />
+                                </div>
+                                <br/>
+                                <div class="input-group ">
+                                    <span class="input-group-addon ion-ios7-compose-outline"></span>
+                                    <textarea class="form-control" name="comment" required="true" placeholder="commit message"></textarea>
+                                </div>
+                                <br/>
+                                <input type="submit" class="btn pull-right btn-default submit" value="Save"/>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- edit -->
+                    <!-- logs -->
+                    <div class="logs t-all" data-bind="css:{active:tab()=='logs'}">
+                        <div>
+                            <table>
+                                <tr>
+                                    <th>rev</th>
+                                    <th>date</th>
+                                    <th>author</th>
+                                    <th>message</th>
+                                </tr>
+                                <tr>
+                                    <td>f </td>
+                                    <td>f </td>
+                                    <td>f </td>
+                                    <td>f </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- logs -->
+                </div>
+
+                <!-- toolbar -->
+                <ul class="toolbar">
+                    <li>
+                        <a href="#" class="ion-ios7-close-outline btn-close t-color btn btn-primary"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="ion-ios7-eye t-color btn-zoom btn btn-primary"
+                           data-bind="css:{active:tab()=='zoom'}"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="ion-ios7-cloud-upload-outline btn-edit t-color btn btn-primary"
+                           data-bind="css:{active:tab()=='edit'}"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="ion-ios7-recording-outline btn-logs t-color btn btn-primary"
+                           data-bind="css:{active:tab()=='logs'}"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="ion-ios7-trash-outline t-color btn-trash btn btn-primary"
+                           data-bind="css:{active:tab()=='trash'}"></a>
+                    </li>
+                </ul>
+                <!-- toolbar -->
+            </div>
+            <!-- edit -->
         </div>
         <!-- pop-in -->
 
 
-        <!-- modal confirm -->
+        <!-- trash confirm -->
         <div class="modal  fade in" data-bind="with:modal,css:{hide:modal.display()==false}">
             <div class="bg-warning modal-header  ">
                 <a class="close" data-dismiss="modal">x</a>
-                <h3 data-bind="text:title">Trash file xxxx</h3>
+                <h3>Trash <span data-bind="text:type()"></span> <span data-bind="text:name()"></span></h3>
             </div>
             <div class="modal-body bg-warning">
                 <h4>Please fill in a commit message</h4>
-                <textarea class="form-control" data-bind="value:message">
+                <textarea class="form-control" data-bind="value:message" required="true">
                     Type here
                 </textarea>
             </div>
@@ -417,7 +462,9 @@
                 <a href="#" class="btn" data-dismiss="modal">Close</a>
             </div>
         </div>
-        <!-- modal confirm -->
+        <!-- trash confirm -->
+
+
     </div>
 <!-- app -->
 

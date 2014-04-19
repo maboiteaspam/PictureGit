@@ -67,6 +67,18 @@
       }
       return false;
     });
+    AppModel.on("click",".btn-new-file", function(ev){
+      AppModel.fileDetail.path("");
+      AppModel.fileDetail.name("");
+      AppModel.fileDetail.tab("new-file");
+      return false;
+    });
+    AppModel.on("click",".btn-new-directory", function(ev){
+      AppModel.fileDetail.path("");
+      AppModel.fileDetail.name("");
+      AppModel.fileDetail.tab("new-directory");
+      return false;
+    });
 
 
 
@@ -148,9 +160,6 @@
 
 
 
-    AppModel.fileDetail.preview_url.subscribe(function(){
-      $(".fileDetail .edit form").get(0).reset();
-    });
     var find_item = function(i){
       if( i > -1 ){
         var t = AppModel.files.items()[i];
@@ -160,15 +169,25 @@
       }
       return false;
     };
-    var trash_item = function(path){
-      AppModel.modal.display(true);
+    var trash_item = function(item){
+      AppModel.modal.name(item.name());
+      AppModel.modal.type(item.type());
+      AppModel.modal.display("trash-"+item.type());
       $(".modal .confirm").one("click",function(){
         AppModel.fileDetail.tab("");
         AppModel.modal.display(false);
-        AppModel.modal.title("");
-        api.trashFile(path).always(function(){
+        AppModel.modal.name("");
+        AppModel.modal.type("");
+        var p = null;
+        if( item.type() == "file" ){
+          p = api.trashFolder(item.path());
+        }else{
+          p = api.trashFolder(item.path());
+        }
+        p.always(function(){
           AppModel.reload();
         });
+        return false;
       });
     };
     AppModel.on("click",".fileBrowser .btn-logs", function(ev){
@@ -201,7 +220,20 @@
       ev.preventDefault();
       return false;
     });
-    AppModel.on("click",".fileBrowser .btn-trash", function(ev){
+    AppModel.on("click",".fileBrowser .directory .btn-trash", function(ev){
+      var item;
+      if ($(this).parentsUntil(".directory").is("tr") ){
+        item = find_item($(this).parentsUntil(".directory").index());
+      }else{
+        item = find_item($(this).parentsUntil(".directory").parent().index());
+      }
+      if( item ){
+        trash_item(item);
+      }
+      ev.preventDefault();
+      return false;
+    });
+    AppModel.on("click",".fileBrowser .file .btn-trash", function(ev){
       var item;
       if( $(this).parentsUntil(".file").is("tr") ){
         item = find_item($(this).parentsUntil(".file").index());
@@ -209,8 +241,7 @@
         item = find_item($(this).parentsUntil(".file").parent().index());
       }
       if( item ){
-        AppModel.modal.title(item.name());
-        trash_item(item.path());
+        trash_item(item);
       }
       ev.preventDefault();
       return false;
@@ -243,31 +274,74 @@
       return false;
     });
     AppModel.on("click",".fileDetail .btn-trash", function(){
-      AppModel.modal.title(AppModel.fileDetail.name());
-      trash_item(AppModel.fileDetail.path());
+      trash_item(AppModel.fileDetail);
       return false;
     });
-    AppModel.on("submit",".fileDetail form", function(ev){
+    AppModel.on("submit",".fileDetail .edit form", function(ev){
       ev.preventDefault();
+      var form = $('.fileDetail .edit form');
       $('.fileDetail').addClass("loading");
-      $('.fileDetail form input').attr("disabled","disabled");
-      $('.fileDetail form textarea').attr("disabled","disabled");
+      form.find('input').attr("disabled","disabled");
+      form.find('textarea').attr("disabled","disabled");
 
-      var img = $('.fileDetail form input[type="file"]')[0].files[0];
-      var txt = $('.fileDetail form textarea').val();
+      var img = form.find('input[type="file"]')[0].files[0];
+      var comment = form.find('textarea').val();
       var path = AppModel.fileDetail.path();
 
       AppModel.loaded(false);
-      api.editPicture(path,txt,img)
+      api.editPicture(path,comment,img)
           .always(function(){
-            $('.fileDetail form input').attr("disabled",null);
-            $('.fileDetail form textarea').attr("disabled",null);
+            form.find('input').attr("disabled",null);
+            form.find('textarea').attr("disabled",null);
 
             AppModel.fileDetail.path(path+"?q="+(new Date()));
             AppModel.files.findByPath(path).path(path+"?q="+(new Date()));
 
             $('.fileDetail').removeClass("loading");
-            $(".fileDetail .edit form").get(0).reset();
+            form.get(0).reset();
+          });
+      return false;
+    });
+    AppModel.on("submit",".fileDetail .new-file form", function(ev){
+      ev.preventDefault();
+      var form = $('.fileDetail .new-file form');
+      $('.fileDetail').addClass("loading");
+      form.find('input').attr("disabled","disabled");
+      form.find('textarea').attr("disabled","disabled");
+
+      var img = form.find('input[type="file"]')[0].files[0];
+      var comment = form.find('textarea').val();
+      var path = AppModel.fileDetail.path();
+
+      AppModel.loaded(false);
+      api.addPicture(path,comment,img)
+          .always(function(){
+            form.find('input').attr("disabled",null);
+            form.find('textarea').attr("disabled",null);
+            $('.fileDetail').removeClass("loading");
+            AppModel.fileDetail.tab("");
+            AppModel.reload();
+            form.get(0).reset();
+          });
+      return false;
+    });
+    AppModel.on("submit",".fileDetail .new-directory form", function(ev){
+      ev.preventDefault();
+      var form = $('.fileDetail .new-directory form');
+      $('.fileDetail').addClass("loading");
+      form.find('input').attr("disabled","disabled");
+
+      var name = form.find('input').val();
+      var path = AppModel.navigation.location();
+
+      AppModel.loaded(false);
+      api.addDirectory(path,name)
+          .always(function(){
+            form.find('input').attr("disabled",null);
+            $('.fileDetail').removeClass("loading");
+            AppModel.fileDetail.tab("");
+            AppModel.reload();
+            form.get(0).reset();
           });
       return false;
     });

@@ -123,26 +123,46 @@ $routes["`^/edit_file(/.*)`i"] = function($path) use($picture_dir,$VS){
         $path = secure_path($picture_dir, $path );
         $contents = file_get_contents($_FILES["img"]["tmp_name"]);
         file_put_contents($picture_dir.$path,$contents);
-        $message = isset($_POST["commit"])?$_POST["commit"]:"";
-        $VS->commit($picture_dir.$path,$message);
+        $comment = isset($_POST["comment"])?$_POST["comment"]:"";
+        $VS->commit($picture_dir.$path,$comment);
         return respond_json("ok");
     }
     return respond_json("ko");
 };
-$routes["`^/new_file(/.*)`i"] = function($d_path) use($picture_dir,$VS){
-    $d_path = secure_path($picture_dir, $d_path );
-    if( is_dir($picture_dir.$d_path) == false ){
-        mkdir($picture_dir.$d_path,0777,true);
+$routes["`^/new_file(.*)`i"] = function($d_path) use($picture_dir,$VS){
+    if( isset($_FILES["img"]) ){
+        $d_path = secure_path($picture_dir, $d_path );
+        if( is_dir($picture_dir.$d_path) == false ){
+            mkdir($picture_dir.$d_path,0777,true);
+        }
+        $name = $d_path.$_FILES["img"]["name"];
+        $contents = file_get_contents($_FILES["img"]["tmp_name"]);
+        file_put_contents($picture_dir."/".$name,$contents);
+        $comment = isset($_POST["comment"])?$_POST["comment"]:"";
+        $VS->commit($picture_dir."/".$name,$comment);
+        return respond_json("ok");
     }
-    $path = $d_path.$_FILES["img"]["name"];
-    $contents = file_get_contents($_FILES["img"]["tmp_name"]);
-    file_put_contents($picture_dir.$path,$contents);
-    $message = isset($_POST["commit"])?$_POST["commit"]:"";
-    $VS->commit($picture_dir.$path,$message);
+    return respond_json("ko");
+};
+$routes["`^/new_directory(.*)`i"] = function($d_path) use($picture_dir,$VS){
+    if( isset($_POST["name"]) ){
+        $name = isset($_POST["name"])?$_POST["name"]:"";
+        $d_path = secure_path($picture_dir, $d_path );
+        $name = preg_replace("/[^a-z0-9_ -]+/","",$name);
+        if( is_dir($picture_dir.$d_path."/".$name) == false ){
+            mkdir($picture_dir.$d_path."/".$name,0777,true);
+        }
+    }
 };
 $routes["`^/trash_file(/.+)`i"] = function($path) use($picture_dir, $VS){
     $path = secure_path($picture_dir, $path );
     $trashed = trash_file($picture_dir.$path);
+    $trashed = $trashed && $VS->remove($picture_dir.$path);
+    return respond_json( $trashed );
+};
+$routes["`^/trash_folder(/.+)`i"] = function($path) use($picture_dir, $VS){
+    $path = secure_path($picture_dir, $path );
+    $trashed = trash_folder($picture_dir.$path);
     $trashed = $trashed && $VS->remove($picture_dir.$path);
     return respond_json( $trashed );
 };

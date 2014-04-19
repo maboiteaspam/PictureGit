@@ -28,11 +28,23 @@ define([],function(){
     that.trashFile = function(path){
       return ajaxHelper.getJSON("/trash_file/"+path);
     };
-    that.editPicture = function(path,message,file){
+    that.trashFolder = function(path){
+      return ajaxHelper.getJSON("/trash_folder/"+path);
+    };
+    that.editPicture = function(path,comment,file){
       var data = new FormData();
       data.append("img", file);
-      data.append("comment", message);
+      data.append("comment", comment);
       return ajaxHelper.uploadJSON("/edit_file"+path,data);
+    };
+    that.addPicture = function(path,comment,file){
+      var data = new FormData();
+      data.append("img", file);
+      data.append("comment", comment);
+      return ajaxHelper.uploadJSON("/new_file"+path,data);
+    };
+    that.addDirectory = function(path,name){
+      return ajaxHelper.postJSON("/new_directory"+path,{name:name});
     };
     that.fetchThemes = function(){
       return ajaxHelper.getJSON("/list_bootstrap_themes");

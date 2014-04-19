@@ -313,7 +313,7 @@
     box-shadow: 0 0px 6px whitesmoke;
 }
 
-.fileDetail .edit .preview{
+.fileDetail .preview{
     width: 120px;
     height: 120px;
     text-align: center;
@@ -325,27 +325,23 @@
     margin-left: 165px;
     position: relative;
 }
-.fileDetail .edit .preview img{
+.fileDetail .preview img{
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
 }
-.fileDetail.loading .edit .preview img{
+.fileDetail.loading .preview img{
     opacity: 0;
 }
-
-.fileDetail .edit form{
+.fileDetail form{
     width: 80%;
     margin-left: 10%;
 }
-
-
-.fileDetail .edit .form-control{
+.fileDetail .form-control{
     font-size: 16px;
 }
-
-.fileDetail .edit textarea{
+.fileDetail textarea{
     height: 130px;
 }
 

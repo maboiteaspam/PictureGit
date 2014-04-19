@@ -10,7 +10,8 @@ define([],function(){
 
     that.modal = {};
     that.modal.display = ko.observable(false);
-    that.modal.title = ko.observable("");
+    that.modal.type = ko.observable("");
+    that.modal.name = ko.observable("");
     that.modal.message = ko.observable("");
     that.modal.is_valid = ko.computed(function(){
       return this.display() && this.message()!="";
@@ -123,6 +124,7 @@ define([],function(){
     that.fileDetail = {};
     that.fileDetail.tab = ko.observable("");
     that.fileDetail.path = ko.observable("");
+    that.fileDetail.type = ko.observable('file');
     that.fileDetail.name = ko.observable("");
     that.fileDetail.logs = ko.observableArray([]);
     that.fileDetail.preview_url = ko.computed(function(){

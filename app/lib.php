@@ -77,6 +77,33 @@ function trash_file($path){
     return false;
 }
 
+function trash_folder($path){
+    if( is_dir($path) ){
+        $it = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($path,
+                RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        $sucess = true;
+        foreach($it as $entry) {
+            if ($entry->isDir()) {
+                try {
+                    rmdir($entry->getPathname());
+                }
+                catch (Exception $ex) {
+                    $sucess = false;
+                }
+            }
+            else {
+                unlink($entry->getPathname());
+            }
+        }
+        return $sucess && rmdir($path);
+    }
+    return false;
+}
+
 function secure_path($within, $path){
     $path = urldecode($path);
     $within = realpath($within);
