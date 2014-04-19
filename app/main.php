@@ -135,7 +135,7 @@ $routes["`^/new_file(.*)`i"] = function($d_path) use($picture_dir,$VS){
         if( is_dir($picture_dir.$d_path) == false ){
             mkdir($picture_dir.$d_path,0777,true);
         }
-        $name = $d_path.$_FILES["img"]["name"];
+        $name = $d_path."/".$_FILES["img"]["name"];
         $contents = file_get_contents($_FILES["img"]["tmp_name"]);
         file_put_contents($picture_dir."/".$name,$contents);
         $comment = isset($_POST["comment"])?$_POST["comment"]:"";

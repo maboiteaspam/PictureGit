@@ -55,6 +55,7 @@
       var mode = $(this).data("mode");
       AppModel.files.display( mode );
       localStorage.setValue("preferred_display", mode);
+      $(".dropdown").removeClass("open");
       return false;
     });
     AppModel.on("click",".sizeSelector ul li", function(ev){
@@ -64,19 +65,22 @@
         var size = $(this).data("size");
         AppModel.files.size( size );
         localStorage.setValue("preferred_size", size);
+        $(".dropdown").removeClass("open");
       }
       return false;
     });
     AppModel.on("click",".btn-new-file", function(ev){
-      AppModel.fileDetail.path("");
+      AppModel.fileDetail.path( AppModel.navigation.location() );
       AppModel.fileDetail.name("");
       AppModel.fileDetail.tab("new-file");
+      $(".dropdown").removeClass("open");
       return false;
     });
     AppModel.on("click",".btn-new-directory", function(ev){
-      AppModel.fileDetail.path("");
+      AppModel.fileDetail.path( AppModel.navigation.location() );
       AppModel.fileDetail.name("");
       AppModel.fileDetail.tab("new-directory");
+      $(".dropdown").removeClass("open");
       return false;
     });
 
@@ -180,12 +184,13 @@
         AppModel.modal.type("");
         var p = null;
         if( item.type() == "file" ){
-          p = api.trashFolder(item.path());
+          p = api.trashFile(item.path());
         }else{
           p = api.trashFolder(item.path());
         }
         p.always(function(){
           AppModel.reload();
+          $(".modal form").get(0).reset();
         });
         return false;
       });

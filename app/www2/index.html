@@ -342,6 +342,14 @@
                     <br/>
                     <input type="submit" class="btn pull-right btn-default submit" value="Save"/>
                 </form>
+
+                <!-- toolbar -->
+                <ul class="toolbar">
+                    <li>
+                        <a href="#" class="ion-ios7-close-outline btn-close t-color btn btn-primary"></a>
+                    </li>
+                </ul>
+                <!-- toolbar -->
             </div>
             <!-- new-file -->
             <!-- new-directory -->
@@ -355,6 +363,14 @@
                     <br/>
                     <input type="submit" class="btn pull-right btn-default submit" value="Save"/>
                 </form>
+
+                <!-- toolbar -->
+                <ul class="toolbar">
+                    <li>
+                        <a href="#" class="ion-ios7-close-outline btn-close t-color btn btn-primary"></a>
+                    </li>
+                </ul>
+                <!-- toolbar -->
             </div>
             <!-- new-directory -->
             <!-- edit -->
@@ -446,21 +462,23 @@
 
         <!-- trash confirm -->
         <div class="modal  fade in" data-bind="with:modal,css:{hide:modal.display()==false}">
-            <div class="bg-warning modal-header  ">
-                <a class="close" data-dismiss="modal">x</a>
-                <h3>Trash <span data-bind="text:type()"></span> <span data-bind="text:name()"></span></h3>
-            </div>
-            <div class="modal-body bg-warning">
-                <h4>Please fill in a commit message</h4>
-                <textarea class="form-control" data-bind="value:message" required="true">
-                    Type here
-                </textarea>
-            </div>
-            <div class="bg-warning modal-footer ">
-                <a href="#" class="btn confirm btn-danger t-all"
-                   data-bind="css:{disabled:!is_valid()}">Confirm trash</a>
-                <a href="#" class="btn" data-dismiss="modal">Close</a>
-            </div>
+            <form>
+                <div class="bg-warning modal-header  ">
+                    <a class="close" data-dismiss="modal">x</a>
+                    <h3>Trash <span data-bind="text:type()"></span> <span data-bind="text:name()"></span></h3>
+                </div>
+                <div class="modal-body bg-warning">
+                    <h4>Please fill in a commit message</h4>
+                    <textarea class="form-control" data-bind="value:message" required="true">
+                        Type here
+                    </textarea>
+                </div>
+                <div class="bg-warning modal-footer ">
+                    <a href="#" class="btn confirm btn-danger t-all"
+                       data-bind="css:{disabled:!is_valid()}">Confirm trash</a>
+                    <a href="#" class="btn" data-dismiss="modal">Close</a>
+                </div>
+            </form>
         </div>
         <!-- trash confirm -->
 
