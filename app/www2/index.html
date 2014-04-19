@@ -177,18 +177,25 @@
                 <!-- Display -->
                 <!-- Pagination status -->
                 <div class="pull-right">
-                    <ul class="items-pager pagination pagination-sm" data-bind="foreach: $parent.pager.items">
-                        <li data-bind="css:{active:selected,disabled:!enabled}"><a href="#" data-bind="text:name"></a></li>
-                    </ul>
                     <ul class="pagination pagination-sm">
-                        <li><a href="#" data-bind="text:'display '+items().length +' on '+$parent.pager.total_count()+' items'"></a></li>
+                        <li>
+                            <a href="#">
+                                display
+                                <span data-bind="text:$parent.pager.total_count()+' items'"></span>
+                                on
+                                <span data-bind="text:$parent.pager.total_count()+' items'"></span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Pagination status -->
                 <!-- Breadcrumb items -->
                 <div class="pull-left">
-                    <ul class="nav navbar-nav navigation" data-bind="foreach: $parent.navigation.breadcrumb">
-                        <li data-bind="css:{disabled:active}"><a href="#" class="t-font" data-bind="text: short_name"></a></li>
+                    <ul class="pagination pagination-sm navigation"
+                        data-bind="foreach: $parent.navigation.breadcrumb">
+                        <li data-bind="css:{disabled:active}">
+                            <a href="#" class="t-font" data-bind="text: short_name"></a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Breadcrumb items -->
@@ -314,18 +321,30 @@
                 <!-- Display -->
                 <!-- Pagination status -->
                 <div class="pull-right">
-                    <ul class="items-pager pagination pagination-sm" data-bind="foreach: $parent.pager.items">
-                        <li data-bind="css:{active:selected,disabled:!enabled}"><a href="#" data-bind="text:name"></a></li>
+                    <ul class="items-pager pagination pagination-sm"
+                        data-bind="foreach: $parent.pager.items">
+                        <li data-bind="css:{active:selected,disabled:!enabled}">
+                            <a href="#" data-bind="text:name"></a></li>
                     </ul>
                     <ul class="pagination pagination-sm">
-                        <li><a href="#" data-bind="text:'display '+items().length +' on '+$parent.pager.total_count()+' items'"></a></li>
+                        <li>
+                            <a href="#">
+                                display
+                                <span data-bind="text:$parent.pager.total_count()+' items'"></span>
+                                on
+                                <span data-bind="text:$parent.pager.total_count()+' items'"></span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Pagination status -->
                 <!-- Breadcrumb items -->
                 <div class="pull-left">
-                    <ul class="nav navbar-nav navigation" data-bind="foreach: $parent.navigation.breadcrumb">
-                        <li data-bind="css:{disabled:active}"><a href="#" class="t-font" data-bind="text: short_name"></a></li>
+                    <ul class="pagination pagination-sm navigation"
+                        data-bind="foreach: $parent.navigation.breadcrumb">
+                        <li data-bind="css:{disabled:active}">
+                            <a href="#" class="t-font" data-bind="text: short_name"></a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Breadcrumb items -->
