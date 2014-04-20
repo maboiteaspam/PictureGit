@@ -1,6 +1,6 @@
 {
     "app_title":"Manage pictures on top of git !",
-    "pictures_path":"../pictures_repo/",
+    "pictures_path":"demo_repo/",
     "www_path":"app/www2/",
     "git":{
         "enable":true,
