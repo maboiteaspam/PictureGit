@@ -13,16 +13,37 @@ define([],function(){
       if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
       return ajaxHelper.getJSON(url);
     };
+    that.searchDirectoryItems = function(path,from,items_by_page,search){
+      var url = "/search_directory/"+path+"?";
+      if( from ) url+= "from="+from+"&";
+      if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
+      if( search ) url+= "search="+search+"&";
+      return ajaxHelper.getJSON(url);
+    };
     that.fetchDirectories = function(path,from,items_by_page){
       var url = "/list_directories/"+path+"?";
       if( from ) url+= "from="+from+"&";
       if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
       return ajaxHelper.getJSON(url);
     };
+    that.searchDirectories = function(path,from,items_by_page){
+      var url = "/search_directories/"+path+"?";
+      if( from ) url+= "from="+from+"&";
+      if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
+      if( search ) url+= "search="+search+"&";
+      return ajaxHelper.getJSON(url);
+    };
     that.fetchPictures = function(path,from,items_by_page){
       var url = "/list_files/"+path+"?";
       if( from ) url+= "from="+from+"&";
       if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
+      return ajaxHelper.getJSON(url);
+    };
+    that.searchPictures = function(path,from,items_by_page){
+      var url = "/search_files/"+path+"?";
+      if( from ) url+= "from="+from+"&";
+      if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
+      if( search ) url+= "search="+search+"&";
       return ajaxHelper.getJSON(url);
     };
     that.trashFile = function(path){

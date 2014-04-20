@@ -63,7 +63,7 @@
     if( preferred_theme ) themes.name( preferred_theme );
     themes.items.subscribe(function(data){
       var k;
-      for( var n in data ){k = data[n];console.log(k)}
+      for( var n in data ){k = data[n];}
       if(!preferred_theme ) themes.name( k.name );
     });
     themes.items_resource.update(api.fetchThemes());
@@ -150,17 +150,38 @@
       if( url ){
         var c = parseInt(browser.current_page())-1;
         var i = browser.items_by_page();
+        var search_text = browser.search_text();
         if(browser.display_type() == 'any'){
-          browser.items_resource.update(api.fetchDirectoryItems(url,c*i,i));
+          if( search_text ){
+            browser.items_resource.update(api.searchDirectoryItems(url,c*i,i,search_text));
+          }else{
+            browser.items_resource.update(api.fetchDirectoryItems(url,c*i,i));
+          }
         }else if(browser.display_type() == 'file'){
-          browser.items_resource.update(api.fetchPictures(url,c*i,i));
+          if(search_text ){
+            browser.items_resource.update(api.searchPictures(url,c*i,i,search_text));
+          }else{
+            browser.items_resource.update(api.fetchPictures(url,c*i,i));
+          }
         }else if(browser.display_type() == 'directory'){
-          browser.items_resource.update(api.fetchDirectories(url,c*i,i));
+          if(search_text ){
+            browser.items_resource.update(api.searchDirectories(url,c*i,i,search_text));
+          }else{
+            browser.items_resource.update(api.fetchDirectories(url,c*i,i));
+          }
         }
         browser.directories_resource.update(api.fetchDirectories(url));
       }
     });
 
+    AppModel.on("click",".searchBox input", function(ev){
+      $(this).select();
+    });
+    AppModel.on("click",".searchBox button", function(ev){
+      if( browser.search_text()!="" ){
+        browser.search_text("");
+      }
+    });
 
 
     var fileDetail = new FileDetailView();

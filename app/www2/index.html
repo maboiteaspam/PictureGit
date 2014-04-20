@@ -135,6 +135,24 @@
                         </li>
                         <!-- Themes -->
 
+                        <!-- Search -->
+                        <li class="dropdown searchBox"
+                            data-bind="with: browser" >
+                            <div class="input-group input-group-sm t-color t-font">
+                                <div class="input-group-btn ">
+                                    <button type="button"
+                                            class="btn btn-default "
+                                            data-bind="text: search_text()==''?'Search':'Clear'">
+                                        Search</button>
+                                </div><!-- /btn-group -->
+                                <input type="text" class="form-control"
+                                       placeholder="Keyword.."
+                                       data-bind="value: search_text, valueUpdate: ['input', 'afterkeydown']">
+                            </div><!-- /input-group -->
+
+                        </li>
+                        <!-- Search -->
+
                     </ul>
                 </div>
             </div>
