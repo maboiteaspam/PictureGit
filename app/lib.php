@@ -227,29 +227,8 @@ function clean_paths($path,$items){
 function match_paths($search,$items){
     $retour = array();
     foreach( $items as $i=>$v){
-        if( fnmatch("$search", $v) ){
+        if( fnmatch("**$search**", $v) ){
             $retour[] = $items[$i];
-        }
-    }
-    if( count($items) == 0 ){
-        foreach( $items as $i=>$v){
-            if( fnmatch("$search*", $v) ){
-                $retour[] = $items[$i];
-            }
-        }
-    }
-    if( count($items) == 0 ){
-        foreach( $items as $i=>$v){
-            if( fnmatch("*$search", $v) ){
-                $retour[] = $items[$i];
-            }
-        }
-    }
-    if( count($items) == 0 ){
-        foreach( $items as $i=>$v){
-            if( fnmatch("*$search*", $v) ){
-                $retour[] = $items[$i];
-            }
         }
     }
     return $retour;
