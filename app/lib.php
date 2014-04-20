@@ -231,5 +231,20 @@ function match_paths($search,$items){
             $retour[] = $items[$i];
         }
     }
+    if( count($items) == 0 ){
+        if( fnmatch("$search*", $v) ){
+            $retour[] = $items[$i];
+        }
+    }
+    if( count($items) == 0 ){
+        if( fnmatch("*$search", $v) ){
+            $retour[] = $items[$i];
+        }
+    }
+    if( count($items) == 0 ){
+        if( fnmatch("*$search*", $v) ){
+            $retour[] = $items[$i];
+        }
+    }
     return $retour;
 }
