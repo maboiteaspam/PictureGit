@@ -61,9 +61,12 @@
     });
     var preferred_theme = localStorage.getValue("preferred_theme");
     if( preferred_theme ) themes.name( preferred_theme );
-    themes.items_resource.update(api.fetchThemes()).done(function(data){
-      if(!preferred_theme ) themes.name( data[data.length-1].name );
+    themes.items.subscribe(function(data){
+      var k;
+      for( var n in data ){k = data[n];console.log(k)}
+      if(!preferred_theme ) themes.name( k.name );
     });
+    themes.items_resource.update(api.fetchThemes());
 
     AppModel.themes = themes;
     AppModel.theme = themes;

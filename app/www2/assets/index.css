@@ -217,30 +217,32 @@
     height: 266px;
 }
 
-.sec-nav .sizeSelector.disabled{
+.navigation-toolbar .sizeSelector.disabled{
     cursor: not-allowed;
 }
 
-.sec-nav .sizeSelector.disabled ul li{
+.navigation-toolbar .sizeSelector.disabled ul li{
     cursor: not-allowed;
 }
 
-.sec-nav .sizeSelector .size-1{
+.navigation-toolbar .sizeSelector .size-1{
     font-size: 10px;
 }
 
-.sec-nav .sizeSelector .size-2{
+.navigation-toolbar .sizeSelector .size-2{
     font-size: 16px;
 }
 
-.sec-nav .pagination{
+.sec-nav .navigation-toolbar .pagination{
     margin: 0px;
     margin-right: 15px;
 }
-.sec-nav .bg-info{
+
+.navigation-toolbar{
     padding: 5;
     padding-left: 30;
     padding-right: 30;
+    padding-bottom: 10;
 }
 
 
