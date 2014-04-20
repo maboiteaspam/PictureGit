@@ -197,9 +197,11 @@ function filter_dirs($path, $items){
 function reduce($items, $from, $by){
     $retour = array();
     $by = $by<=0?count($items):$by;
-    foreach( $items as $i=>$v){
+    $i = 0;
+    foreach( $items as $index=>$v){
+        $i++;
         if( $i>=$from && $i<$from+$by ){
-            $retour[] = $items[$i];
+            $retour[] = $items[$index];
         }
     }
     return $retour;
