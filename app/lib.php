@@ -101,15 +101,14 @@ function etaged_file($path){
     // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
     if ( (int)$modified_since === (int)$last_modified && $etag === $etagHeader ) {
         header( "HTTP/1.1 304 Not Modified" );
-        header("Cache-Control: must-revalidate");
         header("Pragma: ");
         header("Expires: ");
         return false;
     }
     header( "HTTP/1.1 200 ok" );
-    header("Cache-Control: must-revalidate");
     header("Pragma: ");
     header("Expires: ");
+    header("Cache-Control: must-revalidate");
     return $etag;
 }
 
