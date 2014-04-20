@@ -227,7 +227,7 @@ function clean_paths($path,$items){
 function match_paths($search,$items){
     $retour = array();
     foreach( $items as $i=>$v){
-        if( preg_match("/".preg_quote($search)."/",$v) > 0 ){
+        if( preg_match("/$search/",$v) > 0 ){
             $retour[] = $items[$i];
         }
     }
