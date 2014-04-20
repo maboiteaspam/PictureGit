@@ -28,9 +28,10 @@ define([
 
     that.showTab = function(tab,item){
       if( item ){
-        that.path(item.path())
-        that.name(item.name())
-        that.type(item.type())
+        that.path(item.path());
+        that.name(item.name());
+        that.type(item.type());
+        that.item_resource.loaded(true);
       }else if( item === null ){
         that.path("")
         that.name("")

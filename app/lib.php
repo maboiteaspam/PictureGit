@@ -38,27 +38,47 @@ function respond_json($data){
 }
 
 function respond_file($path){
-    if( !is_file($path) || !is_readable($path) ) return "";
+    $result = "";
+    if( !is_file($path) || !is_readable($path) ) return $result;
     if( preg_match("/[.]css$/i",$path)>0){
         header('Content-type: text/css');
-        $result = etaged_file($path);
+        if(etaged_file($path)!==false){
+            $result = file_get_contents($path);
+        }
     }else if( preg_match("/[.]js$/i",$path)>0){
         header('Content-type: text/javascript');
-        $result = etaged_file($path);
+        if(etaged_file($path)!==false){
+            $result = file_get_contents($path);
+        }
     }else if( preg_match("/[.](jpeg|jpg|gif|png)$/i",$path)>0){
-        $result = "";
-        if( etaged_file($path) != "" ){
-            $image = new SimpleImage();
-            if( $image->load($path) ){
-                $image->resizeToWidth(150);
-                $image->output();
-            }else{
-                $result = "wont image";
+        $etag = etaged_file($path);
+        if($etag!==false){
+            $c = sys_get_temp_dir()."/cache";
+            if( ! is_dir($c) ) mkdir($c,0777,true);
+            $c = "$c/$etag";
+            if( !file_exists($c) || filemtime($c) !== filemtime($path) ){
+                $image = new SimpleImage();
+                if( $image->load($path) ){
+                    $image->resizeToHeight(250);
+                    $image->save("$c",$image->image_type);
+                }else{
+                    $result = "wont image";
+                }
             }
+            if (preg_match("/[.](jpeg|jpg)$/i",$path)>0) {
+                header('Content-Type: image/jpeg');
+            } elseif (preg_match("/[.](gif)$/i",$path)>0) {
+                header('Content-Type: image/gif');
+            } elseif (preg_match("/[.](png)$/i",$path)>0) {
+                header('Content-Type: image/png');
+            }
+            $result = file_get_contents($c);
         }
     }else{
         header('Content-type: '.mime_content_type($path));
-        $result = etaged_file($path);
+        if(etaged_file($path)!==false){
+            $result = file_get_contents($path);
+        }
     }
     return $result;
 }
@@ -84,13 +104,13 @@ function etaged_file($path){
         header("Cache-Control: must-revalidate");
         header("Pragma: ");
         header("Expires: ");
-        return "";
+        return false;
     }
     header( "HTTP/1.1 200 ok" );
     header("Cache-Control: must-revalidate");
     header("Pragma: ");
     header("Expires: ");
-    return file_get_contents($path);
+    return $etag;
 }
 
 function trash_file($path){

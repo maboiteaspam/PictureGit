@@ -138,6 +138,7 @@
         var c = parseInt(browser.current_page())-1;
         var i = browser.items_by_page();
         browser.items_resource.update(api.fetchDirectoryItems(url,c*i,i));
+        browser.directories_resource.update(api.fetchDirectories(url));
       }
     });
 

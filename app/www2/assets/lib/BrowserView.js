@@ -14,6 +14,7 @@ define([
     that.display_size = ko.observable("size-1");
 
     that.items_resource = new DataResource();
+    that.directories_resource = new DataResource();
 
     that.total_count = ko.computed(function(){
       var count = 0;
@@ -45,7 +46,10 @@ define([
     });
 
     that.items_resource.loaded.subscribe(function(l){
-      that.loaded(l);
+      that.loaded(l && that.directories_resource.loaded());
+    })
+    that.directories_resource.loaded.subscribe(function(l){
+      that.loaded(l && that.items_resource.loaded());
     })
 
 
@@ -137,7 +141,6 @@ define([
               return this.path();
             return "/read_file"+this.path();
           },e);
-
           items.push(e);
         }
       }
@@ -146,10 +149,34 @@ define([
 
     that.breadcrumb_next = ko.computed(function(){
       var retour = [];
-      var items = that.items();
-      for(var n in items ){
-        if( items[n].type() == 'directory' ){
-          retour.push(items[n]);
+      var response = that.directories_resource.response();
+      if( response ){
+        var items = response.items;
+        for(var n in items ){
+          var e = {};
+          e.path = ko.observable(response.items[n]);
+          e.type = ko.computed(function(){
+            return this.path().match(/\/$/)?'directory':'file';
+          },e);
+          e.name = ko.computed(function(){
+            var r = "";
+            if( this.type() == "directory" )
+              r = this.path().match(/[/]([^/]+)[/]$/)[1];
+            else
+              r = this.path().match(/[/]([^/]*)$/)[1];
+            return r;
+          },e);
+          e.short_name = ko.computed(function(){
+            var r = this.name();
+            if(r.length>15 ) r = r.substr(0,15)+"...";
+            return r;
+          },e);
+          e.preview_url = ko.computed(function(){
+            if( this.path().match(/^http/))
+              return this.path();
+            return "/read_file"+this.path();
+          },e);
+          retour.push(e);
         }
       }
       return retour;
