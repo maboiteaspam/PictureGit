@@ -99,8 +99,7 @@ function etaged_file($path){
     header( "Etag: ".$etag );
 
     // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
-    if ( !isset($_GET["q"])
-        && (int)$modified_since === (int)$last_modified
+    if ( (int)$modified_since === (int)$last_modified
         && $etag === $etagHeader ) {
         header( "HTTP/1.1 304 Not Modified" );
         header("Pragma: ");
