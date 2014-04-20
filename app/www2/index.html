@@ -55,7 +55,7 @@
                     <ul class="nav navbar-nav">
 
                         <!-- up -->
-                        <li data-bind="with:navigation, css: {disabled:navigation.location()=='/'}"
+                        <li data-bind="with:browser, css: {disabled:browser.current_url()=='/'}"
                             class="up">
                             <a href="#" class="t-font"
                                     ><span class=" ion-ios7-arrow-thin-up"></span>Up
@@ -86,15 +86,15 @@
 
                         <!-- Display -->
                         <li class="dropdown displaySelector"
-                            data-bind="with: files">
+                            data-bind="with: browser">
                             <a href="#" class="dropdown-toggle t-font"
                                data-toggle="dropdown">Display <b class="caret"></b></a>
                             <ul class="dropdown-menu pull-right">
-                                <li data-mode="table" data-bind="css:{active:display()=='table'}">
+                                <li data-mode="table" data-bind="css:{active:display_mode()=='table'}">
                                     <a><span class="ion-ios7-drag"></span>
                                         Table</a>
                                 </li>
-                                <li data-mode="thumbs" data-bind="css:{active:display()=='thumbs'}">
+                                <li data-mode="thumbs" data-bind="css:{active:display_mode()=='thumbs'}">
                                     <a><span class="ion-ios7-keypad-outline"></span>
                                         Thumbs</a>
                                 </li>
@@ -104,19 +104,19 @@
 
                         <!-- Size -->
                         <li class="dropdown sizeSelector"
-                            data-bind="with: files, css: {disabled:files.display()!='thumbs'}">
+                            data-bind="with: browser, css: {disabled:browser.display_mode()!='thumbs'}">
                             <a href="#" class="dropdown-toggle t-font"
                                data-toggle="dropdown"
                                     >Size <b class="caret"></b></a>
                             <ul class="dropdown-menu pull-right">
                                 <li data-size="size-1"
-                                    data-bind="css:{active:size()=='size-1'}"
+                                    data-bind="css:{active:display_size()=='size-1'}"
                                         ><a>Size 1</a></li>
                                 <li data-size="size-2"
-                                    data-bind="css:{active:size()=='size-2'}"
+                                    data-bind="css:{active:display_size()=='size-2'}"
                                         ><a>Size 2</a></li>
                                 <li data-size="size-3"
-                                    data-bind="css:{active:size()=='size-3'}"
+                                    data-bind="css:{active:display_size()=='size-3'}"
                                         ><a>Size 3</a></li>
                             </ul>
                         </li>
@@ -141,14 +141,14 @@
         </div>
         <!-- header -->
 
-        <div class="fileBrowser" data-bind="with: files,css:{loading:!files.loaded()}">
+        <div class="fileBrowser" data-bind="with: browser,css:{loading:!browser.loaded()}">
 
             <!-- browser -->
             <div data-bind="if: items().length">
                 <div class="items-display">
 
                     <!-- table -->
-                    <div class="display-table" data-bind="if: display()=='table'">
+                    <div class="display-table" data-bind="if: display_mode()=='table'">
                         <table class="table table-striped table-hover table-condensed">
                             <tr>
                                 <th class="type-col">type</th>
@@ -180,7 +180,7 @@
                     <!-- table -->
 
                     <!-- thumbs -->
-                    <div class="display-thumbs" data-bind="if: display()=='thumbs',css:size()">
+                    <div class="display-thumbs" data-bind="if: display_mode()=='thumbs',css:display_size()">
                         <ul data-bind="foreach: items">
                             <li class="t-all" data-bind="css:type()">
                                 <!-- directory -->
@@ -227,21 +227,21 @@
                 <div class="container-pager bg-info">
                     <!-- Size -->
                     <div class="sizeSelector pull-right"
-                         data-bind="css: {disabled:display()!='thumbs'}">
+                         data-bind="css: {disabled:display_mode()!='thumbs'}">
                         <ul class=" pagination pagination-sm ">
                             <li class="size-1"
                                 data-size="size-1"
-                                data-bind="css:{active:size()=='size-1'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                                data-bind="css:{active:display_size()=='size-1'&&display_mode()=='thumbs',disabled:display_mode()!='thumbs'}">
                                 <a href="#" class="ion-arrow-resize">1</a>
                             </li>
                             <li class="size-2"
                                 data-size="size-2"
-                                data-bind="css:{active:size()=='size-2'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                                data-bind="css:{active:display_size()=='size-2'&&display_mode()=='thumbs',disabled:display_mode()!='thumbs'}">
                                 <a href="#" class="ion-arrow-resize">2</a>
                             </li>
                             <li class="size-3"
                                 data-size="size-3"
-                                data-bind="css:{active:size()=='size-3'&&display()=='thumbs',disabled:display()!='thumbs'}">
+                                data-bind="css:{active:display_size()=='size-3'&&display_mode()=='thumbs',disabled:display_mode()!='thumbs'}">
                                 <a href="#" class="ion-arrow-resize">3</a>
                             </li>
                         </ul>
@@ -251,11 +251,11 @@
                     <div class="displaySelector pull-right">
                         <ul class=" pagination pagination-sm ">
                             <li data-mode="table"
-                                data-bind="css:{active:display()=='table'}">
+                                data-bind="css:{active:display_mode()=='table'}">
                                 <a href="#" class="ion-ios7-drag"></a>
                             </li>
                             <li data-mode="thumbs"
-                                data-bind="css:{active:display()=='thumbs'}">
+                                data-bind="css:{active:display_mode()=='thumbs'}">
                                 <a href="#" class="ion-ios7-keypad-outline"></a>
                             </li>
                         </ul>
@@ -266,12 +266,12 @@
                         <ul class="pagination pagination-sm">
                             <li>
                                 <a href="#">
-                                    <span data-bind="text:$root.pager.limit_start()"></span>
+                                    <span data-bind="text:$root.browser.limit_start()"></span>
                                     to
-                                    <span data-bind="text:$root.pager.limit_end()"></span>
+                                    <span data-bind="text:$root.browser.limit_end()"></span>
                                     |
                                     total
-                                    <span data-bind="text:$root.pager.total_count()+' items'"></span>
+                                    <span data-bind="text:$root.browser.total_count()+' items'"></span>
                                 </a>
                             </li>
                         </ul>
@@ -280,7 +280,7 @@
                     <!-- bt up -->
                     <div class="pull-right">
                         <ul class="pagination pagination-sm">
-                            <li data-bind="css: {disabled:$parent.navigation.location()=='/'}"
+                            <li data-bind="css: {disabled:$root.browser.current_url()=='/'}"
                                 class="up">
                                 <a href="#" class="t-font">
                                     <span class="ion-ios7-arrow-thin-up"></span>Up
@@ -292,7 +292,7 @@
                     <!-- Pagination items -->
                     <div class="pull-right">
                         <ul class="items-pager pagination pagination-sm"
-                            data-bind="foreach: $parent.pager.items">
+                            data-bind="foreach: $root.browser.pager_items">
                             <li data-bind="css:{active:selected,disabled:!enabled}">
                                 <a href="#" data-bind="text:name"></a></li>
                         </ul>
@@ -301,7 +301,7 @@
                     <!-- Breadcrumb items -->
                     <div class="pull-left">
                         <ul class="pagination pagination-sm navigation"
-                            data-bind="foreach: $root.navigation.breadcrumb">
+                            data-bind="foreach: $root.browser.breadcrumb_items">
                             <li data-bind="css:{disabled:active}" class="prev">
                                 <a href="#" class="t-font " data-bind="text: short_name"></a>
                             </li>
@@ -312,13 +312,13 @@
                     <div class="pull-left breadcrumb_next">
                         <ul class="pagination pagination-sm">
                             <li class=" dropup"
-                                data-bind="css:{disabled:$root.navigation.breadcrumb_next().length==0}">
+                                data-bind="css:{disabled:$root.browser.breadcrumb_next().length==0}">
                                 <a href="#">
                                     Next
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu"
-                                    data-bind="foreach: $root.navigation.breadcrumb_next">
+                                    data-bind="foreach: $root.browser.breadcrumb_next">
                                     <li class="next">
                                         <a href="#" class="t-font" data-bind="text: short_name"></a>
                                     </li>
@@ -344,7 +344,7 @@
         </div>
 
         <!-- pop-in -->
-        <div class="fileDetail t-all bg-primary" data-bind="with: fileDetail, css:{active:fileDetail.tab()!=''}">
+        <div class="fileDetail t-all bg-primary" data-bind="with: fileDetail, css:{active:fileDetail.tab()!='',loading:!fileDetail.loaded()}">
 
             <!-- new-file -->
             <div data-bind="if:tab()=='new-file'" class="new-file">

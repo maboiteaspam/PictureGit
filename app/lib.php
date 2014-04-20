@@ -63,6 +63,7 @@ function respond_file($path){
     return $result;
 }
 function etaged_file($path){
+    clearstatcache();
     $last_modified  = filemtime( $path );
 
     $modified_since = ( isset( $_SERVER["HTTP_IF_MODIFIED_SINCE"] )
@@ -70,7 +71,7 @@ function etaged_file($path){
     $etagHeader     = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] )
         ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
 
-    $etag = sha1(sha1_file($path).$path.$last_modified);
+    $etag = sha1(sha1_file($path).$last_modified);
 
     //set last-modified header
     header( "Last-Modified: ".gmdate( "D, d M Y H:i:s", $last_modified )." GMT" );
@@ -80,8 +81,15 @@ function etaged_file($path){
     // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
     if ( (int)$modified_since === (int)$last_modified && $etag === $etagHeader ) {
         header( "HTTP/1.1 304 Not Modified" );
+        header("Cache-Control: must-revalidate");
+        header("Pragma: ");
+        header("Expires: ");
         return "";
     }
+    header( "HTTP/1.1 200 ok" );
+    header("Cache-Control: must-revalidate");
+    header("Pragma: ");
+    header("Expires: ");
     return file_get_contents($path);
 }
 
