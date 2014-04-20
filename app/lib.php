@@ -232,18 +232,24 @@ function match_paths($search,$items){
         }
     }
     if( count($items) == 0 ){
-        if( fnmatch("$search*", $v) ){
-            $retour[] = $items[$i];
+        foreach( $items as $i=>$v){
+            if( fnmatch("$search", $v) ){
+                $retour[] = $items[$i];
+            }
         }
     }
     if( count($items) == 0 ){
-        if( fnmatch("*$search", $v) ){
-            $retour[] = $items[$i];
+        foreach( $items as $i=>$v){
+            if( fnmatch("$search", $v) ){
+                $retour[] = $items[$i];
+            }
         }
     }
     if( count($items) == 0 ){
-        if( fnmatch("*$search*", $v) ){
-            $retour[] = $items[$i];
+        foreach( $items as $i=>$v){
+            if( fnmatch("$search", $v) ){
+                $retour[] = $items[$i];
+            }
         }
     }
     return $retour;
