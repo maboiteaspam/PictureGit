@@ -90,6 +90,16 @@
       }
       return false;
     });
+    AppModel.on("click",".typeSelector ul li", function(ev){
+      if( !$(this).hasClass("disabled") ){
+        var type = $(this).data("type");
+        browser.display_type( type );
+        browser.reload(  );
+        localStorage.setValue("preferred_type", type);
+        $(".dropdown").removeClass("open");
+      }
+      return false;
+    });
     AppModel.on("click",".btn-new-file", function(ev){
       fileDetail.showTab("new-file",null);
       fileDetail.path( browser.current_url() );
@@ -137,7 +147,13 @@
       if( url ){
         var c = parseInt(browser.current_page())-1;
         var i = browser.items_by_page();
-        browser.items_resource.update(api.fetchDirectoryItems(url,c*i,i));
+        if(browser.display_type() == 'any'){
+          browser.items_resource.update(api.fetchDirectoryItems(url,c*i,i));
+        }else if(browser.display_type() == 'file'){
+          browser.items_resource.update(api.fetchPictures(url,c*i,i));
+        }else if(browser.display_type() == 'directory'){
+          browser.items_resource.update(api.fetchDirectories(url,c*i,i));
+        }
         browser.directories_resource.update(api.fetchDirectories(url));
       }
     });

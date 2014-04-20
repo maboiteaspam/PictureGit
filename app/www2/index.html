@@ -233,6 +233,27 @@
         <div class=" sec-nav navbar-fixed-bottom" data-bind="with: browser">
             <!-- navigation -->
             <div class="container-pager bg-info">
+                <!-- Type -->
+                <div class="typeSelector pull-right">
+                    <ul class=" pagination pagination-sm ">
+                        <li class="display_type"
+                            data-type="any"
+                            data-bind="css:{active:display_type()=='any'}">
+                            <a href="#" >A</a>
+                        </li>
+                        <li class="display_type"
+                            data-type="directory"
+                            data-bind="css:{active:display_type()=='directory'}">
+                            <a href="#">D</a>
+                        </li>
+                        <li class="display_type"
+                            data-type="file"
+                            data-bind="css:{active:display_type()=='file'}">
+                            <a href="#">F</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Type -->
                 <!-- Size -->
                 <div class="sizeSelector pull-right"
                      data-bind="css: {disabled:display_mode()!='thumbs'}">

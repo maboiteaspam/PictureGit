@@ -108,7 +108,7 @@ $routes["`^/list_files(/.*)`i"] = function($path) use($picture_dir,$items_by_pag
     $items = reduce($items,$from,$items_by_page);
     return respond_json(array(
         "items"=>$items,
-        "length"=>$length,
+        "total_count"=>$length,
         "from"=>$from,
         "items_by_page"=>$items_by_page,
     ));

@@ -10,6 +10,7 @@ define([
     that.loaded = ko.observable(false).extend({ rateLimit: 0 });
 
     that.current_url = ko.observable(null);
+    that.display_type = ko.observable("any");
     that.display_mode = ko.observable("table");
     that.display_size = ko.observable("size-1");
 
