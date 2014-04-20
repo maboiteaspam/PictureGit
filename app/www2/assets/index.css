@@ -178,12 +178,6 @@
     font-size: 22em;
     line-height: 90%;
 }
-.fileBrowser .display-thumbs.size-1 .directory a span{
-}
-.fileBrowser .display-thumbs.size-2 .directory a span{
-}
-.fileBrowser .display-thumbs.size-3 .directory a span{
-}
 .fileBrowser .display-thumbs.size-1 .actions a{
     font-size: 0.8em;
 }
@@ -223,37 +217,27 @@
     height: 266px;
 }
 
-.fileBrowser .displaySelector{
-}
-
-.fileBrowser .sizeSelector{
-}
-
-.fileBrowser .sizeSelector.disabled{
+.sec-nav .sizeSelector.disabled{
     cursor: not-allowed;
 }
 
-.fileBrowser .sizeSelector.disabled ul li{
+.sec-nav .sizeSelector.disabled ul li{
     cursor: not-allowed;
 }
 
-.fileBrowser .sizeSelector .size-1{
+.sec-nav .sizeSelector .size-1{
     font-size: 10px;
 }
 
-.fileBrowser .sizeSelector .size-2{
+.sec-nav .sizeSelector .size-2{
     font-size: 16px;
 }
 
-.fileBrowser .pagination{
+.sec-nav .pagination{
     margin: 0px;
     margin-right: 15px;
 }
-
-.fileBrowser .sec-nav{
-}
-
-.fileBrowser .bg-info{
+.sec-nav .bg-info{
     padding: 5;
     padding-left: 30;
     padding-right: 30;
