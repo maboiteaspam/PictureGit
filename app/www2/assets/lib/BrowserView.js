@@ -57,6 +57,7 @@ define([
       that.loaded(l && that.items_resource.loaded());
     });
     that.delayed_search_text.subscribe(function(){
+      that.current_page(1);
       that.reload();
     });
 
