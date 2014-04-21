@@ -179,7 +179,6 @@ $routes["`^/index[.]mocha$`"] = function() use($www_dir,$api_location){
             $c = respond_file("$www_dir/$f");
             // note the reversed order, easy way(....)
             $c = inject_css_file("/assets/tests/mocha.css", $c);
-            $c = inject_script_file("/assets/tests/index.js", $c);
             $c = inject_script("mocha.setup('bdd')", $c);
             $c = inject_css_file("/assets/mocha/mocha.css", $c);
             $c = inject_script_file("/assets/mocha/mocha.js", $c);
@@ -189,6 +188,7 @@ $routes["`^/index[.]mocha$`"] = function() use($www_dir,$api_location){
             $c = inject_script("mocha.globals(['jQuery']);", $c,'bottom');
             $c = inject_script("mocha.checkLeaks();", $c,'bottom');
             $c = inject_script("$('<div id=\"mocha\"></div>').appendTo('body')", $c,'bottom');
+            $c = inject_script_file("/assets/tests/index.js", $c,'bottom');
             return $c;
         }
     }
