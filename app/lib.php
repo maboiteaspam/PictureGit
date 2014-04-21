@@ -147,6 +147,7 @@ function trash_folder($path){
 
 function secure_path($within, $path){
     $path = urldecode($path);
+    $path = str_replace("//","/",$path);
     $within = realpath($within);
     $real = realpath($within.$path);
     if( $real != false ){
