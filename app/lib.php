@@ -112,6 +112,12 @@ function etaged_file($path){
     header("Cache-Control: must-revalidate");
     return $etag;
 }
+function inject_script($content,$in,$where="top"){
+    // can be improve later.
+    if( $where == "top" ) $in = str_replace("<head>","<head><script>$content</script>",$in);
+    if( $where == "bottom" ) $in = str_replace("</body>","</body><script>$content</script>",$in);
+    return $in;
+}
 
 function trash_file($path){
     if( is_file($path) ) return unlink($path);
