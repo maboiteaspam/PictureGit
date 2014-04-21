@@ -310,15 +310,15 @@
                 <!-- Display -->
                 <!-- Pagination status -->
                 <div class="pull-right">
-                    <ul class="pagination pagination-sm">
+                    <ul class="pagination-status pagination pagination-sm">
                         <li>
                             <a href="#">
-                                <span data-bind="text:$root.browser.limit_start()"></span>
+                                <span data-bind="text:limit_start()"></span>
                                 to
-                                <span data-bind="text:$root.browser.limit_end()"></span>
+                                <span data-bind="text:limit_end()"></span>
                                 |
                                 total
-                                <span data-bind="text:$root.browser.total_count()+' items'"></span>
+                                <span data-bind="text:total_count()+' items'"></span>
                             </a>
                         </li>
                     </ul>
@@ -367,7 +367,7 @@
                             <ul class="dropdown-menu"
                                 data-bind="foreach: $root.browser.breadcrumb_next">
                                 <li class="next">
-                                    <a href="#" class="t-font" data-bind="text: short_name"></a>
+                                    <a href="#" class="t-font" data-bind="text: short_name, attr:{title: name}"></a>
                                 </li>
                             </ul>
                         </li>
