@@ -169,6 +169,31 @@ $routes["`^/(|index[.](html|htm))$`"] = function() use($www_dir,$api_location){
     }
     return false;
 };
+$routes["`^/index[.]mocha$`"] = function() use($www_dir,$api_location){
+    $files = array(
+        "index.html",
+        "index.htm",
+    );
+    foreach( $files as $f ){
+        if( is_file("$www_dir/$f") ){
+            $c = respond_file("$www_dir/$f");
+            // note the reversed order, easy way(....)
+            $c = inject_css_file("/assets/tests/mocha.css", $c);
+            $c = inject_script_file("/assets/tests/index.js", $c);
+            $c = inject_script("mocha.setup('bdd')", $c);
+            $c = inject_css_file("/assets/mocha/mocha.css", $c);
+            $c = inject_script_file("/assets/mocha/mocha.js", $c);
+            $c = inject_script_file("/assets/mocha/expect.js", $c);
+            // note the reversed order, easy way(....)
+            $c = inject_script("mocha.run();", $c,'bottom');
+            $c = inject_script("mocha.globals(['jQuery']);", $c,'bottom');
+            $c = inject_script("mocha.checkLeaks();", $c,'bottom');
+            $c = inject_script("$('<div id=\"mocha\"></div>').appendTo('body')", $c,'bottom');
+            return $c;
+        }
+    }
+    return false;
+};
 $routes["catch_all"] = function($path) use($www_dir){
     $path = secure_path($www_dir, $path );
     if( is_file($www_dir.$path) ){

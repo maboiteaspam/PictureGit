@@ -113,9 +113,21 @@ function etaged_file($path){
     return $etag;
 }
 function inject_script($content,$in,$where="top"){
-    // can be improve later.
+    // can be improved later.
     if( $where == "top" ) $in = str_replace("<head>","<head><script>$content</script>",$in);
     if( $where == "bottom" ) $in = str_replace("</body>","</body><script>$content</script>",$in);
+    return $in;
+}
+function inject_script_file($url,$in,$where="top"){
+    // can be improved later.
+    if( $where == "top" ) $in = str_replace("<head>","<head><script src='$url'></script>",$in);
+    if( $where == "bottom" ) $in = str_replace("</body>","</body><script src='$url'></script>",$in);
+    return $in;
+}
+function inject_css_file($url,$in,$where="top"){
+    // can be improved later.
+    if( $where == "top" ) $in = str_replace("<head>","<head><link href='$url' rel='stylesheet' type='text/css'>",$in);
+    if( $where == "bottom" ) $in = str_replace("</body>","</body><link href='$url' rel='stylesheet' type='text/css'>",$in);
     return $in;
 }
 
