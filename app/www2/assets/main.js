@@ -97,8 +97,8 @@
       if( !$(this).hasClass("disabled") ){
         var type = $(this).data("type");
         browser.display_type( type );
+        browser.current_page(1);
         browser.reload(  );
-        localStorage.setValue("preferred_type", type);
         $(".dropdown").removeClass("open");
       }
       return false;
