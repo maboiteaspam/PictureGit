@@ -1,7 +1,8 @@
 {
     "app_title":"Manage pictures on top of git !",
     "pictures_path":"demo_repo/",
-    "www_path":"app/www2/",
+    "www_path":"app/www/",
+    "api_location":null,
     "git":{
         "enable":true,
         "auto_push":true,
