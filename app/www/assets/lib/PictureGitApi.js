@@ -7,47 +7,12 @@ define([],function(){
     that.fetchConfig = function(){
       return ajaxHelper.getJSON("/config");
     };
-    that.fetchDirectoryItems = function(path,from,items_by_page){
-      var url = "/list_items"+path+"?";
-      if( from ) url+= "from="+from+"&";
-      if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
-      return ajaxHelper.getJSON(url);
-    };
-    that.searchDirectoryItems = function(path,from,items_by_page,search){
+    that.listItems = function(path,from,items_by_page,search,type){
       var url = "/list_items"+path+"?";
       if( from ) url+= "from="+from+"&";
       if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
       if( search ) url+= "search="+search+"&";
-      return ajaxHelper.getJSON(url);
-    };
-    that.fetchDirectories = function(path,from,items_by_page){
-      var url = "/list_items"+path+"?";
-      if( from ) url+= "from="+from+"&";
-      if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
-      url+= "type=directory&";
-      return ajaxHelper.getJSON(url);
-    };
-    that.searchDirectories = function(path,from,items_by_page,search){
-      var url = "/list_items"+path+"?";
-      if( from ) url+= "from="+from+"&";
-      if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
-      if( search ) url+= "search="+search+"&";
-      url+= "type=directory&";
-      return ajaxHelper.getJSON(url);
-    };
-    that.fetchPictures = function(path,from,items_by_page){
-      var url = "/list_items"+path+"?";
-      if( from ) url+= "from="+from+"&";
-      if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
-      url+= "type=file&";
-      return ajaxHelper.getJSON(url);
-    };
-    that.searchPictures = function(path,from,items_by_page,search){
-      var url = "/list_items"+path+"?";
-      if( from ) url+= "from="+from+"&";
-      if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
-      if( search ) url+= "search="+search+"&";
-      url+= "type=file&";
+      if( type ) url+= "type="+type+"&";
       return ajaxHelper.getJSON(url);
     };
     that.trashFile = function(path){

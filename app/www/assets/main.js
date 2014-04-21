@@ -151,27 +151,10 @@
       if( url ){
         var c = parseInt(browser.current_page())-1;
         var i = browser.items_by_page();
-        var search_text = browser.search_text();
-        if(browser.display_type() == 'any'){
-          if( search_text ){
-            browser.items_resource.update(api.searchDirectoryItems(url,c*i,i,search_text));
-          }else{
-            browser.items_resource.update(api.fetchDirectoryItems(url,c*i,i));
-          }
-        }else if(browser.display_type() == 'file'){
-          if(search_text ){
-            browser.items_resource.update(api.searchPictures(url,c*i,i,search_text));
-          }else{
-            browser.items_resource.update(api.fetchPictures(url,c*i,i));
-          }
-        }else if(browser.display_type() == 'directory'){
-          if(search_text ){
-            browser.items_resource.update(api.searchDirectories(url,c*i,i,search_text));
-          }else{
-            browser.items_resource.update(api.fetchDirectories(url,c*i,i));
-          }
-        }
-        browser.directories_resource.update(api.fetchDirectories(url));
+        var search = browser.search_text();
+        var type = browser.display_type();
+        browser.items_resource.update(api.listItems(url,c*i,i,search,type));
+        browser.directories_resource.update(api.listItems(url,null,null,null,"directory"));
       }
     });
 
