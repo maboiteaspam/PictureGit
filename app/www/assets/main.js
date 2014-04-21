@@ -20,7 +20,8 @@
       ModalView
       ){
 
-    var ajaxHelper = new AjaxHelper("");
+    var api_location = window.api_location || "";
+    var ajaxHelper = new AjaxHelper(api_location);
     var localStorage = new LocalStorage();
     var api = new PictureGitApi(ajaxHelper);
 
