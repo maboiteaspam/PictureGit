@@ -169,6 +169,12 @@ $routes["`^/(|index[.](html|htm))$`"] = function() use($www_dir,$api_location){
     }
     return false;
 };
+$routes["`^(/tests/.+)$`"] = function($path) use($app_dir){
+    if( is_file("$app_dir/www-tests/$path") ){
+        return respond_file("$app_dir/www-tests/$path");
+    }
+    return false;
+};
 $routes["`^/index[.]mocha$`"] = function() use($www_dir,$api_location){
     $files = array(
         "index.html",
@@ -178,17 +184,17 @@ $routes["`^/index[.]mocha$`"] = function() use($www_dir,$api_location){
         if( is_file("$www_dir/$f") ){
             $c = respond_file("$www_dir/$f");
             // note the reversed order, easy way(....)
-            $c = inject_css_file("/assets/tests/mocha.css", $c);
+            $c = inject_css_file("/tests/mocha.css", $c);
             $c = inject_script("mocha.setup('bdd')", $c);
-            $c = inject_css_file("/assets/mocha/mocha.css", $c);
-            $c = inject_script_file("/assets/mocha/mocha.js", $c);
-            $c = inject_script_file("/assets/mocha/expect.js", $c);
+            $c = inject_css_file("/tests/vendors/mocha/mocha.css", $c);
+            $c = inject_script_file("/tests/vendors/mocha/mocha.js", $c);
+            $c = inject_script_file("/tests/vendors/mocha/expect.js", $c);
             // note the reversed order, easy way(....)
             $c = inject_script("mocha.run();", $c,'bottom');
             $c = inject_script("mocha.globals(['jQuery']);", $c,'bottom');
             $c = inject_script("mocha.checkLeaks();", $c,'bottom');
             $c = inject_script("$('<div id=\"mocha\"></div>').appendTo('body')", $c,'bottom');
-            $c = inject_script_file("/assets/tests/index.js", $c,'bottom');
+            $c = inject_script_file("/tests/index.js", $c,'bottom');
             return $c;
         }
     }
@@ -207,20 +213,24 @@ $request_uri = isset($_SERVER["REQUEST_URI"])?$_SERVER["REQUEST_URI"]:"";
 $q_str = isset($_SERVER["QUERY_STRING"])?$_SERVER["QUERY_STRING"]:"";
 $request_uri = str_replace("?".$q_str,"",$request_uri);
 $found = false;
+$response = "";
 foreach( $routes as $pattern => $handler ){
     if( $pattern != "catch_all" ){
         $matches = array();
         if( preg_match($pattern, $request_uri, $matches) ) {
             array_shift($matches);
-            echo call_user_func_array($handler,$matches);
-            $found = true;
-            break;
+            $response = call_user_func_array($handler,$matches);
+            if( $response !== false ){
+                $found = true;
+                break;
+            }
         }
     }
 }
 // router.php
 if (!$found && isset($routes["catch_all"])) {
-    echo call_user_func_array($routes["catch_all"],array($request_uri));
+    $response = call_user_func_array($routes["catch_all"],array($request_uri));
     $found = true;
 }
+if( $response !== false ) echo $response;
 return $found;
