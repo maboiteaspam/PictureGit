@@ -26,7 +26,7 @@ define([],function(){
       if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
       return ajaxHelper.getJSON(url);
     };
-    that.searchDirectories = function(path,from,items_by_page){
+    that.searchDirectories = function(path,from,items_by_page,search){
       var url = "/search_directories/"+path+"?";
       if( from ) url+= "from="+from+"&";
       if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
@@ -39,7 +39,7 @@ define([],function(){
       if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
       return ajaxHelper.getJSON(url);
     };
-    that.searchPictures = function(path,from,items_by_page){
+    that.searchPictures = function(path,from,items_by_page,search){
       var url = "/search_files/"+path+"?";
       if( from ) url+= "from="+from+"&";
       if( items_by_page ) url+= "items_by_page="+items_by_page+"&";
