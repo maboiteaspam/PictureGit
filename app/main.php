@@ -9,6 +9,7 @@ $default_config = [
     "app_title"=>"My Super great app to manage pictures !",
     "pictures_path"=>"pictures_repo/",
     "www_path"=>"app/www/",
+    "api_location"=>"http://some.host:80/",
     "git"=>[
         "enable"=>false,
         "auto_push"=>false,
@@ -60,6 +61,7 @@ if( ! $VS->isRootReady() ){
 $www_dir = $config->www_path;
 $assets_dir = $config->www_path."/assets/";
 $items_by_page = $config->display->items_by_page;
+$api_location = $config->api_location;
 
 
 $routes = array();
@@ -240,12 +242,15 @@ $routes["`^/config$`"] = function() use($config,$VS){
         "display"=>$config->display,
     ]);
 };
-$routes["`^/$`"] = function() use($www_dir){
-    if( is_file("$www_dir/index.html") ){
-        return respond_file("$www_dir/index.html");
-    }
-    if( is_file("$www_dir/index.htm") ){
-        return respond_file("$www_dir/index.htm");
+$routes["`^/(|index[.](html|htm))$`"] = function() use($www_dir,$api_location){
+    $files = array(
+        "index.html",
+        "index.htm",
+    );
+    foreach( $files as $f ){
+        if( is_file("$www_dir/$f") ){
+            return inject_script("window.api_location='$api_location';",respond_file("$www_dir/$f"));
+        }
     }
     return false;
 };
