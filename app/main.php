@@ -175,11 +175,12 @@ $routes["`^(/tests/.+)$`"] = function($path) use($app_dir){
     }
     return false;
 };
-$routes["`^/index[.]mocha$`"] = function() use($www_dir,$api_location){
+$routes["`^/(.+)[.]mocha$`"] = function($path_url) use($www_dir,$api_location){
     $files = array(
-        "index.html",
-        "index.htm",
+        "$path_url.html",
+        "$path_url.htm",
     );
+    var_dump($files);
     foreach( $files as $f ){
         if( is_file("$www_dir/$f") ){
             $c = respond_file("$www_dir/$f");
@@ -194,7 +195,7 @@ $routes["`^/index[.]mocha$`"] = function() use($www_dir,$api_location){
             $c = inject_script("mocha.globals(['jQuery']);", $c,'bottom');
             $c = inject_script("mocha.checkLeaks();", $c,'bottom');
             $c = inject_script("$('<div id=\"mocha\"></div>').appendTo('body')", $c,'bottom');
-            $c = inject_script_file("/tests/index.js", $c,'bottom');
+            $c = inject_script_file("/tests/$path_url.js", $c,'bottom');
             return $c;
         }
     }
