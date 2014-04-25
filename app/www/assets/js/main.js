@@ -1,14 +1,14 @@
 "use strict";
 (function(){
   require([
-    "lib/AppViewModel",
+    "view_models/AppViewModel",
     "lib/AjaxHelper",
     "lib/LocalStorage",
-    "lib/PictureGitApi",
-    "lib/ThemeView",
-    "lib/BrowserView",
-    "lib/FileDetailView",
-    "lib/ModalView"
+    "api/PictureGitApi",
+    "view_models/ThemeView",
+    "view_models/BrowserView",
+    "view_models/FileDetailView",
+    "view_models/ModalView"
   ],function(
       AppViewModel,
       AjaxHelper,

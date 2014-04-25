@@ -11,8 +11,8 @@ describe('a suite of tests', function(){
           .trigger("click");
       $(".modal textarea").val("commit message");
       $(".modal .confirm").trigger("click");
-      setTimeout(done,2500);
-    },2000);
+      setTimeout(done,2000);
+    },3500);
   });
 
   it('create a new folder', function(done){
