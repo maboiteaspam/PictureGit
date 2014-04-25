@@ -246,7 +246,7 @@ function clean_paths($path,$items){
 function match_paths($search,$items){
     $retour = array();
     foreach( $items as $i=>$v){
-        if( fnmatch("**$search**", $v) ){
+        if( fnmatch("$search", $v) ){
             $retour[] = $items[$i];
         }
     }

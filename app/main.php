@@ -76,7 +76,25 @@ $routes["`^/list_items(/.*)`i"] = function($path) use($picture_dir,$items_by_pag
     if( $type == "directory" ) $items = filter_dirs($picture_dir.$path, $items);
     $items = relative_to($path, $items);
     $items = clean_paths($picture_dir, $items);
-    if( $search != "" ) $items = match_paths($search, $items);
+    if( $search != "" ) $items = match_paths("**$search**", $items);
+    $length = count($items);
+    $items = reduce($items,$from,$items_by_page);
+    return respond_json(array(
+        "items"=>$items,
+        "total_count"=>$length,
+        "from"=>$from,
+        "items_by_page"=>$items_by_page,
+    ));
+};
+$routes["`^/completion(/.*)$`"] = function($path) use($picture_dir){
+    $search = isset($_GET["search"])?($_GET["search"]):"";
+    $from = isset($_GET["from"])?intval($_GET["from"]):0;
+    $items_by_page = isset($_GET["items_by_page"])?intval($_GET["items_by_page"]):5;
+    $path = secure_path($picture_dir, $path );
+    $items = read_directory($picture_dir.$path);
+    $items = relative_to($path, $items);
+    $items = clean_paths($picture_dir, $items);
+    $items = match_paths("/$search**", $items);
     $length = count($items);
     $items = reduce($items,$from,$items_by_page);
     return respond_json(array(
@@ -91,6 +109,7 @@ $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
     return respond_file($picture_dir.$path);
 };
 $routes["`^/read_file(/[^@]+)@(.+)`i"] = function($f_path, $version) use($picture_dir){
+    /**/
 };
 $routes["`^/edit_file(/.*)`i"] = function($path) use($picture_dir,$VS){
     if( isset($_FILES["img"]) ){
@@ -141,6 +160,7 @@ $routes["`^/trash_folder(/.+)`i"] = function($path) use($picture_dir, $VS){
     return respond_json( $trashed );
 };
 $routes["`^/read_logs(/.+)`i"] = function($f_path) use($picture_dir){
+    /**/
 };
 $routes["`^/list_bootstrap_themes`i"] = function() use($assets_dir,$www_dir){
     $retour = read_directory($assets_dir."/themes/");
@@ -180,7 +200,6 @@ $routes["`^/(.+)[.]mocha$`"] = function($path_url) use($www_dir,$api_location){
         "$path_url.html",
         "$path_url.htm",
     );
-    var_dump($files);
     foreach( $files as $f ){
         if( is_file("$www_dir/$f") ){
             $c = respond_file("$www_dir/$f");

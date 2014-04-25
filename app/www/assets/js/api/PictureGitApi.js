@@ -7,6 +7,11 @@ define([],function(){
     that.fetchConfig = function(){
       return ajaxHelper.getJSON("/config");
     };
+    that.completion = function(path,search){
+      var url = "/completion"+path+"?";
+      if( search ) url+= "search="+search+"&";
+      return ajaxHelper.getJSON(url);
+    };
     that.listItems = function(path,from,items_by_page,search,type){
       var url = "/list_items"+path+"?";
       if( from ) url+= "from="+from+"&";

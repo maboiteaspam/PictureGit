@@ -20,6 +20,7 @@ define([
 
     that.items_resource = new DataResource();
     that.directories_resource = new DataResource();
+    that.completions_resource = new DataResource();
 
     that.total_count = ko.computed(function(){
       var count = 0;
@@ -190,6 +191,13 @@ define([
       }
       return retour;
     }).extend({ rateLimit: 0 });
+
+    that.completions = ko.computed(function(){
+      var response = that.completions_resource.response();
+      var items = [];
+      if( response ) items = response.items;
+      return items;
+    }).extend({ rateLimit: 500 });
 
     that.findByPath = function(p){
       var items = that.items();
