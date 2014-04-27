@@ -156,13 +156,24 @@
       }
     });
 
-    AppModel.on("click",".searchBox input", function(ev){
+    AppModel.on("focus",".searchBox input", function(ev){
       $(this).select();
     });
     AppModel.on("click",".searchBox button", function(ev){
-      if( browser.search_text()!="" ){
-        browser.search_text("");
+      browser.search_text("");
+    });
+    AppModel.on("keydown","", function(ev){
+      if( $(ev.target).not("input").not("textarea").length ){
+        $(".searchBox input").val( String.fromCharCode(ev.which) );
+        $(".searchBox input").trigger("focus");
       }
+    });
+    var searchSelectT = null;
+    browser.search_text.subscribe(function(){
+      clearTimeout(searchSelectT);
+      searchSelectT = setTimeout(function(){
+        $(".searchBox input").select();
+      },1500);
     });
 
 
