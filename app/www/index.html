@@ -169,6 +169,7 @@
                     <div class="display-table" data-bind="if: display_mode()=='table'">
                         <table class="table table-striped table-hover table-condensed">
                             <tr>
+                                <th></th>
                                 <th class="type-col">type</th>
                                 <th class="name-col">name</th>
                                 <th class="edit-col"></th>
@@ -177,6 +178,7 @@
                             </tr>
                             <tbody data-bind="foreach: items">
                             <tr data-bind="css:type(),attr:{title:path}">
+                                <td data-bind="text: position_text"></td>
                                 <td class="type-col">
                                     <span class="btn t-all btn-primary"
                                           data-bind="css:type()=='file'?'ion-ios7-photos-outline':'ion-ios7-folder-outline'"></span>
@@ -529,7 +531,7 @@
                 </div>
                 <div class="modal-body bg-warning">
                     <h4>Please fill in a commit message</h4>
-                    <textarea class="form-control" data-bind="value:message" required="true">
+                    <textarea class="form-control" data-bind="value:message, valueUpdate: ['input', 'afterkeydown']" required="true">
                         Type here
                     </textarea>
                 </div>

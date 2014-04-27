@@ -130,6 +130,17 @@ define([
         for( var n in response.items ){
           var e = {};
           e.path = ko.observable(response.items[n]);
+          e.position = ko.observable(response.from+parseInt(n));
+          e.position_text = ko.computed(function(){
+            var p = ""+this.position();
+            var t = ""+response.total_count;
+            var pad = [];
+            for( var i=p.length,e=t.length;i<e;i++){
+              pad.push("0")
+            }
+            p=pad.join("")+p;
+            return p;
+          },e);
           e.type = ko.computed(function(){
             return this.path().match(/\/$/)?'directory':'file';
           },e);
