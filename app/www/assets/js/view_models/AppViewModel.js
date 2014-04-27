@@ -6,7 +6,7 @@ define([
     ){
   return function (el) {
     var that = this;
-    that.ready = ko.observable(false);
+    that.ready = ko.observable(false).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 1500 } });
 
     that.init_seq = {};
     that.init_seq.startup_modules = ko.observableArray([]).extend({ rateLimit: 50 });
@@ -15,8 +15,8 @@ define([
       for(var n in modules ){
         if( modules[n].loaded() == false ) return false;
       }
-      return true;
-    });
+      return modules.length>0;
+    }).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 } });
 
     that.user_config = new DataResource();
     that.init_seq.startup_modules.push(that.user_config);
