@@ -237,7 +237,20 @@
 
             <div data-bind="if: !items().length">
                 <div class="items-display">
-                    No items !
+                    <h3>There is no results !</h3>
+                    <b>Try to adjust your settings</b>
+                    <p>
+                    <ul class="nav nav-pills" data-bind="if:search_text">
+                        <li class="btn-clear-search">
+                            <a href="#">Remove search <span class="badge">'<span data-bind="text:search_text"></span>' x</span></a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills" data-bind="if:display_type()!='any'">
+                        <li class="btn-clear-display_type">
+                            <a href="#">Display all items<span class="badge">'<span data-bind="text:display_type"></span>' x</span></a>
+                        </li>
+                    </ul>
+                    </p>
                 </div>
             </div>
             <!-- browser -->
@@ -316,12 +329,9 @@
                     <ul class="pagination-status pagination pagination-sm">
                         <li>
                             <a href="#">
-                                <span data-bind="text:limit_start()"></span>
-                                to
-                                <span data-bind="text:limit_end()"></span>
+                                <span data-bind="text:limit_start()"></span> / <span data-bind="text:limit_end()"></span>
                                 |
-                                total
-                                <span data-bind="text:total_count()+' items'"></span>
+                                total <span data-bind="text:total_count()"></span> items
                             </a>
                         </li>
                     </ul>
@@ -446,7 +456,7 @@
                     <!-- zoom -->
                     <div class="zoom t-all" data-bind="css:{active:tab()=='zoom'}">
                         <div>
-                            <img data-bind="attr:{src:item.preview_url,title:item.name}" />
+                            <img data-bind="attr:{src:item.preview_url,title:item.name}" class="t-all" />
                             <div data-bind="with: name"></div>
                         </div>
                     </div>
@@ -504,10 +514,10 @@
                             <a href="#" class="ion-ios7-close-outline btn-close t-color btn btn-primary">Close</a>
                         </li>
                         <li>
-                            <a href="#" class="ion-ios7-arrow-right  btn-prev t-color btn btn-primary">Previous</a>
+                            <a href="#" class="ion-ios7-arrow-left  btn-prev t-color btn btn-primary">Previous</a>
                         </li>
                         <li>
-                            <a href="#" class="ion-ios7-arrow-left  btn-next t-color btn btn-primary">Next</a>
+                            <a href="#" class="ion-ios7-arrow-right  btn-next t-color btn btn-primary">Next</a>
                         </li>
                         <li>
                             <a href="#" class="ion-ios7-eye t-color btn-zoom btn btn-primary"

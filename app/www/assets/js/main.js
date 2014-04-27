@@ -217,6 +217,15 @@
         return false;
       });
     };
+    AppModel.on("click",".fileBrowser .btn-clear-search", function(ev){
+      browser.search_text("");
+      return false;
+    });
+    AppModel.on("click",".fileBrowser .btn-clear-display_type", function(ev){
+      browser.display_type("any");
+      browser.reload();
+      return false;
+    });
     AppModel.on("click",".fileBrowser .btn-logs", function(ev){
       var item;
       if( $(this).parentsUntil(".file").is("tr") ){
