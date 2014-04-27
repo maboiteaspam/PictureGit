@@ -58,6 +58,9 @@ define([
       }
       return p;
     });
+    that.hasSettings = ko.computed(function(){
+      return that.search_text()!="" || that.display_type()!='any';
+    });
 
     that.items_resource.loaded.subscribe(function(l){
       that.loaded(l && that.directories_resource.loaded());
@@ -108,6 +111,7 @@ define([
           name:"/",
           short_name:"/",
           path:"/",
+          items:ko.observableArray([]),
           active:ko.observable(false)
         };
         items.push(item);
@@ -121,6 +125,7 @@ define([
               short_name:short_name,
               name:name,
               path:p,
+              items:ko.observableArray([]),
               active:ko.observable(false)
             };
             items.push(item);
@@ -183,40 +188,6 @@ define([
       return items;
     }).extend({ rateLimit: 0 });
 
-    that.breadcrumb_next = ko.computed(function(){
-      var retour = [];
-      var response = that.directories_resource.response();
-      if( response ){
-        var items = response.items;
-        for(var n in items ){
-          var e = {};
-          e.path = ko.observable(response.items[n]);
-          e.type = ko.computed(function(){
-            return this.path().match(/\/$/)?'directory':'file';
-          },e);
-          e.name = ko.computed(function(){
-            var r = "";
-            if( this.type() == "directory" )
-              r = this.path().match(/[/]([^/]+)[/]$/)[1];
-            else
-              r = this.path().match(/[/]([^/]*)$/)[1];
-            return r;
-          },e);
-          e.short_name = ko.computed(function(){
-            var r = this.name();
-            if(r.length>15 ) r = r.substr(0,15)+"...";
-            return r;
-          },e);
-          e.preview_url = ko.computed(function(){
-            if( this.path().match(/^http/))
-              return this.path();
-            return "/read_file"+this.path();
-          },e);
-          retour.push(e);
-        }
-      }
-      return retour;
-    }).extend({ rateLimit: 0 });
 
     that.completions = ko.computed(function(){
       var response = that.completions_resource.response();
@@ -262,22 +233,16 @@ define([
       c = parseInt(c)
       if( c < that.pager_items().length ) that.current_page(c+1);
     };
-    that.selectBreadcrumbNextAtIndex = function(i){
-      if( i > -1 ){
-        var breadcrumb_item = that.breadcrumb_next()[i];
-        if( breadcrumb_item ){
-          var url = that.current_url();
-          that.current_page(1);
-          that.current_url(url+""+breadcrumb_item.name()+"/");
-        }
-      }
-    };
-    that.selectBreadcrumbItemAtIndex = function(i){
+    that.selectBreadcrumbItemAtIndex = function(i,items_index){
       if( i > -1 ){
         var breadcrumb_item = that.breadcrumb_items()[i];
         if( breadcrumb_item ){
           that.current_page(1);
-          that.current_url(breadcrumb_item.path);
+          if( items_index!==undefined ){
+            that.current_url(breadcrumb_item.items()[items_index]);
+          }else{
+            that.current_url(breadcrumb_item.path);
+          }
         }
       }
     };

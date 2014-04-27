@@ -131,13 +131,11 @@
       }
       return false;
     });
-    AppModel.on("click",".breadcrumb_next .next", function(ev){
-      browser.selectBreadcrumbNextAtIndex( $(this).index() );
+    AppModel.on("click",".bread_crumb .prev", function(){
+      browser.selectBreadcrumbItemAtIndex( $(this).parent().parent().index() );
     });
-    AppModel.on("click",".navigation .prev", function(){
-      if( !$(this).hasClass("active") ){
-        browser.selectBreadcrumbItemAtIndex( $(this).index() );
-      }
+    AppModel.on("click",".bread_crumb .next", function(){
+      browser.selectBreadcrumbItemAtIndex( $(this).parent().parent().parent().index(), $(this).parent().index() );
     });
     AppModel.on("click",".items-pager li", function(){
       if( !$(this).hasClass("disabled")
@@ -154,7 +152,33 @@
       var search = browser.search_text();
       var type = browser.display_type();
       browser.items_resource.update(api.listItems(url,c*i,i,search,type));
-      browser.directories_resource.update(api.listItems(url,null,null,null,"directory"));
+      browser.directories_resource.update((function(){
+        var ret = $.Deferred();
+
+        var t = [];
+        var k = [];
+        var p = url.replace(/(\/\/)/g,"/").split("/");
+        p.pop();
+
+        var c_path = "";
+        for( var i in p ){
+          var part = p[i];
+          c_path += part+"/";
+          k.push(c_path);
+          t.push( api.listItems(c_path,null,null,null,"directory") )
+        }
+
+        $.when.apply($,t).done(function(){
+          var results = {};
+          var t = browser.breadcrumb_items();
+          for(var i= 0,e=arguments.length;i<e;i++){
+            if(t[i]) t[i].items(arguments[i].items);
+          }
+          ret.resolve(results)
+        });
+
+        return ret;
+      })());
     }).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 50 } });
 
     AppModel.on("focus",".searchBox input", function(ev){

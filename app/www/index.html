@@ -360,34 +360,26 @@
                 </div>
                 <!-- Pagination items -->
                 <!-- Breadcrumb items -->
-                <div class="pull-left">
+                <div class="pull-left bread_crumb">
                     <ul class="pagination pagination-sm navigation"
                         data-bind="foreach: $root.browser.breadcrumb_items">
-                        <li data-bind="css:{disabled:active}" class="prev">
-                            <a href="#" class="t-font " data-bind="text: short_name"></a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Breadcrumb items -->
-                <!-- Breadcrumb next -->
-                <div class="pull-left breadcrumb_next">
-                    <ul class="pagination pagination-sm">
-                        <li class=" dropup"
-                            data-bind="css:{disabled:$root.browser.breadcrumb_next().length==0}">
-                            <a href="#">
-                                Next
-                                <span class="caret"></span>
+                        <li data-bind="css:{dropup:!!items().length}">
+                            <a href="#" class="t-font ">
+                                <span data-bind="text: short_name" class="prev"></span>
+                                <span data-bind="if: items().length">
+                                    <span class="caret"></span>
+                                </span>
                             </a>
                             <ul class="dropdown-menu"
-                                data-bind="foreach: $root.browser.breadcrumb_next">
-                                <li class="next">
-                                    <a href="#" class="t-font" data-bind="text: short_name, attr:{title: name}"></a>
+                                data-bind="foreach: items">
+                                <li>
+                                    <a href="#" class="t-font next" data-bind="text: $data"></a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-                <!-- Breadcrumb next -->
+                <!-- Breadcrumb items -->
             </div>
             <!-- navigation -->
         </div>
