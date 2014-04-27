@@ -49,7 +49,6 @@ define([
         that.item_resource.loaded(true);
         return true;
       }else if( item === null ){
-        that.item(null);
         that.item.path("");
         that.item.position("");
         that.item.position_text("");
