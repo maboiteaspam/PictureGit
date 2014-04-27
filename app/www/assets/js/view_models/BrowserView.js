@@ -50,6 +50,14 @@ define([
     that.page_count = ko.computed(function(){
       return Math.ceil(that.total_count()/that.items_by_page()) || 0;
     });
+    that.limit_start_text = ko.computed(function(){
+      var p = ""+that.limit_start();
+      var g = ""+that.limit_end();
+      for(var i= p.length,e=g.length;i<e;i++){
+        p = "0"+p;
+      }
+      return p;
+    });
 
     that.items_resource.loaded.subscribe(function(l){
       that.loaded(l && that.directories_resource.loaded());
