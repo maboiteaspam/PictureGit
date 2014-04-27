@@ -106,13 +106,11 @@
     });
     AppModel.on("click",".btn-new-file", function(ev){
       fileDetail.showTab("new-file",null);
-      fileDetail.path( browser.current_url() );
       $(".dropdown").removeClass("open");
       return false;
     });
     AppModel.on("click",".btn-new-directory", function(ev){
       fileDetail.showTab("new-directory",null);
-      fileDetail.path( browser.current_url() );
       $(".dropdown").removeClass("open");
       return false;
     });
@@ -183,6 +181,7 @@
     };
     var trash_item = function(item){
       modal.setItem(item);
+      fileDetail.loaded(false);
       $(".modal .confirm").one("click",function(){
         var p = null;
         if( modal.type() == "file" ){
@@ -196,8 +195,14 @@
           modal.setItem(null);
           fileDetail.showTab(null);
           browser.reload();
+          fileDetail.loaded(true);
           $(".modal form").get(0).reset();
         });
+        return false;
+      });
+      $(".modal .close").one("click",function(){
+        browser.loaded(true);
+        fileDetail.loaded(true);
         return false;
       });
     };
@@ -209,7 +214,7 @@
         item = find_item($(this).parentsUntil(".file").parent().index());
       }
       if( item ){
-        fileDetail.showTab("logs",item);
+        fileDetail.showTab("logs", ko.toJS(item) );
       }
       ev.preventDefault();
       return false;
@@ -222,7 +227,7 @@
         item = find_item($(this).parentsUntil(".file").parent().index());
       }
       if( item ){
-        fileDetail.showTab("edit",item);
+        fileDetail.showTab("edit", ko.toJS(item) );
       }
       ev.preventDefault();
       return false;
@@ -256,10 +261,11 @@
     AppModel.on("click",".fileBrowser .file", function(){
       var item = find_item($(this).index());
       if( item ){
-        fileDetail.showTab("zoom",item);
+        fileDetail.showTab("zoom", ko.toJS(item) );
       }
       return false;
     });
+
     AppModel.on("click",".fileDetail .btn-edit", function(){
       fileDetail.showTab("edit");
       return false;
@@ -276,8 +282,22 @@
       fileDetail.showTab(null);
       return false;
     });
+    AppModel.on("click",".fileDetail .btn-next", function(){
+      var item = browser.findItemAtPosition( parseInt(fileDetail.item.position())+1 );
+      if( item ){
+        fileDetail.setItem( ko.toJS(item) );
+      }
+      return false;
+    });
+    AppModel.on("click",".fileDetail .btn-prev", function(){
+      var item = browser.findItemAtPosition( parseInt(fileDetail.item.position())-1 );
+      if( item ){
+        fileDetail.setItem( ko.toJS(item) );
+      }
+      return false;
+    });
     AppModel.on("click",".fileDetail .btn-trash", function(){
-      trash_item(fileDetail);
+      trash_item(fileDetail.item);
       return false;
     });
     AppModel.on("submit",".fileDetail .edit form", function(ev){
@@ -287,18 +307,20 @@
 
       var img = form.find('input[type="file"]')[0].files[0];
       var comment = form.find('textarea').val();
-      var path = fileDetail.path();
+      var path = fileDetail.item.path();
 
       browser.loaded(false);
+      fileDetail.loaded(false);
       fileDetail.item_resource
           .update(api.editPicture(path,comment,img))
           .done(function(){
-            fileDetail.path(path+"?q="+(new Date()));
-            browser.findByPath(path).path(path+"?q="+(new Date()));
+            fileDetail.item.q((new Date()));
+            browser.findByPath(path).q((new Date()));
           })
           .always(function(){
             enable_form(form);
             browser.loaded(true);
+            fileDetail.loaded(true);
           });
       return false;
     });
@@ -309,14 +331,16 @@
 
       var img = form.find('input[type="file"]')[0].files[0];
       var comment = form.find('textarea').val();
-      var path = fileDetail.path();
+      var path = browser.current_url();
 
       browser.loaded(false);
+      fileDetail.loaded(false);
       fileDetail.item_resource
           .update(api.addPicture(path,comment,img))
           .always(function(){
             fileDetail.showTab(null);
             browser.reload();
+            fileDetail.loaded(true);
             enable_form(form);
           });
       return false;
@@ -330,15 +354,26 @@
       var path = browser.current_url();
 
       browser.loaded(false);
+      fileDetail.loaded(false);
       fileDetail.item_resource
           .update(api.addDirectory(path,name))
           .always(function(){
             fileDetail.showTab(null);
             browser.reload();
+            fileDetail.loaded(true);
             enable_form(form);
           });
       return false;
     });
+
+    AppModel.on("click",".fileDetail", function(ev){
+      if( $(ev.target).is("div") ){
+        fileDetail.showTab(null);
+        return false;
+      }
+    });
+
+
 
     $(".modal [data-dismiss]").click(function(){
       AppModel.modal.display(false);

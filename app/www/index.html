@@ -34,6 +34,7 @@
     <link href='assets/vendors/css/ionicons.min.css' rel='stylesheet' type='text/css'>
     <link href='assets/index.css' rel='stylesheet' type='text/css'>
     <link href='assets/transitions.css' rel='stylesheet' type='text/css'>
+    <link href='assets/fileDetail.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -383,12 +384,14 @@
 
 
         <!-- pop-in -->
-        <div class="fileDetail t-all bg-primary" data-bind="with: fileDetail, css:{active:fileDetail.tab()!='',loading:!fileDetail.loaded()}">
+        <div class="fileDetail t-all " data-bind="with: fileDetail, css:{active:fileDetail.tab()!='',loading:!fileDetail.loaded()}">
+
+            <div class="bg-item"></div>
 
             <!-- new-file -->
             <div data-bind="if:tab()=='new-file'" class="new-file">
                 <div class="ion-ios7-cloud-outline preview">
-                    <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
+                    <img data-bind="attr:{src:item.preview_url,title:item.name}" class="t-all" />
                 </div>
                 <form>
                     <br/>
@@ -443,7 +446,7 @@
                     <!-- zoom -->
                     <div class="zoom t-all" data-bind="css:{active:tab()=='zoom'}">
                         <div>
-                            <img data-bind="attr:{src:preview_url,title:name}" />
+                            <img data-bind="attr:{src:item.preview_url,title:item.name}" />
                             <div data-bind="with: name"></div>
                         </div>
                     </div>
@@ -451,8 +454,9 @@
                     <!-- edit -->
                     <div class="edit t-all" data-bind="css:{active:tab()=='edit'}">
                         <div>
-                            <div class="ion-ios7-cloud-outline preview">
-                                <img data-bind="attr:{src:preview_url,title:name}" class="t-all" />
+                            <div class="preview">
+                                <div class="ion-ios7-cloud-outline"></div>
+                                <img data-bind="attr:{src:item.preview_url,title:item.name}" class="t-all" />
                             </div>
                             <form>
                                 <br/>
@@ -494,27 +498,35 @@
                 </div>
 
                 <!-- toolbar -->
-                <ul class="toolbar">
-                    <li>
-                        <a href="#" class="ion-ios7-close-outline btn-close t-color btn btn-primary"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="ion-ios7-eye t-color btn-zoom btn btn-primary"
-                           data-bind="css:{active:tab()=='zoom'}"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="ion-ios7-cloud-upload-outline btn-edit t-color btn btn-primary"
-                           data-bind="css:{active:tab()=='edit'}"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="ion-ios7-recording-outline btn-logs t-color btn btn-primary"
-                           data-bind="css:{active:tab()=='logs'}"></a>
-                    </li>
-                    <li>
-                        <a href="#" class="ion-ios7-trash-outline t-color btn-trash btn btn-primary"
-                           data-bind="css:{active:tab()=='trash'}"></a>
-                    </li>
-                </ul>
+                <div class="navbar-fixed-bottom">
+                    <ul class="toolbar">
+                        <li>
+                            <a href="#" class="ion-ios7-close-outline btn-close t-color btn btn-primary">Close</a>
+                        </li>
+                        <li>
+                            <a href="#" class="ion-ios7-arrow-left  btn-next t-color btn btn-primary">Next</a>
+                        </li>
+                        <li>
+                            <a href="#" class="ion-ios7-arrow-right  btn-prev t-color btn btn-primary">Previous</a>
+                        </li>
+                        <li>
+                            <a href="#" class="ion-ios7-eye t-color btn-zoom btn btn-primary"
+                               data-bind="css:{active:tab()=='zoom'}">Zoom</a>
+                        </li>
+                        <li>
+                            <a href="#" class="ion-ios7-cloud-upload-outline btn-edit t-color btn btn-primary"
+                               data-bind="css:{active:tab()=='edit'}">Edit</a>
+                        </li>
+                        <li>
+                            <a href="#" class="ion-ios7-recording-outline btn-logs t-color btn btn-primary"
+                               data-bind="css:{active:tab()=='logs'}">Logs</a>
+                        </li>
+                        <li>
+                            <a href="#" class="ion-ios7-trash-outline t-color btn-trash btn btn-primary"
+                               data-bind="css:{active:tab()=='trash'}">Trash</a>
+                        </li>
+                    </ul>
+                </div>
                 <!-- toolbar -->
             </div>
             <!-- edit -->
@@ -538,7 +550,7 @@
                 <div class="bg-warning modal-footer ">
                     <a href="#" class="btn confirm btn-danger t-all"
                        data-bind="css:{disabled:!is_valid()}">Confirm trash</a>
-                    <a href="#" class="btn" data-dismiss="modal">Close</a>
+                    <a href="#" class="btn close" data-dismiss="modal">Close</a>
                 </div>
             </form>
         </div>

@@ -157,10 +157,17 @@ define([
             if(r.length>15 ) r = r.substr(0,15)+"...";
             return r;
           },e);
+          e.q = ko.observable("");
           e.preview_url = ko.computed(function(){
-            if( this.path().match(/^http/))
-              return this.path();
-            return "/read_file"+this.path();
+            var r = this.path();
+            var q = this.q();
+            if( ! r.match(/^http/) ){
+              r = "/read_file"+r;
+            }
+            if( q ){
+              r += "?q="+q;
+            }
+            return r;
           },e);
           items.push(e);
         }
@@ -219,6 +226,16 @@ define([
         }
       }
     };
+    that.findItemAtPosition = function(i){
+      var items = that.items();
+      for( var n in items ){
+        var e = items[n];
+        if( e.position() == i ){
+          return e;
+        }
+      }
+    };
+
     that.browseUp = function(){
       var c = that.current_url();
       if( c ){

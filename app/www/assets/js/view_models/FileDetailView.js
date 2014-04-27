@@ -12,31 +12,56 @@ define([
     that.item_resource = new DataResource();
 
     that.tab = ko.observable("");
-    that.path = ko.observable("");
-    that.type = ko.observable('file');
-    that.name = ko.observable("");
-    that.logs = ko.observableArray([]);
-    that.preview_url = ko.computed(function(){
-      if( that.path().match(/^http/))
-        return that.path();
-      return "/read_file"+that.path();
-    });
+
+    that.item = {
+      path:ko.observable(""),
+      position:ko.observable(""),
+      position_text:ko.observable(""),
+      type:ko.observable(""),
+      name:ko.observable(""),
+      q:ko.observable(""),
+      short_name:ko.observable("")
+    };
+    that.item.preview_url = ko.computed(function(){
+      var r = this.item.path();
+      var q = this.item.q();
+      if( ! r.match(/^http/) ){
+        r = "/read_file"+r;
+      }
+      if( q ){
+        r += "?q="+q;
+      }
+      return r;
+    },that);
 
     that.item_resource.loaded.subscribe(function(l){
       that.loaded(l);
-    })
+    });
+
+    that.setItem = function(item){
+      if( item ){
+        that.item.path(item.path);
+        that.item.position(item.position);
+        that.item.position_text(item.position_text);
+        that.item.type(item.type);
+        that.item.name(item.name);
+        that.item.short_name(item.short_name);
+        that.item_resource.loaded(true);
+        return true;
+      }else if( item === null ){
+        that.item(null);
+        that.item.path("");
+        that.item.position("");
+        that.item.position_text("");
+        that.item.type("");
+        that.item.name("");
+        that.item.short_name("");
+        return false;
+      }
+    };
 
     that.showTab = function(tab,item){
-      if( item ){
-        that.path(item.path());
-        that.name(item.name());
-        that.type(item.type());
-        that.item_resource.loaded(true);
-      }else if( item === null ){
-        that.path("")
-        that.name("")
-        that.type("")
-      }
+      that.setItem(item);
       if( tab ){
         that.tab(tab)
       }else{
