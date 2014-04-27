@@ -7,7 +7,7 @@ define([
   return function () {
     var that = this;
 
-    that.loaded = ko.observable(false).extend({ rateLimit: 0 });
+    that.loaded = ko.observable(false);
 
     that.current_url = ko.observable(null);
     that.display_type = ko.observable("any");

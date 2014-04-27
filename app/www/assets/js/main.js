@@ -147,7 +147,7 @@
       return false;
     });
 
-    var t = ko.computed(function(){
+    ko.computed(function(){
       var url = browser.current_url() || "" ;
       var c = parseInt(browser.current_page())-1;
       var i = browser.items_by_page();
@@ -155,7 +155,7 @@
       var type = browser.display_type();
       browser.items_resource.update(api.listItems(url,c*i,i,search,type));
       browser.directories_resource.update(api.listItems(url,null,null,null,"directory"));
-    }).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 350 } });
+    }).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 50 } });
 
     AppModel.on("focus",".searchBox input", function(ev){
       $(this).select();

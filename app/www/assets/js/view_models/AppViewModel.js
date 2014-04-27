@@ -6,7 +6,7 @@ define([
     ){
   return function (el) {
     var that = this;
-    that.ready = ko.observable(false).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 1500 } });
+    that.ready = ko.observable(false);
 
     that.init_seq = {};
     that.init_seq.startup_modules = ko.observableArray([]).extend({ rateLimit: 50 });
