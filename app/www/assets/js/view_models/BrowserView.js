@@ -16,7 +16,7 @@ define([
     that.filter = ko.observable("view");
     that.search_text = ko.observable("");
     that.delayed_search_text = ko.computed(that.search_text)
-        .extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
+        .extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 350 } });
 
     that.items_resource = new DataResource();
     that.directories_resource = new DataResource();
