@@ -238,18 +238,19 @@
             <div data-bind="if: !items().length">
                 <div class="items-display">
                     <h3>There is no results !</h3>
-                    <b>Try to adjust your settings</b>
-                    <p>
-                    <ul class="nav nav-pills" data-bind="if:search_text">
-                        <li class="btn-clear-search">
-                            <a href="#">Remove search <span class="badge">'<span data-bind="text:search_text"></span>' x</span></a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-pills" data-bind="if:display_type()!='any'">
-                        <li class="btn-clear-display_type">
-                            <a href="#">Display all items<span class="badge">'<span data-bind="text:display_type"></span>' x</span></a>
-                        </li>
-                    </ul>
+                    <p data-bind="if: hasSettings()">
+                        <br/>
+                        <b>Try to adjust your settings</b>
+                        <ul class="nav nav-pills" data-bind="if:search_text">
+                            <li class="btn-clear-search">
+                                <a href="#">Remove search <span class="badge">'<span data-bind="text:search_text"></span>' x</span></a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-pills" data-bind="if:display_type()!='any'">
+                            <li class="btn-clear-display_type">
+                                <a href="#">Display all items<span class="badge">'<span data-bind="text:display_type"></span>' x</span></a>
+                            </li>
+                        </ul>
                     </p>
                 </div>
             </div>
