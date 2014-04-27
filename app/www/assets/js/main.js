@@ -124,6 +124,7 @@
       if( i > -1 ){
         var item = browser.items()[i];
         if( item ){
+          browser.search_text("");
           browser.current_page(1);
           browser.current_url(item.path());
         }
@@ -145,16 +146,16 @@
       }
       return false;
     });
-    browser.current_url.subscribe(function(url){
-      if( url ){
-        var c = parseInt(browser.current_page())-1;
-        var i = browser.items_by_page();
-        var search = browser.search_text();
-        var type = browser.display_type();
-        browser.items_resource.update(api.listItems(url,c*i,i,search,type));
-        browser.directories_resource.update(api.listItems(url,null,null,null,"directory"));
-      }
-    });
+
+    var t = ko.computed(function(){
+      var url = browser.current_url() || "" ;
+      var c = parseInt(browser.current_page())-1;
+      var i = browser.items_by_page();
+      var search = browser.search_text();
+      var type = browser.display_type();
+      browser.items_resource.update(api.listItems(url,c*i,i,search,type));
+      browser.directories_resource.update(api.listItems(url,null,null,null,"directory"));
+    }).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 350 } });
 
     AppModel.on("focus",".searchBox input", function(ev){
       $(this).select();
