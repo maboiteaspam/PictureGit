@@ -160,7 +160,7 @@
         </div>
         <!-- header -->
 
-        <div class="fileBrowser" data-bind="with: browser,css:{loading:!browser.loaded()}">
+        <div class="fileBrowser" data-bind="with: browser,css:{loading:!browser.loaded()},style: { position: fileDetail.tab()!='' ? 'fixed' : '' }">
 
             <!-- browser -->
             <div data-bind="if: items().length">
