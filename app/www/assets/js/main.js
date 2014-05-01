@@ -179,7 +179,7 @@
 
         return ret;
       })());
-    }).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 50 } });
+    }).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 250 } });
 
     AppModel.on("focus",".searchBox input", function(ev){
       $(this).select();
