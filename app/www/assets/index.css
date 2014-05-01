@@ -63,6 +63,7 @@
 .fileBrowser .display-thumbs .file:hover{
     transition: box-shadow 500ms;
     box-shadow: inset  0px 0px 5px,  -0em -0em 2em ;
+    z-index: 1000;
 }
 .fileBrowser .display-thumbs .directory,
 .fileBrowser .display-thumbs .file{
@@ -109,7 +110,6 @@
     top: 0;
     left: 0;
     z-index: -1;
-    font-size: 5em;
     line-height: 100px;
 }
 .fileBrowser .display-thumbs .directory{
@@ -138,7 +138,6 @@
 .fileBrowser .display-thumbs.size-1 .file,
 .fileBrowser .display-thumbs.size-1 .directory{
     height: 100px;
-    min-width: 100px;
 }
 .fileBrowser .display-thumbs.size-1 .directory{
     width: 100px;
@@ -192,7 +191,6 @@
 }
 .fileBrowser .display-thumbs .file img{
     max-width: 100%;
-    min-width: 100%;
 }
 .fileBrowser .display-thumbs.size-1 .file img{
     max-height: 88px;
