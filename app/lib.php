@@ -87,14 +87,11 @@ function etaged_file($path){
     if ( (int)$modified_since === (int)$last_modified
         && $etag === $etagHeader ) {
         header( "HTTP/1.1 304 Not Modified" );
-        header("Pragma: ");
-        header("Expires: ");
+        header( "Cache-Control:max-age=60, public" );
         return false;
     }
     header( "HTTP/1.1 200 ok" );
-    header("Pragma: ");
-    header("Expires: ");
-    header("Cache-Control: must-revalidate");
+    header( "Cache-Control:max-age=60, public" );
     return $etag;
 }
 function inject_script($content,$in,$where="top"){

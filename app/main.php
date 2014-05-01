@@ -118,6 +118,7 @@ $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
                 if( $image->load($picture_dir.$path) ){
                     $image->resizeToHeight(250);
                     $image->save("$c",$image->image_type);
+                    touch($c,filemtime($picture_dir.$path));
                 }else{
                     $c = $picture_dir.$path; // revert to original
                 }
@@ -126,7 +127,9 @@ $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
         }
     }
 
-    return respond_file($path);
+    $retour = respond_file($path);
+    header( "Cache-Control:must-revalidate, public" );
+    return $retour;
 };
 $routes["`^/read_file(/[^@]+)@(.+)`i"] = function($f_path, $version) use($picture_dir){
     /**/
