@@ -40,46 +40,31 @@ function respond_json($data){
 function respond_file($path){
     $result = "";
     if( !is_file($path) || !is_readable($path) ) return $result;
-    if( preg_match("/[.]css$/i",$path)>0){
-        header('Content-type: text/css');
-        if(etaged_file($path)!==false){
-            $result = file_get_contents($path);
-        }
-    }else if( preg_match("/[.]js$/i",$path)>0){
-        header('Content-type: text/javascript');
-        if(etaged_file($path)!==false){
-            $result = file_get_contents($path);
-        }
-    }else if( preg_match("/[.](jpeg|jpg|gif|png)$/i",$path)>0){
-        $etag = etaged_file($path);
-        if($etag!==false){
-            $c = sys_get_temp_dir()."/cache";
-            if( ! is_dir($c) ) mkdir($c,0777,true);
-            $c = "$c/$etag";
-            if( !file_exists($c) || filemtime($c) !== filemtime($path) ){
-                $image = new SimpleImage();
-                if( $image->load($path) ){
-                    $image->resizeToHeight(250);
-                    $image->save("$c",$image->image_type);
-                }else{
-                    $result = "wont image";
-                }
-            }
-            if (preg_match("/[.](jpeg|jpg)$/i",$path)>0) {
-                header('Content-Type: image/jpeg');
-            } elseif (preg_match("/[.](gif)$/i",$path)>0) {
-                header('Content-Type: image/gif');
-            } elseif (preg_match("/[.](png)$/i",$path)>0) {
-                header('Content-Type: image/png');
-            }
-            $result = file_get_contents($c);
-        }
-    }else{
+
+
+    if (preg_match("/[.](jpeg|jpg)$/i",$path)>0) {
+        header('Content-Type: image/jpeg');
+
+    } elseif (preg_match("/[.](gif)$/i",$path)>0) {
+        header('Content-Type: image/gif');
+
+    } elseif (preg_match("/[.](png)$/i",$path)>0) {
+        header('Content-Type: image/png');
+
+    } elseif (preg_match("/[.](css$)$/i",$path)>0) {
+        header('Content-Type: text/css');
+
+    } elseif (preg_match("/[.](js$)$/i",$path)>0) {
+        header('Content-Type: text/javascript');
+
+    } else {
         header('Content-type: '.mime_content_type($path));
-        if(etaged_file($path)!==false){
-            $result = file_get_contents($path);
-        }
     }
+
+    if(etaged_file($path)!==false){
+        $result = file_get_contents($path);
+    }
+
     return $result;
 }
 function etaged_file($path){

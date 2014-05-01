@@ -105,8 +105,28 @@ $routes["`^/completion(/.*)$`"] = function($path) use($picture_dir){
     ));
 };
 $routes["`^/read_file(/.+)`i"] = function($path) use($picture_dir){
-    $path = secure_path($picture_dir, $path );
-    return respond_file($picture_dir.$path);
+    $path = secure_path($picture_dir, $path);
+
+    if( preg_match("/[.](jpeg|jpg|gif|png)$/i",$path)>0){
+        $etag = etaged_file($picture_dir.$path);
+        if($etag!==false){
+            $c = sys_get_temp_dir()."/cache";
+            if( ! is_dir($c) ) mkdir($c,0777,true);
+            $c = "$c/$etag";
+            if( !file_exists($c) || filemtime($c) !== filemtime($picture_dir.$path) ){
+                $image = new SimpleImage();
+                if( $image->load($picture_dir.$path) ){
+                    $image->resizeToHeight(250);
+                    $image->save("$c",$image->image_type);
+                }else{
+                    $c = $picture_dir.$path; // revert to original
+                }
+            }
+            $path = $c; // apply c to path
+        }
+    }
+
+    return respond_file($path);
 };
 $routes["`^/read_file(/[^@]+)@(.+)`i"] = function($f_path, $version) use($picture_dir){
     /**/
